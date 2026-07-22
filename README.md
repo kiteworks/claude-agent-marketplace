@@ -1,93 +1,69 @@
-# claude-agent-marketplace
+# Kiteworks Agents (Lite)
 
+Productivity-grade (Lite) Kiteworks agents for Claude — direct-MCP, best-effort. NOT the audited Kiteworks compliance runtime, not audit-defensible, and not a basis for deletion decisions.
 
+## Browse the catalog
 
-## Getting started
+**→ https://marketplace.kiteworks.com** — the full, always-current catalog with live examples, categories, and screenshots. This repository is the **install source**; the website is where you explore.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Recent additions and announcements: **https://marketplace.kiteworks.com/whats-new**
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Before you install — the short version
 
-## Add your files
+Kiteworks agents are provided **as is**. They are helpful, but they can be wrong. You are responsible for checking what an agent produces before you rely on it, and Kiteworks is not liable for outcomes from using them.
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+[Read the full install disclaimer](https://marketplace.kiteworks.com/legal/install-disclaimer) · Version `1.0` · Effective 2026-07-16
+
+## Prerequisite — the Kiteworks connector
+
+Every agent calls Kiteworks through a remote MCP connector referenced by the logical name `Kiteworks` — no URL or credential is bundled. In your Claude organization, add the remote MCP connector and name it `Kiteworks` (your Kiteworks admin provides the tenant-specific link). Without it the workflows have nothing to call.
+
+## Install
+
+Add this marketplace by URL, then install any agent by name:
 
 ```
-cd existing_repo
-git remote add origin https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace.git
-git branch -M main
-git push -uf origin main
+/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace
+/plugin install <agent>@kiteworks-lite
 ```
 
-## Integrate with your tools
+**Claude Desktop (single plugin):** download an `<agent>.plugin` bundle and upload it via **Customize → Personal plugins → Upload plugin** (or, org-wide, **Organization settings → Plugins → Add plugins → Upload a file**). If the uploader rejects `.plugin`, upload the identical `<agent>.zip`.
 
-* [Set up project integrations](https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace/-/settings/integrations)
+## Agents (15)
 
-## Collaborate with your team
+Explore and try each agent on the website — the list below links straight to each live page.
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+<details><summary>All 15 agents</summary>
 
-## Test and Deploy
+| Agent | Version | Links |
+|---|---|---|
+| Activity Digest | `1.0.3` | [`./activity-digest/`](./activity-digest/) · [live](https://marketplace.kiteworks.com/catalog/activity-digest) |
+| Contract Radar | `1.0.4` | [`./contract-radar/`](./contract-radar/) · [live](https://marketplace.kiteworks.com/catalog/contract-radar) |
+| Document Summarizer | `0.5.1` | [`./document-summarizer/`](./document-summarizer/) · [live](https://marketplace.kiteworks.com/catalog/document-summarizer) |
+| Duplicate Finder | `0.5.1` | [`./duplicate-finder/`](./duplicate-finder/) · [live](https://marketplace.kiteworks.com/catalog/duplicate-finder) |
+| Folder Expiry Audit | `0.2.0` | [`./folder-expiry-audit/`](./folder-expiry-audit/) · [live](https://marketplace.kiteworks.com/catalog/folder-expiry-audit) |
+| Inbox Triage | `0.5.1` | [`./inbox-triage/`](./inbox-triage/) · [live](https://marketplace.kiteworks.com/catalog/inbox-triage) |
+| Intake Form Builder | `0.1.0` | [`./intake-form-builder/`](./intake-form-builder/) · [live](https://marketplace.kiteworks.com/catalog/intake-form-builder) |
+| Invoice Organizer | `0.5.1` | [`./invoice-organizer/`](./invoice-organizer/) · [live](https://marketplace.kiteworks.com/catalog/invoice-organizer) |
+| Naming Cleanup | `0.5.1` | [`./naming-cleanup/`](./naming-cleanup/) · [live](https://marketplace.kiteworks.com/catalog/naming-cleanup) |
+| Offboarding Content Finder | `0.5.1` | [`./offboarding-content-finder/`](./offboarding-content-finder/) · [live](https://marketplace.kiteworks.com/catalog/offboarding-content-finder) |
+| Redactor | `0.5.1` | [`./redactor/`](./redactor/) · [live](https://marketplace.kiteworks.com/catalog/redactor) |
+| Retention Sweeper | `1.0.3` | [`./retention-sweeper/`](./retention-sweeper/) · [live](https://marketplace.kiteworks.com/catalog/retention-sweeper) |
+| Sensitive Content Scanner | `1.3.0` | [`./sensitive-content-scanner/`](./sensitive-content-scanner/) · [live](https://marketplace.kiteworks.com/catalog/sensitive-content-scanner) |
+| Sharing Auditor | `1.0.3` | [`./sharing-auditor/`](./sharing-auditor/) · [live](https://marketplace.kiteworks.com/catalog/sharing-auditor) |
+| Storage Visualizer | `1.0.3` | [`./storage-visualizer/`](./storage-visualizer/) · [live](https://marketplace.kiteworks.com/catalog/storage-visualizer) |
 
-Use the built-in continuous integration in GitLab.
+</details>
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+## What's in this repo
 
-***
+- `.claude-plugin/marketplace.json` — the marketplace catalog (`kiteworks-lite`).
+- `<agent>/` — the plugin directory (skills, agents, connector setup, per-agent README).
+- `<agent>.plugin` and `<agent>.zip` — single-plugin bundles (identical bytes; `.zip` works around a Claude Desktop uploader that rejects `.plugin`).
 
-# Editing this README
+## Notes
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+- Bundles are **unsigned** in this interim; install-source integrity rests on repository controls (branch protection on the published repo) until signed bundles land.
 
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+---
+*Generated from the `kiteworks-agent-marketplace-lite` source — do not edit by hand; changes are overwritten on publish.*

@@ -1,0 +1,4 @@
+include:
+  - project: agent-marketplace/marketplace
+    ref: 1aa22b07e3dc27b015374595e15d63ae683e211e
+    file: /.gitlab/ci/distribution-production.yml
