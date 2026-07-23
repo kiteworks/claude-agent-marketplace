@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Summarizes what's new or changed in a Kiteworks folder over a time window, and can save a report.",
+  "displayName": "Activity Digest",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "activity-digest",
+  "repository": "https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace",
+  "version": "1.0.3"
+}

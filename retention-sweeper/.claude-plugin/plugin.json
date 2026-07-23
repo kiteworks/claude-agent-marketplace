@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Finds files in a Kiteworks folder that are past a retention deadline you set, and can save a report of what it found.",
+  "displayName": "Retention Sweeper",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "retention-sweeper",
+  "repository": "https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace",
+  "version": "1.0.3"
+}

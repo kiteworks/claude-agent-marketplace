@@ -1,0 +1,44 @@
+include:
+  - project: agent-marketplace/marketplace
+    ref: 1aa22b07e3dc27b015374595e15d63ae683e211e
+    file: /.gitlab/ci/distribution-production.yml
+
+# Keep publication restricted to upstream-triggered pipelines while allowing
+# merge requests in this generated repository to prove the private Claude flow.
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "pipeline"'
+    - when: never
+
+stages: [verify, publish]
+
+publish_distribution:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "pipeline"'
+
+verify_private_claude_marketplace:
+  stage: verify
+  image: node:22-bookworm-slim
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  variables:
+    CLAUDE_CONFIG_DIR: "$CI_PROJECT_DIR/.claude-clean"
+  before_script:
+    - apt-get update
+    - apt-get install --yes --no-install-recommends ca-certificates git
+    - npm install --global @anthropic-ai/claude-code@2.1.216
+  script:
+    - test -n "$CI_JOB_TOKEN"
+    - export GITLAB_TOKEN="$CI_JOB_TOKEN"
+    - claude --version
+    - claude plugin marketplace add "$CI_PROJECT_URL"
+    - claude plugin install activity-digest@kiteworks-lite --scope user
+    - claude plugin marketplace update kiteworks-lite
+    - claude plugin list --json > claude-plugin-proof.json
+    - node -e 'const p=require("./claude-plugin-proof.json"); const xs=Array.isArray(p)?p:(p.plugins||[]); if(!xs.some(x => x.id === "activity-digest@kiteworks-lite" || (x.name === "activity-digest" && x.marketplace === "kiteworks-lite"))) process.exit(1)'
+  artifacts:
+    when: always
+    paths:
+      - claude-plugin-proof.json
+    expire_in: 30 days

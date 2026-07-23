@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Cleans up inconsistent or version-sprawled file names in a Kiteworks folder, and renames them once you approve.",
+  "displayName": "Naming Cleanup",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "naming-cleanup",
+  "repository": "https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace",
+  "version": "0.5.1"
+}

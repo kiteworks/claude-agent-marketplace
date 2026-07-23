@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Reports which Kiteworks folders have an expiry/retention policy configured and which don't.",
+  "displayName": "Folder Expiry Audit",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "folder-expiry-audit",
+  "repository": "https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace",
+  "version": "0.2.0"
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Finds what's shared inside a Kiteworks folder so you can review who has access, and can save a report.",
+  "displayName": "Sharing Auditor",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "sharing-auditor",
+  "repository": "https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace",
+  "version": "1.0.3"
+}

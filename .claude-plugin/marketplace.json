@@ -1,0 +1,269 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
+  "name": "kiteworks-lite",
+  "displayName": "Kiteworks Agents (Lite)",
+  "metadata": {
+    "description": "Productivity-grade (Lite) Kiteworks agents for Claude — direct-MCP, best-effort. NOT the audited Kiteworks compliance runtime, not audit-defensible, and not a basis for deletion decisions."
+  },
+  "owner": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "plugins": [
+    {
+      "name": "activity-digest",
+      "source": "./activity-digest",
+      "version": "1.0.3",
+      "displayName": "🕘 Activity Digest",
+      "description": "Summarizes what's new or changed in a Kiteworks folder over a time window, and can save a report.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "documents"
+      ],
+      "category": "documents"
+    },
+    {
+      "name": "contract-radar",
+      "source": "./contract-radar",
+      "version": "1.0.4",
+      "displayName": "⚖️ Contract Radar",
+      "description": "Finds contracts, agreements, and renewal-related documents in a Kiteworks folder, and can save a report.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "documents"
+      ],
+      "category": "documents"
+    },
+    {
+      "name": "document-summarizer",
+      "source": "./document-summarizer",
+      "version": "0.5.1",
+      "displayName": "✔️ Document Summarizer",
+      "description": "Finds a file in Kiteworks (Word, PDF, PowerPoint, Excel, or text) and summarizes it for you, checking it's virus/DLP-clean first and never repeating sensitive numbers like IDs verbatim -- and can save the summary back next to the file.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "documents"
+      ],
+      "category": "documents"
+    },
+    {
+      "name": "duplicate-finder",
+      "source": "./duplicate-finder",
+      "version": "0.5.1",
+      "displayName": "📑 Duplicate Finder",
+      "description": "Finds duplicate files in a Kiteworks folder and, once you approve, moves the extra copies to a review folder so you can reclaim space.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "administrative"
+      ],
+      "category": "administrative"
+    },
+    {
+      "name": "folder-expiry-audit",
+      "source": "./folder-expiry-audit",
+      "version": "0.2.0",
+      "displayName": "📅 Folder Expiry Audit",
+      "description": "Reports which Kiteworks folders have an expiry/retention policy configured and which don't.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "governance"
+      ],
+      "category": "governance"
+    },
+    {
+      "name": "inbox-triage",
+      "source": "./inbox-triage",
+      "version": "0.5.1",
+      "displayName": "🗂️ Inbox Triage",
+      "description": "Sorts files sitting in a Kiteworks inbox or uploads folder into the right project folders, and moves them once you approve the matches.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "administrative"
+      ],
+      "category": "administrative"
+    },
+    {
+      "name": "intake-form-builder",
+      "source": "./intake-form-builder",
+      "version": "0.1.0",
+      "displayName": "📝 Intake Form Builder",
+      "description": "Builds a Kiteworks intake or request form from a short description of what you need to collect.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "documents"
+      ],
+      "category": "documents"
+    },
+    {
+      "name": "invoice-organizer",
+      "source": "./invoice-organizer",
+      "version": "0.5.1",
+      "displayName": "💳 Invoice Organizer",
+      "description": "Finds invoices and receipts in a Kiteworks folder (including photos and scans), pulls out vendor, date, amount, and tax info, and -- once you approve -- renames them consistently and gives you a categorized spreadsheet for expenses or taxes.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "documents"
+      ],
+      "category": "documents"
+    },
+    {
+      "name": "naming-cleanup",
+      "source": "./naming-cleanup",
+      "version": "0.5.1",
+      "displayName": "🏷️ Naming Cleanup",
+      "description": "Cleans up inconsistent or version-sprawled file names in a Kiteworks folder, and renames them once you approve.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "administrative"
+      ],
+      "category": "administrative"
+    },
+    {
+      "name": "offboarding-content-finder",
+      "source": "./offboarding-content-finder",
+      "version": "0.5.1",
+      "displayName": "🚪 Offboarding Content Finder",
+      "description": "Finds everything a departing or transferring employee owns across Kiteworks, and moves confirmed items to a holding folder for review.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "governance"
+      ],
+      "category": "governance"
+    },
+    {
+      "name": "redactor",
+      "source": "./redactor",
+      "version": "0.5.1",
+      "displayName": "🙈 Redactor",
+      "description": "Finds and replaces specific text -- like a name or other sensitive information -- across documents in a Kiteworks folder, and creates redacted copies once you approve. Originals are never changed.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "dlp"
+      ],
+      "category": "dlp"
+    },
+    {
+      "name": "retention-sweeper",
+      "source": "./retention-sweeper",
+      "version": "1.0.3",
+      "displayName": "🕒 Retention Sweeper",
+      "description": "Finds files in a Kiteworks folder that are past a retention deadline you set, and can save a report of what it found.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "governance"
+      ],
+      "category": "governance"
+    },
+    {
+      "name": "sensitive-content-scanner",
+      "source": "./sensitive-content-scanner",
+      "version": "1.3.0",
+      "displayName": "📋 Sensitive Content Scanner",
+      "description": "Scans a Kiteworks folder for sensitive terms and common PII (like SSNs, credit card numbers, and IBANs) before you share it, and can save a report.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "dlp"
+      ],
+      "category": "dlp"
+    },
+    {
+      "name": "sharing-auditor",
+      "source": "./sharing-auditor",
+      "version": "1.0.3",
+      "displayName": "👥 Sharing Auditor",
+      "description": "Finds what's shared inside a Kiteworks folder so you can review who has access, and can save a report.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "security"
+      ],
+      "category": "security"
+    },
+    {
+      "name": "storage-visualizer",
+      "source": "./storage-visualizer",
+      "version": "1.0.3",
+      "displayName": "📊 Storage Visualizer",
+      "description": "Shows what's taking up space in a Kiteworks folder -- totals, the largest files and folders, and how much is shared -- and can save a report.",
+      "author": {
+        "name": "Kiteworks",
+        "url": "https://kiteworks.com"
+      },
+      "homepage": "https://kiteworks.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "administrative"
+      ],
+      "category": "administrative"
+    }
+  ]
+}

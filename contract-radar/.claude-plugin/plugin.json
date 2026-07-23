@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Finds contracts, agreements, and renewal-related documents in a Kiteworks folder, and can save a report.",
+  "displayName": "Contract Radar",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "contract-radar",
+  "repository": "https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace",
+  "version": "1.0.4"
+}
