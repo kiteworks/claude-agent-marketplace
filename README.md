@@ -23,7 +23,7 @@ Every agent calls Kiteworks through a remote MCP connector referenced by the log
 Add this marketplace by URL, then install any agent by name:
 
 ```
-/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace
+/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace.git
 /plugin install <agent>@kiteworks-lite
 ```
 

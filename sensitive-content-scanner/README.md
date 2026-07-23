@@ -21,7 +21,7 @@ Improved sensitive-term and PII detection; refreshed the branded report and safe
 Add the marketplace once, then install this agent:
 
 ```
-/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace
+/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace.git
 /plugin install sensitive-content-scanner@kiteworks-lite
 ```
 

@@ -21,7 +21,7 @@ Refreshed the branded report and the safety pre-check.
 Add the marketplace once, then install this agent:
 
 ```
-/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace
+/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace.git
 /plugin install invoice-organizer@kiteworks-lite
 ```
 

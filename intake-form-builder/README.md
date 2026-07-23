@@ -21,7 +21,7 @@ Turns a short plain-language description into a ready-to-use Kiteworks intake/re
 Add the marketplace once, then install this agent:
 
 ```
-/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace
+/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace.git
 /plugin install intake-form-builder@kiteworks-lite
 ```
 

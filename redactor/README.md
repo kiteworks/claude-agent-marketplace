@@ -21,7 +21,7 @@ Improved the redaction preview and term matching; refreshed the branded report a
 Add the marketplace once, then install this agent:
 
 ```
-/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace
+/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace.git
 /plugin install redactor@kiteworks-lite
 ```
 
