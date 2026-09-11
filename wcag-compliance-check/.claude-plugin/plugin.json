@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Runs a real accessibility structure check (tagged PDFs, document metadata, alt text across PDF/DOCX/PPTX/HTML) over documents in a Kiteworks folder under WCAG, and saves a report. This is not a full WCAG conformance test.",
+  "displayName": "WCAG Compliance Check",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "wcag-compliance-check",
+  "repository": "https://github.com/kiteworks/claude-agent-marketplace",
+  "version": "1.0.1"
+}

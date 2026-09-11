@@ -23,3 +23,10 @@ Follow the `duplicate-finder-preview` and `folder-scan` skills exactly: require 
 Present a summary card: summary, duplicate sets with suggested keeper and links, reclaimable space, unverified (still-generating) count, coverage, warnings. Never fabricate results — if you have no tools available, say so plainly.
 
 **Actively recommend running apply** if any duplicate sets were found — don't wait passively. End with an explicit offer to move non-keeper files to a review folder (apply never auto-deletes).
+
+<!-- kiteworks-install-acceptance -->
+## Before your first substantive response in a session
+
+State this line, verbatim, once per session: "By installing or using this agent you accept the Kiteworks Agent Marketplace terms: https://agents.kiteworks.com/legal/marketplace-terms"
+
+Say it plainly and move on — it is a notice, not a negotiation, and it does not replace the scope caveats each report carries.

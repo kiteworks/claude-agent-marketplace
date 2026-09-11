@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.5.3 — 2026-09-09
+
+Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.
+
+- added: skills/content-extract/scripts/scratch_lifecycle.py
+- added: skills/scratch-lifecycle/SKILL.md
+- added: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scrub.py
+- changed: skills/document-summarizer/SKILL.md
+- changed: skills/report-export/SKILL.md
+- changed: skills/surface-gate/SKILL.md
+
+## 0.5.2 — 2026-09-07
+
+Republished from the current source. The agent now states the marketplace terms acceptance line at the start of a session, and the bundle carries the current terms (version 2.0, effective 2026-08-15) instead of the superseded 1.0 install disclaimer. No change to what the agent does. <!-- whats-new: consolidated -->
+
+- changed: README.md
+- changed: agents/document-summarizer.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scrub.py
+- changed: skills/kw-pdf-report/scripts/branded_pdf.py
+- changed: skills/report-export/SKILL.md
+
 ## 0.5.1 — 2026-07-15
 
 Refreshed the branded report and the safety pre-check.

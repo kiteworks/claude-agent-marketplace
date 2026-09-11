@@ -1,27 +1,29 @@
 # Sensitive Content Scanner
 
-`v1.3.0` · updated 2026-07-15
+`v1.3.2` · updated 2026-09-09
 
 Scans a Kiteworks folder for sensitive terms and common PII (like SSNs, credit card numbers, and IBANs) before you share it, and can save a report.
 
-**[View on the Kiteworks Agent Marketplace →](https://marketplace.kiteworks.com/catalog/sensitive-content-scanner)** — live examples, screenshots, and full detail.
+**[View on the Kiteworks Agent Marketplace →](https://agents.kiteworks.com/catalog/sensitive-content-scanner)** — live examples, screenshots, and full detail.
+
+> **By installing or using this agent you accept the Kiteworks Agent Marketplace terms: https://agents.kiteworks.com/legal/marketplace-terms**
 
 ## Before you install — the short version
 
-Kiteworks agents are provided **as is**. They are helpful, but they can be wrong. You are responsible for checking what an agent produces before you rely on it, and Kiteworks is not liable for outcomes from using them.
+Kiteworks agents are intended for business and professional use. They use AI to generate their output automatically and are provided "as is", without warranty, to the maximum extent permitted by applicable law. Outputs are not professional advice and are not a compliance certification or legal determination of compliance with any framework. You are solely responsible for reviewing outputs before relying on them. No agent is FedRAMP authorized, and none are within the scope of Kiteworks' ISO 27001 certification or SOC 2 report. Installing or using any agent means you accept the full terms: https://agents.kiteworks.com/legal/marketplace-terms
 
-[Read the full install disclaimer](https://marketplace.kiteworks.com/legal/install-disclaimer) · Version `1.0` · Effective 2026-07-16
+[Read the full terms](https://agents.kiteworks.com/legal/marketplace-terms) · Version `2.0` · Effective 2026-08-15
 
 ## What's new
 
-Improved sensitive-term and PII detection; refreshed the branded report and safety pre-check.
+Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.
 
 ## Install
 
 Add the marketplace once, then install this agent:
 
 ```
-/plugin marketplace add https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace.git
+/plugin marketplace add https://github.com/kiteworks/claude-agent-marketplace.git
 /plugin install sensitive-content-scanner@kiteworks-lite
 ```
 

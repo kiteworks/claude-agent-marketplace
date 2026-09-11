@@ -40,6 +40,7 @@ Call Kiteworks tools sequentially or in small batches (at most 5 in parallel) �
 ## Metadata fields worth using directly
 
 Folder and file objects returned by `get_top_folders`/`get_folder_children`/`search*` already include useful signals without any extra call:
+
 - `isShared` (boolean) — whether the item is shared. Use this directly for any sharing-related check; do not rely on `search_filter: 'shared'` with an empty query (confirmed to return no results without a scoped term).
 - `fingerprint` — a 32-char lowercase hex content checksum, or the literal string `"Generating..."` while the backend computes it asynchronously on fresh uploads/new versions. Never treat a `"Generating..."` file as fingerprint-matched; report it separately as unverified.
 - `avStatus` / `dlpStatus` — present on file objects (e.g. `"scanning"`, `"allowed"`). Useful for any content-safety-flavored check; don't assume every tenant surfaces these identically.

@@ -8,7 +8,7 @@ description: >
   files." Defaults to a tenant-wide sweep across all top-level folders,
   not a single folder. Read-only.
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 Delegate to the `offboarding-content-finder-preview` subagent. Read `../folder-scan/SKILL.md` first.
@@ -24,5 +24,14 @@ There is no server-side "owner" or "creator" filter on `search`/`search_files`/`
 ## Collect from the user
 
 The departed/transferring person's name or email (required). Ask, don't assume, whether they want:
+
 - **Tenant-wide sweep (default, recommended)** — every top-level folder from `get_top_folders`, each walked and filtered.
-- **Narrowe
+- **Narrower scope** — a specific folder or subtree the user already has in mind, if they'd rather not wait on a full sweep.
+
+## Walk and filter
+
+Walk the chosen scope with `get_folder_children`, matching each item's `creator`/`userId` field against the name or email given (case-insensitive; check both fields, since which one is populated varies by endpoint). Never rely on folder or file naming as a proxy for ownership — only the actual `creator`/`userId` field counts as a match.
+
+## Present the result
+
+Summary card: summary, matched items (path, type, which field matched, last-modified), folders swept vs. skipped, coverage, warnings. Hand the confirmed item set forward for apply (staging into a holding folder for reassignment) if the user wants to act on it.

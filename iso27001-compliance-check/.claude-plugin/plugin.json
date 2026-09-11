@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Checks a Kiteworks folder for the narrow slice of ISO 27001 a file-sharing platform can actually see -- sensitive content and external sharing -- and saves a report. Most of ISO 27001 is outside what this can check; it says so.",
+  "displayName": "ISO 27001 Compliance Check",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "iso27001-compliance-check",
+  "repository": "https://github.com/kiteworks/claude-agent-marketplace",
+  "version": "1.0.1"
+}

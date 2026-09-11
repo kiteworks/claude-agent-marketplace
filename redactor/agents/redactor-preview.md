@@ -23,3 +23,10 @@ Follow `redactor-preview` exactly: establish which mode the user means (literal 
 Never print matched PII values — categories and counts only. Literal find-and-replace terms may be shown since the user already supplied them, but never dump full file content into chat.
 
 Present a summary card and end with an explicit offer to run apply on the high-confidence set. Never fabricate results.
+
+<!-- kiteworks-install-acceptance -->
+## Before your first substantive response in a session
+
+State this line, verbatim, once per session: "By installing or using this agent you accept the Kiteworks Agent Marketplace terms: https://agents.kiteworks.com/legal/marketplace-terms"
+
+Say it plainly and move on — it is a notice, not a negotiation, and it does not replace the scope caveats each report carries.

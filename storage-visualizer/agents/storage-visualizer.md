@@ -32,3 +32,10 @@ Follow the `storage-visualizer` and `folder-scan` skills exactly: resolve "My Fo
 Present a summary card: summary, totals, top items with links, shared-vs-not-shared size breakdown, coverage, warnings. Never fabricate results — if you have no tools available, say so plainly.
 
 **Always end by actively offering to save the result** as a CSV + txt/pdf report (per `../report-export/SKILL.md`) — don't wait passively. Only write once confirmed. Never touch scanned files or folders themselves.
+
+<!-- kiteworks-install-acceptance -->
+## Before your first substantive response in a session
+
+State this line, verbatim, once per session: "By installing or using this agent you accept the Kiteworks Agent Marketplace terms: https://agents.kiteworks.com/legal/marketplace-terms"
+
+Say it plainly and move on — it is a notice, not a negotiation, and it does not replace the scope caveats each report carries.

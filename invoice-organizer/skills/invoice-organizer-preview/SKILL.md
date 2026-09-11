@@ -8,7 +8,7 @@ description: >
   ready for taxes." Read-only: proposes renames and a categorized CSV,
   creates and changes nothing.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 Delegate to the `invoice-organizer-preview` subagent. Read `../folder-scan/SKILL.md` and `../content-extract/SKILL.md` first. Read `scripts/ocr_extract.py`'s own docstring before using it -- it's this skill's own OCR fallback, not part of `content-extract`.
@@ -39,9 +39,9 @@ Per `folder-scan`: candidates are any file that could plausibly be an invoice or
 ## Step 2 — get real text out of each candidate
 
 - Text-based (`.txt`, `.csv`): `read_file_contents` directly, per `content-extract`.
-- `.pdf`, `.docx`, `.xlsx`: per `content-extract`'s binary path — but note `content-extract` doesn't itself distinguish a real text layer from an empty/near-empty one for PDFs. Use `scripts/ocr_extract.py <local-path>` instead of a bare `pdftotext` call for every PDF in scope — it does the same text-layer extraction `content-extract` would, but automatically falls back to OCR rasterization when the text layer is empty (the scanned-receipt-saved-as-PDF case), and reports which path it took (`"method": "text_layer"` vs `"ocr_pdf_rasterized"`) so you can set the confidence tier correctly in Step 4.
-- Image files (`.jpg`, `.png`, `.tiff`, `.bmp`, `.gif`): also via `scripts/ocr_extract.py` — direct OCR, no text-layer question. `.heic`/`.heif`: same script; if it reports `"error": "heic_unsupported"`, try `pip install pillow-heif --break-system-packages` once and retry — if it still fails, flag the file for manual review with the script's own message, don't guess.
-- Same download-location and cleanup rules as `content-extract`'s Cowork path: download to this session's own outputs/working mount (never a bare `/tmp` path relative to the connector, and never assume real deletion works afterward — scrub content, don't claim removal).
+- `.pdf`, `.docx`, `.xlsx`: per `content-extract`'s binary path — but note `content-extract` doesn't itself distinguish a real text layer from an empty/near-empty one for PDFs. Use `scripts/ocr_extract.py --root <run> --source <owned-source> --out <reserved-text>` instead of a bare `pdftotext` call for every PDF in scope — it does the same text-layer extraction `content-extract` would, but automatically falls back to OCR rasterization when the text layer is empty (the scanned-receipt-saved-as-PDF case), and reports which path it took (`"method": "text_layer"` vs `"ocr_pdf_rasterized"`) so you can set the confidence tier correctly in Step 4.
+- Image files (.jpg/.png/.tiff/.bmp/.gif/.webp) use the same owned-source/output OCR call. HEIC/HEIF uses pillow-heif/Pillow when installed, with a pre-reserved PNG conversion artifact released in finally. A missing decoder returns heic_unsupported; offer a user-converted PNG/JPG or an authorized decoder installation before retrying once. Missing OCR tools are an explicit unavailable result.
+- Follow `../scratch-lifecycle/SKILL.md` for destinations, disclosure, grants and cleanup. Reserve text before OCR and keep the original through text-layer/OCR fallback. The script tracks each rasterized page before creation, releases pages/source in finally blocks under the run policy, and returns only metadata to stdout. Read owned text internally, then release it and finalize. A deletion denial never triggers truncation; list residual paths/statuses. The OCR cap is 100 pages per PDF with bounded subprocess timeouts.
 - Same per-run cap as `content-extract` (default 30 files; OCR is heavier per-file than a text-layer read, so don't raise this cap casually). Disclose the cap and how many files were actually processed vs. in scope.
 
 ## Step 3 — extract fields from the real text

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Checks a Kiteworks folder for AI-related documents that are shared externally or contain personal data, under NIST AI RMF. Most of NIST AI RMF is outside what this can check; it says so.",
+  "displayName": "NIST AI RMF Compliance Check",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "nist-ai-rmf-compliance-check",
+  "repository": "https://github.com/kiteworks/claude-agent-marketplace",
+  "version": "1.0.1"
+}
