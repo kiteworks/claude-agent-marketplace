@@ -80,6 +80,7 @@ match count and the context-confirmed subset of it, e.g.
 Never prints the matched values themselves -- per this plugin's privacy rule
 (term-sweep / content-extract), only counts and categories are safe to surface.
 """
+
 import json
 import re
 import signal
@@ -165,7 +166,15 @@ CATEGORY_SPECS = {
         "type": "financial",
         "pattern": CARD_CANDIDATE,
         "validator": _card_valid,
-        "context_keywords": ["credit card", "card number", "cvv", "visa", "mastercard", "amex", "discover"],
+        "context_keywords": [
+            "credit card",
+            "card number",
+            "cvv",
+            "visa",
+            "mastercard",
+            "amex",
+            "discover",
+        ],
     },
     "iban_checksum_valid": {
         "label": "IBAN shape, mod-97 checksum valid (real IBAN validation)",
@@ -173,7 +182,12 @@ CATEGORY_SPECS = {
         "type": "financial",
         "pattern": IBAN_CANDIDATE,
         "validator": iban_valid,
-        "context_keywords": ["iban", "bank account", "rekeningnummer", "account number"],
+        "context_keywords": [
+            "iban",
+            "bank account",
+            "rekeningnummer",
+            "account number",
+        ],
     },
     "aws_access_key": {
         "label": "AWS access key ID shape (AKIA prefix + 16 chars) -- a leaked-credential signal, not classic PII",
@@ -224,7 +238,8 @@ def resolve_categories(arg=None):
             matches = {k for k, v in CATEGORY_SPECS.items() if v["region"] == region}
             if not matches:
                 errors.append(
-                    "unknown region '%s' -- known regions: %s" % (region, ", ".join(_known_regions()))
+                    "unknown region '%s' -- known regions: %s"
+                    % (region, ", ".join(_known_regions()))
                 )
             selected |= matches
         elif lowered.startswith("type:"):
@@ -232,7 +247,8 @@ def resolve_categories(arg=None):
             matches = {k for k, v in CATEGORY_SPECS.items() if v["type"] == type_}
             if not matches:
                 errors.append(
-                    "unknown type '%s' -- known types: %s" % (type_, ", ".join(_known_types()))
+                    "unknown type '%s' -- known types: %s"
+                    % (type_, ", ".join(_known_types()))
                 )
             selected |= matches
         elif token in CATEGORY_SPECS:
@@ -285,7 +301,7 @@ def _finditer_with_timeout(compiled, text, timeout_seconds):
 
 
 def context_hit(text: str, start: int, end: int, keywords) -> bool:
-    window = text[max(0, start - CONTEXT_WINDOW): end + CONTEXT_WINDOW].lower()
+    window = text[max(0, start - CONTEXT_WINDOW) : end + CONTEXT_WINDOW].lower()
     return any(kw.lower() in window for kw in keywords)
 
 
@@ -333,16 +349,24 @@ def scan_custom(text: str, patterns: list) -> dict:
         try:
             compiled = re.compile(pattern_str)
         except re.error as e:
-            result[label] = {"valid": 0, "context_confirmed": 0, "error": "invalid regex: " + str(e)}
+            result[label] = {
+                "valid": 0,
+                "context_confirmed": 0,
+                "error": "invalid regex: " + str(e),
+            }
             continue
 
         try:
-            matches = _finditer_with_timeout(compiled, scan_text, CUSTOM_REGEX_TIMEOUT_SECONDS)
+            matches = _finditer_with_timeout(
+                compiled, scan_text, CUSTOM_REGEX_TIMEOUT_SECONDS
+            )
         except _RegexTimeout:
             result[label] = {
                 "valid": 0,
                 "context_confirmed": 0,
-                "error": "regex timed out after " + str(CUSTOM_REGEX_TIMEOUT_SECONDS) + "s -- likely catastrophic backtracking, simplify the pattern",
+                "error": "regex timed out after "
+                + str(CUSTOM_REGEX_TIMEOUT_SECONDS)
+                + "s -- likely catastrophic backtracking, simplify the pattern",
             }
             continue
 
@@ -355,7 +379,11 @@ def scan_custom(text: str, patterns: list) -> dict:
 
         entry = {"valid": valid, "context_confirmed": context_confirmed, "error": None}
         if truncated:
-            entry["note"] = "input text truncated to " + str(CUSTOM_MAX_TEXT_CHARS) + " chars before evaluation"
+            entry["note"] = (
+                "input text truncated to "
+                + str(CUSTOM_MAX_TEXT_CHARS)
+                + " chars before evaluation"
+            )
         result[label] = entry
 
     return result
@@ -370,7 +398,7 @@ if __name__ == "__main__":
     positional = []
     for a in raw_args:
         if a.startswith("--categories="):
-            categories_arg = a[len("--categories="):]
+            categories_arg = a[len("--categories=") :]
         else:
             positional.append(a)
 

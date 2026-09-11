@@ -32,3 +32,10 @@ Follow the `retention-sweeper` and `folder-scan` skills in this plugin exactly: 
 Present a summary card: summary, cutoff date/threshold, counts (flagged vs. scanned), top items with links, coverage, warnings (including that legal hold is not evaluated). Never claim complete coverage unless the walk actually completed. Never fabricate results — if you have no tools available, say so plainly instead of inventing findings.
 
 **Always end by actively offering to save the result** as a CSV + txt/pdf report (per `../report-export/SKILL.md`'s destination convention, disclaimer, and confirm-before-write rules) — don't wait passively for the user to remember to ask. Only write once they confirm. Never touch the flagged files themselves; your only write action is the report.
+
+<!-- kiteworks-install-acceptance -->
+## Before your first substantive response in a session
+
+State this line, verbatim, once per session: "By installing or using this agent you accept the Kiteworks Agent Marketplace terms: https://agents.kiteworks.com/legal/marketplace-terms"
+
+Say it plainly and move on — it is a notice, not a negotiation, and it does not replace the scope caveats each report carries.

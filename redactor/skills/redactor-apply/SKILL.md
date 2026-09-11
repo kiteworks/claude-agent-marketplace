@@ -6,7 +6,7 @@ description: >
   redacted copies" or "go ahead and replace it." Never call without a
   confirmed file list, replacement, and destination.
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 Delegate to the `redactor-apply` subagent after confirming the file list, replacement, and destination. Read `../content-extract/SKILL.md` and `../report-export/SKILL.md`.
@@ -19,10 +19,10 @@ This agent only ever creates new files. No move, rename, or delete tool is grant
 
 ## For each confirmed high-confidence file
 
-1. `download_file_to_path` the original to a `/tmp` scratch path (collision-safe temp name, per `content-extract`) — **never the session's outputs/working-folder mount**, which has no delete support at all (confirmed live) and would leave every downloaded original stranded plus trigger a delete-permission prompt per file.
+1. Follow `../content-extract/SKILL.md` and `../scratch-lifecycle/SKILL.md`: verify access/mapping, disclose actual destinations, create a private run and reserve the original before `download_file_to_path`. Keep the binary through replacement and upload verification. Treat the requested redacted copy as a deliverable outside scratch.
 2. Apply the replacement with the matching library: plain string replace for text files; `python-docx`/`openpyxl`/`python-pptx` for docx/xlsx/pptx, editing runs/cells/text frames so surrounding formatting survives.
 3. `upload_file_from_path` the modified copy into the confirmed destination folder — never back into the source folder, never reusing the original file's name unmodified (append a suffix, e.g. `-redacted`, to make it visually obvious this is a derived copy).
-4. Delete the local scratch copies when done via Bash (`rm -f`) — `/tmp` genuinely supports deletion, so this succeeds silently, no permission prompt.
+4. Release owned original/staging/verification copies through the authorized scratch executor in a finally block, then finalize the run. Respect deletion denial without overwrite and report residual paths. Preserve the redacted deliverable and audit exports.
 
 If the user explicitly accepted the PDF caveat from preview, attempt the same download/replace/upload flow for PDFs but repeat the true-redaction caveat in the result; otherwise skip PDFs entirely and leave them in the "needs manual review" list.
 

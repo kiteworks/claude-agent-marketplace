@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.5.4 — 2026-09-09
+
+Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.
+
+- added: skills/scratch-lifecycle/SKILL.md
+- added: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/report-export/SKILL.md
+- changed: skills/surface-gate/SKILL.md
+
+## 0.5.3 — 2026-09-07
+
+Republished from the current source. The agent now states the marketplace terms acceptance line at the start of a session, and the bundle carries the current terms (version 2.0, effective 2026-08-15) instead of the superseded 1.0 install disclaimer. No change to what the agent does. <!-- whats-new: consolidated -->
+
+- changed: README.md
+- changed: agents/offboarding-content-finder-apply.md
+- changed: agents/offboarding-content-finder-preview.md
+- changed: skills/kw-pdf-report/scripts/branded_pdf.py
+- changed: skills/report-export/SKILL.md
+
+## 0.5.2 — 2026-08-01
+
+Restores instructions that were cut off mid-sentence: the agent now matches people by the actual creator/user field on each item, checking both name and email case-insensitively and never using folder or file naming as a proxy for ownership, and reports which field matched alongside coverage and warnings.
+
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/kw-pdf-report/SKILL.md
+- changed: skills/kw-pdf-report/scripts/branded_pdf.py
+- changed: skills/offboarding-content-finder-preview/SKILL.md
+- changed: skills/report-export/SKILL.md
+
 ## 0.5.1 — 2026-07-15
 
 Refreshed the branded report and the safety pre-check.

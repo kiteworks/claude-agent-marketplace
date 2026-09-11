@@ -19,6 +19,7 @@ Prints the masked text to stdout. Deterministic, no LLM judgment involved --
 this exists specifically so the model never has to be trusted to remember
 not to paste a full number verbatim.
 """
+
 import re
 import sys
 

@@ -10,7 +10,7 @@ description: >
   files already attached to the conversation — those can be read directly,
   no Kiteworks lookup needed.
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 Delegate to the `document-summarizer` subagent. If it reports no tools available, or returns a summary without making any Kiteworks tool calls, treat the result as fabricated, discard it, and ask the user to check the `Kiteworks` connector is connected. On other surfaces, follow this skill directly.
@@ -21,7 +21,7 @@ Read `../content-extract/SKILL.md` first for how binary files (.docx, .pdf, .ppt
 
 Ported and rebuilt from an alpha `kiteworks-document-summarizer` plugin Rick had in a separate personal marketplace repo (`github.com/rickgoud/kw-claude-marketplace`). That version's good ideas are kept (see below); its infrastructure is replaced with this project's already-hardened shared skills rather than duplicated:
 
-- The alpha shipped its own `kw-binary-file-bridge` skill (a Filesystem-extension-based bridge for standard Chat, with a real disclosed limitation: no delete, only overwrite). This project's `content-extract` already solves the same problem more completely — it's surface-aware via `surface-gate`, uses `/tmp` (not the undeletable outputs mount) on the Cowork path, enforces a file-size cap before downloading, and bounds how many files get extracted per run. No reason to carry a second implementation of the same bridge.
+- The alpha shipped `kw-binary-file-bridge`; this repository uses the generated `content-extract` and `scratch-lifecycle` foundation for verified destinations, bounded extraction and owned-artifact cleanup. Its old destination/overwrite advice is historical provenance only.
 - The alpha had no subagent at all — it was a bare skill. This agent follows this project's standard pattern instead: a real subagent with a scoped tool list, so a run that silently didn't call any Kiteworks tool can be caught and discarded rather than trusted.
 
 ## Kept from the alpha, because they're genuinely good and don't exist elsewhere in this plugin yet
@@ -50,7 +50,7 @@ The alpha's Step 1 said to search "using the name or description the user gave" 
 
 ## Step 3 — Get the content
 
-Text-based (`.txt`, `.csv`, `.json`, `.xml`, `.md`, `.log`): read directly per `content-extract`'s text path. Binary (`.docx`, `.pdf`, `.pptx`, `.xlsx`, `.doc`, `.ppt`, `.xls`): route through `content-extract`'s binary path (it already picks Cowork-native vs. Filesystem-extension-bridge vs. Tier C correctly for the current surface). Anything else (encrypted, image-only scans without OCR, unrecognized format): say plainly that this format isn't supported yet — don't attempt a partial read.
+Text-based (`.txt`, `.csv`, `.json`, `.xml`, `.md`, `.log`): read directly per `content-extract`'s text path. Binary (`.docx`, `.pdf`, `.pptx`, `.xlsx`, `.doc`, `.ppt`, `.xls`): route through `content-extract`'s binary path (it verifies actual download, parser and cleanup capabilities). Anything else (encrypted, image-only scans without OCR, unrecognized format): say plainly that this format isn't supported yet — don't attempt a partial read.
 
 ## Step 4 — Write the summary
 
@@ -62,3 +62,5 @@ End by asking, e.g.: *"Want me to save this summary back to Kiteworks?"* If yes,
 
 - **.txt:** `create_file_from_content`, UTF-8, with a short header (`Summary of: <path>`, `Generated: <date>`, `Summarized by: <get_user_info_whoami>`) above the summary text.
 - **.docx:** use the `docx` skill's full creation process, **including its render-and-verify step**, before uploading. Only after visual verification, `upload_file_from_path` straight to the Kiteworks destination — **never base64-encode it into `create_file_from_content`.** Live-tested 2026-07-14: a hand-copied base64 string of the built docx was corrupted twice in two different ways between tool calls (once truncated, once with a chunk duplicated), each time reporting a clean success with a plausible-looking response — only a byte-for-byte re-download-and-diff caught it. `upload_file_from_path` uploads straight from the local file, no string relay, no corruption risk; verify afterward by checking the response's `size` matches the local file's real size (or re-download and diff for a higher-stakes write). See `../report-export/SKILL.md`'s corrected rule — same fix, same root cause, applies everywhere in this plugin that writes a binary file.
+
+Release extracted text in a finally block after summarization, then finalize the run. Preserve requested summaries as deliverables. Optional download-back checks use the report-export scratch contract.

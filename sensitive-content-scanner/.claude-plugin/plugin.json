@@ -9,6 +9,6 @@
   "homepage": "https://kiteworks.com",
   "license": "Apache-2.0",
   "name": "sensitive-content-scanner",
-  "repository": "https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace",
-  "version": "1.3.0"
+  "repository": "https://github.com/kiteworks/claude-agent-marketplace",
+  "version": "1.3.2"
 }

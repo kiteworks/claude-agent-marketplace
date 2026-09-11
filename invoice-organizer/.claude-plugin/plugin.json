@@ -9,6 +9,6 @@
   "homepage": "https://kiteworks.com",
   "license": "Apache-2.0",
   "name": "invoice-organizer",
-  "repository": "https://sggitlab.acc.guru/agent-marketplace/claude-agent-marketplace",
-  "version": "0.5.1"
+  "repository": "https://github.com/kiteworks/claude-agent-marketplace",
+  "version": "0.5.3"
 }
