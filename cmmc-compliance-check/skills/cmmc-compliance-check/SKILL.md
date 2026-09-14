@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Good -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `cmmc-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,11 +29,11 @@ Signals: **A, B**. Signal A's default term list for this framework: "CUI", "cont
 Drawn directly from NIST SP 800-171 Rev 2, which CMMC 2.0 Level 2 maps its 110 practices onto 1:1, not the third-party GRC skill library.
 
 - **Signal A** (sensitive-content exposure): Practice 3.1.3 (control the flow of CUI in accordance with approved authorizations) governs where CUI-marked content is allowed to live.
-- **Signal B** (external sharing): Practice 3.13.11 (employ FIPS-validated cryptography when used to protect the confidentiality of CUI) governs CUI once it leaves a controlled environment -- note this requires FIPS 140-2 *module* validation, not just an approved algorithm, a distinction this scan cannot verify from file metadata alone.
+- **Signal B** (sharing exposure): Practice 3.13.11 (employ FIPS-validated cryptography when used to protect the confidentiality of CUI) governs CUI once it leaves a controlled environment -- note this requires FIPS 140-2 *module* validation, not just an approved algorithm, a distinction this scan cannot verify from file metadata alone.
 
 ## What this doesn't check
 
-SSP authorship, the 110 NIST SP 800-171 practice implementations, and SPRS scoring concern an organization's whole security programme, not one folder -- this only flags where CUI-marked content appears to live or be shared externally.
+SSP authorship, the 110 NIST SP 800-171 practice implementations, and SPRS scoring concern an organization's whole security programme, not one folder -- this only flags where CUI-marked content appears to live or be in a shared folder tree. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

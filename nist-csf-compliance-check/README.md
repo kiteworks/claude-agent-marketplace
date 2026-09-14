@@ -1,6 +1,6 @@
 # NIST CSF Compliance Check
 
-`v1.0.1` · updated 2026-09-09
+`v1.1.0` · updated 2026-09-14
 
 Checks a Kiteworks folder for external sharing exposure, the one sliver of NIST CSF's Protect function a file-sharing platform can see, and saves a report. Most of NIST CSF is outside what this can check; it says so.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.
+added 1 file(s); updated 3 file(s)
 
 ## Install
 

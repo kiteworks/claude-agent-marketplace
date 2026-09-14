@@ -1,6 +1,6 @@
 # Section 508 Compliance Check
 
-`v1.0.1` · updated 2026-09-09
+`v1.0.2` · updated 2026-09-14
 
 Runs a shallow accessibility structure check (tagged PDFs, document/slide metadata, alt text, and HTML heading structure) over PDF, Word, PowerPoint, and HTML files in a Kiteworks folder under Section 508, and saves a report. This is not a full VPAT/ACR conformance test.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.
+updated 2 file(s)
 
 ## Install
 

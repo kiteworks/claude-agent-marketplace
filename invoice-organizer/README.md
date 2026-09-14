@@ -1,6 +1,6 @@
 # Invoice Organizer
 
-`v0.5.3` · updated 2026-09-09
+`v0.5.4` · updated 2026-09-14
 
 Finds invoices and receipts in a Kiteworks folder (including photos and scans), pulls out vendor, date, amount, and tax info, and -- once you approve -- renames them consistently and gives you a categorized spreadsheet for expenses or taxes.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.
+updated 1 file(s)
 
 ## Install
 

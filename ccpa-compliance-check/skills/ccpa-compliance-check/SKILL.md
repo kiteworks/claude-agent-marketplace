@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Strong -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `ccpa-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,12 +29,12 @@ Signals: **A, B, C**. Signal A's default term list for this framework: "personal
 Drawn directly from the California Civil Code text (via California Legislative Information, leginfo.ca.gov), not the third-party GRC skill library.
 
 - **Signal A** (sensitive-content exposure): Cal. Civ. Code §1798.140 defines "sensitive personal information" -- 12 categories including SSN, financial account credentials, precise geolocation, race/ethnicity, religion, union membership, genetic/biometric/health data, and sex life/orientation. This signal's term list targets that definition.
-- **Signal B** (external sharing): §1798.140's definitions of "sell" and "share," and §1798.135's opt-out-of-sale/share requirement -- an externally shared file is the observable proxy this scan can check against those definitions.
+- **Signal B** (sharing exposure): §1798.140's definitions of "sell" and "share," and §1798.135's opt-out-of-sale/share requirement -- a file in a shared folder tree is the observable proxy this scan can check against those definitions.
 - **Signal C** (retention): §1798.100(a)(3) requires a business to disclose the retention period for each category of personal information it collects, and prohibits retaining it longer than reasonably necessary -- no fixed number is set, which is why this signal asks the user for their own disclosed policy.
 
 ## What this doesn't check
 
-Business-applicability threshold determination, ad-tech sale/sharing classification, and consumer-rights-request workflows require business context this scan doesn't have -- this covers the same observable slice as GDPR.
+Business-applicability threshold determination, ad-tech sale/sharing classification, and consumer-rights-request workflows require business context this scan doesn't have -- this covers the same observable slice as GDPR. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

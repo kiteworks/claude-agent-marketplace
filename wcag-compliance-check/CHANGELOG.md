@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.2 — 2026-09-14
+
+updated 2 file(s)
+
+- changed: skills/compliance-mapping/SKILL.md
+- changed: skills/folder-scan/SKILL.md
+
 ## 1.0.1 — 2026-09-09
 
 Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.

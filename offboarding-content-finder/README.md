@@ -1,6 +1,6 @@
 # Offboarding Content Finder
 
-`v0.5.4` · updated 2026-09-09
+`v0.5.5` · updated 2026-09-14
 
 Finds everything a departing or transferring employee owns across Kiteworks, and moves confirmed items to a holding folder for review.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.
+updated 1 file(s)
 
 ## Install
 

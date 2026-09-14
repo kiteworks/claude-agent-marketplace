@@ -1,6 +1,6 @@
 # Sharing Auditor
 
-`v1.0.5` · updated 2026-09-09
+`v1.1.0` · updated 2026-09-14
 
 Finds what's shared inside a Kiteworks folder so you can review who has access, and can save a report.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.
+added 1 file(s); updated 3 file(s)
 
 ## Install
 

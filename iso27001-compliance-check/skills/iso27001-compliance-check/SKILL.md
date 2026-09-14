@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Light -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `iso27001-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,11 +29,11 @@ Signals: **A, B**.
 Drawn directly from ISO/IEC 27001:2022's own Annex A control list (the 93-control, 4-theme structure published alongside the standard), not the third-party GRC skill library.
 
 - **Signal A** (sensitive-content exposure): A.5.12 (Classification of information) and A.5.13 (Labelling of information) govern how content like this should be marked; A.8.24 (Use of cryptography) governs how it should be protected once classified.
-- **Signal B** (external sharing): A.5.14 (Information transfer) is the control that directly names electronic, physical, and verbal transfer of information as in scope -- external sharing is exactly this control's subject.
+- **Signal B** (sharing exposure): A.5.14 (Information transfer) is the control that directly names electronic, physical, and verbal transfer of information as in scope -- sharing exposure is exactly this control's subject.
 
 ## What this doesn't check
 
-Nearly all of ISO 27001's substance -- risk assessment methodology, the Statement of Applicability, and the other 90+ Annex A controls covering HR security, physical security, supplier relationships, incident management, and business continuity -- has no file-content or sharing-state signature at all.
+Nearly all of ISO 27001's substance -- risk assessment methodology, the Statement of Applicability, and the other 90+ Annex A controls covering HR security, physical security, supplier relationships, incident management, and business continuity -- has no file-content or sharing-state signature at all. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.4 — 2026-09-14
+
+updated 1 file(s)
+
+- changed: skills/folder-scan/SKILL.md
+
 ## 0.2.3 — 2026-09-09
 
 Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.

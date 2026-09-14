@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Light -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `soc2-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,11 +29,11 @@ Signals: **A, B**.
 Drawn directly from the AICPA's 2017 Trust Services Criteria (as revised 2022), not the third-party GRC skill library.
 
 - **Signal A** (sensitive-content exposure): C1.1 (the entity identifies and maintains confidential information to meet its objectives) and C1.2 (the entity disposes of confidential information to meet its objectives, using encryption, access restriction, and secure deletion as example protection mechanisms).
-- **Signal B** (external sharing): CC6.1 (the entity implements logical access security measures to protect against unauthorized access) and CC6.6 (the entity implements controls to prevent or detect and act upon unauthorized network connections) -- external sharing sits squarely inside both.
+- **Signal B** (sharing exposure): CC6.1 (the entity implements logical access security measures to protect against unauthorized access) and CC6.6 (the entity implements controls to prevent or detect and act upon unauthorized network connections) -- sharing exposure sits squarely inside both.
 
 ## What this doesn't check
 
-SOC 2 is fundamentally an auditor's assessment of internal controls, evidenced through interviews, control testing, and system walkthroughs -- a file scan can speak to the Confidentiality and Privacy criteria's data-handling expectations at best, nothing about Security, Availability, Processing Integrity, or the audit process itself.
+SOC 2 is fundamentally an auditor's assessment of internal controls, evidenced through interviews, control testing, and system walkthroughs -- a file scan can speak to the Confidentiality and Privacy criteria's data-handling expectations at best, nothing about Security, Availability, Processing Integrity, or the audit process itself. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

@@ -1,14 +1,13 @@
 ---
 name: folder-scan
 description: >
-  Shared internal reference skill, not invoked by users directly. Other
-  preview skills in this plugin (retention-sweeper-preview,
-  storage-visualizer-preview, duplicate-finder-preview) read this file to
-  learn the standard, safe way to walk a Kiteworks folder tree and search
-  metadata. Read this before writing or modifying any preview skill in
-  this plugin.
+  Shared internal reference skill, not invoked by users directly. Every
+  skill in this plugin that walks or searches a Kiteworks folder tree
+  reads this file to learn the standard, safe, metadata-only way to do
+  it. Read this before writing or modifying any skill that calls
+  get_folder_children, get_top_folders, or search*.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # folder-scan — shared metadata-walk helper
@@ -31,7 +30,7 @@ Never scan blindly. Collect a folder (path or ID) or a search term from the user
 
 ## Walking a folder tree
 
-The single, correct mechanism for scanning a folder and everything beneath it is a bounded `get_folder_children` recursion — confirmed live and working (nested subfolders returned correctly with full metadata in one call per folder level). Every item it returns already carries `modified`, `created`, `isShared`, `creator`, and (for files) `fingerprint` — so date windows, sharing checks, and owner checks are all done by **filtering the walked results client-side**, not by pushing the filter to a search call. There is no server-side shortcut for a tree-wide date or term filter; don't design one in.
+The single, correct mechanism for scanning a folder and everything beneath it is a bounded `get_folder_children` recursion — confirmed live and working (nested subfolders returned correctly with full metadata in one call per folder level). Every item it returns carries `modified`, `created`, `creator`, `parentId`, `path`, `permalink`, and (for files) `fingerprint`. **`isShared` is present on folder records only, and only when true** (confirmed live 2026-09-14: file records never carry it, and folders in a private tree omit the key rather than sending `false`). A file's sharing state is its containing folder's state; plugins that judge sharing exposure bundle `../sharing-exposure/SKILL.md` and read it before any sharing-related check. So date windows, sharing checks, and owner checks are all done by **filtering the walked results client-side**, not by pushing the filter to a search call. There is no server-side shortcut for a tree-wide date or term filter; don't design one in.
 
 Bounded walk — do not exceed max_depth=25, max_pages=50, max_items=20000 for `get_folder_children` recursion. This is a best-effort walk, not guaranteed to reach every item. When any limit is hit, say so explicitly in the result: state how many folders/files were scanned, and present the result as partial coverage.
 
@@ -41,7 +40,7 @@ Call Kiteworks tools sequentially or in small batches (at most 5 in parallel) �
 
 Folder and file objects returned by `get_top_folders`/`get_folder_children`/`search*` already include useful signals without any extra call:
 
-- `isShared` (boolean) — whether the item is shared. Use this directly for any sharing-related check; do not rely on `search_filter: 'shared'` with an empty query (confirmed to return no results without a scoped term).
+- `isShared` (boolean, **folder records only, present only when true**) — whether the folder is shared with other users (a membership exists beyond the owner; also true for folders shared *to* you). Confirmed live 2026-09-14: the flag cascades, so every descendant folder of a shared folder reports `isShared: true`, and a private tree returns no key at all (treat absent as not shared). `search_folders` hits carry the same fact under the snake_case key `is_shared`. Use the flag directly; do not rely on `search_filter: 'shared'` with an empty query (confirmed to return no results without a scoped term). Never read a file's sharing state from a file record: files inherit their folder (see `../sharing-exposure/SKILL.md` where bundled).
 - `fingerprint` — a 32-char lowercase hex content checksum, or the literal string `"Generating..."` while the backend computes it asynchronously on fresh uploads/new versions. Never treat a `"Generating..."` file as fingerprint-matched; report it separately as unverified.
 - `avStatus` / `dlpStatus` — present on file objects (e.g. `"scanning"`, `"allowed"`). Useful for any content-safety-flavored check; don't assume every tenant surfaces these identically.
 - `expire` / `maxFileLifeTime` — folder lifecycle settings (0 = no expiry configured).
@@ -51,7 +50,7 @@ Folder and file objects returned by `get_top_folders`/`get_folder_children`/`sea
 
 ## Links
 
-`search` / `search_files` / `search_folders` results include a real `url` field directly (confirmed live, e.g. `https://content.kiteworks.com/web/file/<id>`) — use it as-is when an item came from one of those calls, don't reconstruct it. `get_folder_children` results do **not** include a `url` field, so for items obtained by walking, build the link from the tenant's configured web origin (`KW_WEB_BASE`) plus the object id: `<base>/web/file/<id>` or `<base>/web/folder/<id>`. Never infer an origin from a filename or path. If neither a returned `url` nor a configured origin is available, tell the user the item can be opened in Kiteworks but show no link — never emit a bare, relative, or guessed URL.
+`search` / `search_files` / `search_folders` results include a real `url` field directly (confirmed live, e.g. `https://content.kiteworks.com/web/file/<id>`) — use it as-is when an item came from one of those calls, don't reconstruct it. `get_folder_children` / `get_top_folders` records carry `links.web_url` and `permalink` (confirmed live 2026-09-14, of the form `https://<tenant>/w/f-<id>`); use either as-is. Only when a record carries neither, build the link from the tenant's configured web origin (`KW_WEB_BASE`) plus the object id: `<base>/web/file/<id>` or `<base>/web/folder/<id>`. Never infer an origin from a filename or path. If neither a returned `url` nor a configured origin is available, tell the user the item can be opened in Kiteworks but show no link — never emit a bare, relative, or guessed URL.
 
 ## Disclaimer
 

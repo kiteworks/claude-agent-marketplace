@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Light -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `fedramp-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,11 +29,11 @@ Signals: **A, B**. Signal A's default term list for this framework: "CUI", "FOUO
 FedRAMP does not maintain its own control catalog -- it adopts NIST SP 800-53 Rev 5 baselines directly (Moderate baseline: 304 controls; High baseline: 392 controls, per the May 2023 FedRAMP Rev 5 baseline release), so the applicable citations are the same NIST SP 800-53 controls as the dedicated `nist-800-53-compliance-check` skill, scoped to whichever baseline (Low/Moderate/High) the system is authorized at.
 
 - **Signal A** (sensitive-content exposure): AC-3 (Access Enforcement) and MP-6 (Media Sanitization), both present in the Moderate and High baselines.
-- **Signal B** (external sharing): AC-4 (Information Flow Enforcement) and SC-8 (Transmission Confidentiality and Integrity), both present in the Moderate and High baselines.
+- **Signal B** (sharing exposure): AC-4 (Information Flow Enforcement) and SC-8 (Transmission Confidentiality and Integrity), both present in the Moderate and High baselines.
 
 ## What this doesn't check
 
-The overwhelming majority of FedRAMP -- SSP authorship, POA&Ms, 3PAO assessment, continuous monitoring, cloud architecture review, OSCAL submission -- concerns a cloud service provider's own infrastructure and processes, not a customer's file-sharing folder.
+The overwhelming majority of FedRAMP -- SSP authorship, POA&Ms, 3PAO assessment, continuous monitoring, cloud architecture review, OSCAL submission -- concerns a cloud service provider's own infrastructure and processes, not a customer's file-sharing folder. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

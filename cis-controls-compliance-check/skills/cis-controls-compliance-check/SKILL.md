@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Light -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `cis-controls-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,11 +29,11 @@ Signals: **A, B**.
 Drawn directly from CIS Controls v8 (Center for Internet Security), not the third-party GRC skill library.
 
 - **Signal A** (sensitive-content exposure): Safeguard 3.1 (establish and maintain a data management process addressing sensitivity, ownership, handling, retention, and disposal) and Safeguard 3.3 (establish and maintain a data access control list) govern how sensitive content should be classified and gated.
-- **Signal B** (external sharing): Safeguard 3.11 (encrypt sensitive data in transit and at rest) is the direct match for a file leaving the organization's control.
+- **Signal B** (sharing exposure): Safeguard 3.11 (encrypt sensitive data in transit and at rest) is the direct match for a file leaving the organization's control.
 
 ## What this doesn't check
 
-Asset inventory, vulnerability management, and most of the 18 controls concern infrastructure and endpoint management this scan cannot see -- this speaks only to Control 3 (Data Protection)'s sharing/exposure angle.
+Asset inventory, vulnerability management, and most of the 18 controls concern infrastructure and endpoint management this scan cannot see -- this speaks only to Control 3 (Data Protection)'s sharing/exposure angle. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

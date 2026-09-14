@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Light -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `nist-800-53-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,11 +29,11 @@ Signals: **A, B**. Signal A's default term list for this framework: "CUI", "fede
 Drawn directly from NIST SP 800-53 Rev 5 (September 2020, with errata), not the third-party GRC skill library. Rev 5 has 1,196 controls and enhancements across 20 families.
 
 - **Signal A** (sensitive-content exposure): AC-3 (Access Enforcement) and MP-6 (Media Sanitization) are the closest family matches for CUI/PII-shaped content found at rest.
-- **Signal B** (external sharing): AC-4 (Information Flow Enforcement) and SC-8 (Transmission Confidentiality and Integrity) directly govern data leaving an authorized boundary.
+- **Signal B** (sharing exposure): AC-4 (Information Flow Enforcement) and SC-8 (Transmission Confidentiality and Integrity) directly govern data leaving an authorized boundary.
 
 ## What this doesn't check
 
-System categorisation, control tailoring, and SSP narrative authorship concern a federal system's whole control implementation, not one folder -- this only flags CUI/PII-shaped content and its sharing exposure, touching the Media Protection and Access Control families at the edges.
+System categorisation, control tailoring, and SSP narrative authorship concern a federal system's whole control implementation, not one folder -- this only flags CUI/PII-shaped content and its sharing exposure, touching the Media Protection and Access Control families at the edges. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

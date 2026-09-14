@@ -1,6 +1,6 @@
 # ISO 27701 Compliance Check
 
-`v1.0.1` · updated 2026-09-09
+`v1.1.0` · updated 2026-09-14
 
 Scans a Kiteworks folder for personal data, external sharing, and retention gaps under ISO 27701's privacy management scope, and saves a report.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.
+added 1 file(s); updated 3 file(s)
 
 ## Install
 
