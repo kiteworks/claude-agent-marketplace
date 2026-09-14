@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Strong -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `gdpr-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,12 +29,12 @@ Signals: **A, B, C, E (dormant)**. Signal A's default term list for this framewo
 Drawn directly from the official GDPR text (EUR-Lex / gdpr-info.eu), not the third-party GRC skill library.
 
 - **Signal A** (sensitive-content exposure): Art. 9 defines the special categories of personal data this signal's term list targets (health, biometric, racial/ethnic origin, religious/political belief, genetic data, sex life/orientation). Art. 5(1)(f) and Art. 32 (security of processing) govern the obligation to protect that content once found.
-- **Signal B** (external sharing): Art. 32 (security of processing, including access control) for any sharing; where a shared file crosses a border, Art. 44 (general principle for transfers -- permitted only where the conditions of Chapter V are met) is the relevant article, but see Signal E below for why this scan can't detect *where* a share goes today.
+- **Signal B** (sharing exposure): Art. 32 (security of processing, including access control) for any sharing; where a shared file crosses a border, Art. 44 (general principle for transfers -- permitted only where the conditions of Chapter V are met) is the relevant article, but see Signal E below for why this scan can't detect *where* a share goes today.
 - **Signal C** (retention): Art. 5(1)(e), storage limitation -- as stated above.
 
 ## What this doesn't check
 
-Lawful-basis determination, consent-mechanism validity, DPIAs, international-transfer safeguards, and breach-notification timelines all require legal and contextual judgment a file scan cannot make -- this only flags where personal data appears to live, whether it's shared externally, and whether it's older than the user's own stated retention policy.
+Lawful-basis determination, consent-mechanism validity, DPIAs, international-transfer safeguards, and breach-notification timelines all require legal and contextual judgment a file scan cannot make -- this only flags where personal data appears to live, whether it's in a shared folder tree, and whether it's older than the user's own stated retention policy. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Strong -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `lgpd-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,12 +29,12 @@ Signals: **A, B, C, E (dormant)**. Signal A's default term list for this framewo
 Drawn directly from the official LGPD text (Lei 13.709/2018, via planalto.gov.br; English mirror lgpd-brazil.info), not the third-party GRC skill library.
 
 - **Signal A** (sensitive-content exposure): Art. 5(II) defines "dado pessoal sensível" (sensitive personal data -- health, biometric, racial/ethnic origin, religious/political/philosophical belief, union membership, genetic data, sex life), the basis for this signal's term list. Art. 46 requires security and technical measures to protect personal data from unauthorized access and accidental or unlawful destruction, loss, alteration, communication, or dissemination.
-- **Signal B** (external sharing): Art. 46 again (protection against unauthorized "communication" -- i.e. disclosure); where a share crosses a border, Art. 33 lists the specific permitted cases for international transfer, but see Signal E below.
+- **Signal B** (sharing exposure): Art. 46 again (protection against unauthorized "communication" -- i.e. disclosure); where a share crosses a border, Art. 33 lists the specific permitted cases for international transfer, but see Signal E below.
 - **Signal C** (retention): Art. 16 -- personal data must be eliminated after the end of its processing, subject to four listed exceptions (legal obligation, anonymized research use, third-party transfer under LGPD's own rules, or the controller's own anonymized internal use).
 
 ## What this doesn't check
 
-Legal-basis analysis, RIPD impact reports, and the 3-working-day ANPD breach deadline require legal judgment this scan cannot make -- this covers the same observable slice as GDPR.
+Legal-basis analysis, RIPD impact reports, and the 3-working-day ANPD breach deadline require legal judgment this scan cannot make -- this covers the same observable slice as GDPR. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

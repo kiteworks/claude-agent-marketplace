@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Strong -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `dpdpa-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,12 +29,12 @@ Signals: **A, B, C, E (dormant)**. Signal A's default term list for this framewo
 Drawn directly from the Digital Personal Data Protection Act, 2023 and its 2025 Rules (via dpdpa.com's section-by-section mirror of the gazetted Act), not the third-party GRC skill library.
 
 - **Signal A** (sensitive-content exposure): Section 2(t) defines "personal data"; Section 8(5) (implemented via DPDP Rules 2025, Rule 6) requires "reasonable security safeguards" -- encryption/tokenisation, access controls, monitoring/logs, and backups -- for personal data a Data Fiduciary processes.
-- **Signal B** (external sharing): Section 8(5)/Rule 6's access-control obligations extend to any Data Processor a Data Fiduciary shares data with. Cross-border transfer itself is addressed in Section 16, which uses a blacklist model (transfer is permitted except to countries the Central Government specifically restricts by notification) -- see Signal E above for why this scan can't check destination today.
+- **Signal B** (sharing exposure): Section 8(5)/Rule 6's access-control obligations extend to any Data Processor a Data Fiduciary shares data with. Cross-border transfer itself is addressed in Section 16, which uses a blacklist model (transfer is permitted except to countries the Central Government specifically restricts by notification) -- see Signal E above for why this scan can't check destination today.
 - **Signal C** (retention): Section 8(7) -- a Data Fiduciary must erase personal data upon consent withdrawal, or as soon as it's reasonable to assume the specified purpose is no longer being served (deemed, per Section 8(8), after a prescribed period of Data Principal inactivity), unless retention is required by another law.
 
 ## What this doesn't check
 
-Consent-mechanism validity, Significant Data Fiduciary obligations, and breach-notification timelines require legal judgment this scan cannot make -- this covers the same observable slice as GDPR.
+Consent-mechanism validity, Significant Data Fiduciary obligations, and breach-notification timelines require legal judgment this scan cannot make -- this covers the same observable slice as GDPR. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

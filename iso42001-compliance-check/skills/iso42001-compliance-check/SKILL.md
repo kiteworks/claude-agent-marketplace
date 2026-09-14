@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Light -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.4.3"
+  version: "0.4.4"
 ---
 
 Delegate to the `iso42001-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -30,11 +30,11 @@ Partial -- improved this pass to specific control numbers and titles, but still 
 
 This pass narrows the citation further within the **A.7 "Data for AI systems"** objective, the one that maps most directly to this skill's term list ("training data", "model weights", "algorithm"). Multiple independent certification-body/compliance-tooling sources (ISMS.online, Cyvitrix, Mindset Cyber) consistently identify the same control numbers and titles: **A.7.2** "Data for development and enhancement of AI systems," **A.7.3** "Acquisition of data," **A.7.4** "Quality of data for AI systems," and **A.7.5** "Data provenance." Control *titles* being corroborated across independent sources this way is the same level of confidence this project already extends to ISO 27001's Annex A titles elsewhere in this family -- but the operative clause *text* (what each control actually requires an organization to do) remains behind ISO's paywall, so this is a naming-level improvement, not a full-text citation. Closing that last step still requires purchasing the standard or securing access through a licensed party (the same wall documented for ISO 27701 in the Strong tier).
 
-- **Signal A/B**: maps to the A.7.2-A.7.5 cluster above -- content in scope (training data descriptions, model weights, algorithm documentation) sits squarely within "data for AI systems," and a flagged file being shared externally intersects the same objective from an access-control angle, not a separate control.
+- **Signal A/B**: maps to the A.7.2-A.7.5 cluster above -- content in scope (training data descriptions, model weights, algorithm documentation) sits squarely within "data for AI systems," and a flagged file being in a shared folder tree intersects the same objective from an access-control angle, not a separate control.
 
 ## What this doesn't check
 
-The formal AIMS certification process, the Statement of Applicability, and the AI System Impact Assessment (Clauses 6.1.2/6.1.4) require an accredited certification body and organizational risk-assessment work this scan cannot substitute for -- this only flags AI-development-related content (training data, model weights, algorithm documentation) that's externally shared or matches the term list, not conformance to the other 33 Annex A controls outside the A.7 cluster.
+The formal AIMS certification process, the Statement of Applicability, and the AI System Impact Assessment (Clauses 6.1.2/6.1.4) require an accredited certification body and organizational risk-assessment work this scan cannot substitute for -- this only flags AI-development-related content (training data, model weights, algorithm documentation) that's in a shared folder tree or matches the term list, not conformance to the other 33 Annex A controls outside the A.7 cluster. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

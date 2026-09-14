@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Strong -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `hipaa-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -29,17 +29,17 @@ Signals: **A, B, C**. Signal A's default term list for this framework: "PHI", "e
 Drawn directly from the HIPAA Security Rule text at 45 CFR Part 164 (via eCFR), not the third-party GRC skill library.
 
 - **Signal A** (PHI-shaped content exposure): 45 CFR §164.312(a)(1), the Access Control technical safeguard -- ePHI access must be restricted to authorized users. This signal flags where PHI-shaped content sits before that control can even be evaluated.
-- **Signal B** (external sharing): 45 CFR §164.312(e)(1), Transmission Security -- guards against unauthorized access to ePHI transmitted over a network. An externally shared file with PHI-shaped content is the observable proxy for this control's concern.
+- **Signal B** (sharing exposure): 45 CFR §164.312(e)(1), Transmission Security -- guards against unauthorized access to ePHI transmitted over a network. A file in a shared folder tree with PHI-shaped content is the observable proxy for this control's concern.
 - **Signal C** (retention): 45 CFR §164.316(b)(2)(i) -- required documentation must be retained 6 years from the date of creation or the date it last was in effect, whichever is later.
 
 ## What this doesn't check
 
-Technical/administrative/physical safeguard implementation, Business Associate Agreements, breach risk-assessment, and workforce training are entirely outside what content, sharing, and age can reveal -- this only flags where PHI-shaped content appears to live, is shared externally, or has aged past the documentation-retention window.
+Technical/administrative/physical safeguard implementation, Business Associate Agreements, breach risk-assessment, and workforce training are entirely outside what content, sharing, and age can reveal -- this only flags where PHI-shaped content appears to live, is in a shared folder tree, or has aged past the documentation-retention window. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 
 - Complete a formal HIPAA Security Risk Analysis (45 CFR §164.308(a)(1)) -- this scan is not a substitute for one.
-- Verify Business Associate Agreements are in place for any external party a flagged file was shared with.
+- Verify Business Associate Agreements are in place for any party a flagged file was shared with.
 - Confirm workforce training covers the specific PHI-handling gaps this scan surfaced.
 
 ## Source

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.0 — 2026-09-14
+
+added 1 file(s); updated 3 file(s)
+
+- added: skills/sharing-exposure/SKILL.md
+- changed: agents/sharing-auditor.md
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/sharing-auditor/SKILL.md
+
 ## 1.0.5 — 2026-09-09
 
 Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.

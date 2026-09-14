@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.0 — 2026-09-14
+
+added 1 file(s); updated 3 file(s)
+
+- added: skills/sharing-exposure/SKILL.md
+- changed: skills/cis-controls-compliance-check/SKILL.md
+- changed: skills/compliance-mapping/SKILL.md
+- changed: skills/folder-scan/SKILL.md
+
 ## 1.0.1 — 2026-09-09
 
 Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.

@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Light -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.4.3"
+  version: "0.4.4"
 ---
 
 Delegate to the `nzism-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -32,7 +32,7 @@ Fully confirmed this pass, down to specific CIDs. Drawn from the New Zealand Inf
 
 ## What this doesn't check
 
-Certification & Accreditation, the 18+ control sections, and system-authorisation sign-off concern infrastructure this scan cannot see -- this only flags classification-marked content that's externally shared.
+Certification & Accreditation, the 18+ control sections, and system-authorisation sign-off concern infrastructure this scan cannot see -- this only flags classification-marked content that's in a shared folder tree. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

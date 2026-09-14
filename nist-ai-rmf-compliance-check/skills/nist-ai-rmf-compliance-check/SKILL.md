@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Light -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.4.3"
+  version: "0.4.4"
 ---
 
 Delegate to the `nist-ai-rmf-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -32,7 +32,7 @@ Fully confirmed this pass, down to a specific subcategory. Drawn from NIST AI 10
 
 ## What this doesn't check
 
-AI trustworthiness evaluation (bias, explainability, robustness) requires access to the model itself, not just documents about it -- this only flags AI-related documents that are externally shared or contain personal data.
+AI trustworthiness evaluation (bias, explainability, robustness) requires access to the model itself, not just documents about it -- this only flags AI-related documents that are in a shared folder tree or contain personal data. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

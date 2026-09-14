@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Good -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `ear-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -34,7 +34,7 @@ Drawn directly from 15 CFR Parts 734 and 736 (via eCFR and bis.gov), not the thi
 
 ## What this doesn't check
 
-ECCN classification, licence-exception analysis, and restricted-party screening require legal determination this scan cannot make -- this only flags where export-controlled technology descriptions appear to live or be shared, similar to the ITAR check.
+ECCN classification, licence-exception analysis, and restricted-party screening require legal determination this scan cannot make -- this only flags where export-controlled technology descriptions appear to live or be shared, similar to the ITAR check. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

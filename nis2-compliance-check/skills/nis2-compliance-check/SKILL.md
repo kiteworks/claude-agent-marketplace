@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Light -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `nis2-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -28,11 +28,11 @@ Signals: **B**.
 
 Drawn directly from Directive (EU) 2022/2555 (EUR-Lex), not the third-party GRC skill library.
 
-- **Signal B** (external sharing): Art. 21(2) lists 10 minimum risk-management measures essential/important entities must implement, including access control policies and cryptography/encryption use -- an externally-shared file is exactly the kind of event those measures exist to govern. Where a flagged file's exposure looks like it could itself be a "significant incident," Art. 23 sets the reporting clock: an early warning within 24 hours of becoming aware, a full notification within 72 hours, and a final report within one month.
+- **Signal B** (sharing exposure): Art. 21(2) lists 10 minimum risk-management measures essential/important entities must implement, including access control policies and cryptography/encryption use -- a file in a shared folder tree is exactly the kind of event those measures exist to govern. Where a flagged file's exposure looks like it could itself be a "significant incident," Art. 23 sets the reporting clock: an early warning within 24 hours of becoming aware, a full notification within 72 hours, and a final report within one month.
 
 ## What this doesn't check
 
-Entity classification, the 10 Art. 21 risk-management measures, and the 24h/72h/1-month incident-reporting workflow are all outside file-scan visibility -- this speaks only to external sharing of any flagged documentation.
+Entity classification, the 10 Art. 21 risk-management measures, and the 24h/72h/1-month incident-reporting workflow are all outside file-scan visibility -- this speaks only to sharing exposure of any flagged documentation. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

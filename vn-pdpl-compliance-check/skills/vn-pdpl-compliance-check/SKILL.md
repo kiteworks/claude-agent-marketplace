@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Strong -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.4.3"
+  version: "0.4.4"
 ---
 
 Delegate to the `vn-pdpl-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -28,14 +28,14 @@ Signals: **A, B, C, E (dormant)**. Signal A's default term list for this framewo
 
 Drawn from Vietnam's Law No. 91/2025/QH15 on Personal Data Protection, effective 1 January 2026 -- official English translation via english.luatvietnam.vn, LuatVietnam being the sole authorized distributor of Official Gazette English translations published by the Vietnam News Agency. This pass closes the citation gap the previous research left open: the general security-measure and retention obligations turned out to sit in Chapter I's principles article, not Chapter III as originally guessed.
 
-- **Signal B** (external sharing / cross-border): Article 20 ("Cross-border transfer of personal data") defines cross-border transfer and the scenarios that qualify, plus the impact-assessment and periodic-inspection regime around it -- confirmed and citable to the article level.
+- **Signal B** (sharing exposure / cross-border): Article 20 ("Cross-border transfer of personal data") defines cross-border transfer and the scenarios that qualify, plus the impact-assessment and periodic-inspection regime around it -- confirmed and citable to the article level.
 - **Signal A** (general security measures): Article 3, Clause 4 ("Principles of personal data protection") requires agencies, organizations and individuals "to synchronously and effectively implement appropriate institutional, technical and human resource-related measures and solutions to protect personal data" -- this is the general security-measure obligation Signal A's content scan reflects, now confirmed to a specific clause.
 - **Signal C** (retention): Article 3, Clause 3 requires data holders "to ensure the accuracy of personal data ... to store personal data for a period appropriate to the purpose of personal data processing, unless otherwise prescribed by law" -- confirmed to a specific clause. This is a purpose-based retention principle rather than a fixed figure, so this skill still asks the user for their own retention threshold rather than inventing a number -- the honest caveat about "no universal fixed number" still applies, but the citation itself is no longer a gap.
 - **Correction from the prior research pass:** Chapter III of the Law ("Forces and Conditions to Ensure Personal Data Protection", Articles 33+) turned out, on a full read of the statute text, to cover designated personnel and the regulator -- not general security obligations. Those obligations sit in Chapter I (Article 3) instead. Noted here so a future pass doesn't re-search Chapter III for something that isn't there.
 
 ## What this doesn't check
 
-Cross-border transfer impact assessments, DPIAs, and breach-notification timelines require legal and contextual judgment a file scan cannot make -- this only flags where personal data appears to live, whether it's shared externally, and whether it's older than the user's own stated retention policy. This covers the same observable slice as GDPR's storage-limitation and exposure concerns.
+Cross-border transfer impact assessments, DPIAs, and breach-notification timelines require legal and contextual judgment a file scan cannot make -- this only flags where personal data appears to live, whether it's in a shared folder tree, and whether it's older than the user's own stated retention policy. This covers the same observable slice as GDPR's storage-limitation and exposure concerns. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

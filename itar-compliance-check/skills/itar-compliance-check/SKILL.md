@@ -7,7 +7,7 @@ description: >
   to ask for. Fit tier: Good -- see below for what this can and can't
   actually check.
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
 ---
 
 Delegate to the `itar-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
@@ -34,7 +34,7 @@ Drawn directly from 22 CFR Part 120 (via eCFR), not the third-party GRC skill li
 
 ## What this doesn't check
 
-USML jurisdiction analysis, DDTC registration, export licensing, and Technology Control Plans require legal determination this scan cannot make -- this only flags where ITAR-related technical data appears to live or be shared, including with parties outside the organization, which is the file-sharing analogue of a deemed-export risk.
+USML jurisdiction analysis, DDTC registration, export licensing, and Technology Control Plans require legal determination this scan cannot make -- this only flags where ITAR-related technical data appears to live or sit in a shared folder tree (the file-sharing analogue of a deemed-export risk, although this scan cannot tell whether a share reaches parties outside the organization). It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 

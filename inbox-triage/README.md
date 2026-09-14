@@ -1,6 +1,6 @@
 # Inbox Triage
 
-`v0.5.4` · updated 2026-09-09
+`v0.5.5` · updated 2026-09-14
 
 Sorts files sitting in a Kiteworks inbox or uploads folder into the right project folders, and moves them once you approve the matches.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.
+updated 1 file(s)
 
 ## Install
 
