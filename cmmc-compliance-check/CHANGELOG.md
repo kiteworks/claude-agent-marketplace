@@ -2,7 +2,7 @@
 
 ## 1.1.0 — 2026-09-14
 
-added 1 file(s); updated 3 file(s)
+added 1 file(s); updated 3 file(s) <!-- whats-new: consolidated -->
 
 - added: skills/sharing-exposure/SKILL.md
 - changed: skills/cmmc-compliance-check/SKILL.md

@@ -2,7 +2,7 @@
 
 ## 1.0.2 — 2026-09-14
 
-updated 2 file(s)
+updated 2 file(s) <!-- whats-new: consolidated -->
 
 - changed: skills/compliance-mapping/SKILL.md
 - changed: skills/folder-scan/SKILL.md
