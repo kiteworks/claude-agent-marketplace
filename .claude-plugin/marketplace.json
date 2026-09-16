@@ -74,6 +74,8 @@
       "homepage": "https://kiteworks.com",
       "license": "Apache-2.0",
       "keywords": [
+        "cmmc",
+        "nist-800-171",
         "compliance"
       ],
       "category": "compliance"
@@ -244,6 +246,7 @@
       "homepage": "https://kiteworks.com",
       "license": "Apache-2.0",
       "keywords": [
+        "gdpr",
         "compliance"
       ],
       "category": "compliance"
@@ -261,6 +264,7 @@
       "homepage": "https://kiteworks.com",
       "license": "Apache-2.0",
       "keywords": [
+        "hipaa",
         "compliance"
       ],
       "category": "compliance"
@@ -346,6 +350,7 @@
       "homepage": "https://kiteworks.com",
       "license": "Apache-2.0",
       "keywords": [
+        "iso-27001",
         "compliance"
       ],
       "category": "compliance"
@@ -465,6 +470,7 @@
       "homepage": "https://kiteworks.com",
       "license": "Apache-2.0",
       "keywords": [
+        "nist-800-53",
         "compliance"
       ],
       "category": "compliance"
@@ -550,6 +556,7 @@
       "homepage": "https://kiteworks.com",
       "license": "Apache-2.0",
       "keywords": [
+        "pci-dss",
         "compliance"
       ],
       "category": "compliance"
@@ -652,6 +659,7 @@
       "homepage": "https://kiteworks.com",
       "license": "Apache-2.0",
       "keywords": [
+        "soc-2",
         "compliance"
       ],
       "category": "compliance"

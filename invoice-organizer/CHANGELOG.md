@@ -2,7 +2,7 @@
 
 ## 0.5.4 — 2026-09-14
 
-updated 1 file(s)
+updated 1 file(s) <!-- whats-new: consolidated -->
 
 - changed: skills/folder-scan/SKILL.md
 
