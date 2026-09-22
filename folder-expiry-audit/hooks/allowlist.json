@@ -1,0 +1,9 @@
+{
+  "folder-expiry-audit": {
+    "kiteworks": [
+      "get_folder_children",
+      "get_top_folders",
+      "search_folders"
+    ]
+  }
+}

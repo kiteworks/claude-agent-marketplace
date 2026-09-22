@@ -1,0 +1,8 @@
+{
+  "intake-form-builder": {
+    "kiteworks": [
+      "get_create_form_schema",
+      "create_form"
+    ]
+  }
+}

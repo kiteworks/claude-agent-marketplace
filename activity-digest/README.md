@@ -1,6 +1,6 @@
 # Activity Digest
 
-`v1.0.6` · updated 2026-09-14
+`v1.1.0` · updated 2026-09-20
 
 Summarizes what's new or changed in a Kiteworks folder over a time window, and can save a report.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-updated 1 file(s)
+Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection
 
 ## Install
 

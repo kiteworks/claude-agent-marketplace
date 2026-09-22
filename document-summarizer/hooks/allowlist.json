@@ -1,0 +1,15 @@
+{
+  "document-summarizer": {
+    "kiteworks": [
+      "search_files",
+      "search",
+      "get_file_metadata",
+      "read_file_contents",
+      "download_file_to_path",
+      "create_file_from_content",
+      "upload_file_from_path",
+      "create_folder",
+      "get_user_info_whoami"
+    ]
+  }
+}

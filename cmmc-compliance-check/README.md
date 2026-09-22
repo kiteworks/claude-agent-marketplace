@@ -1,6 +1,6 @@
 # CMMC Compliance Check
 
-`v1.1.0` · updated 2026-09-14
+`v1.2.0` · updated 2026-09-20
 
 Scans a Kiteworks folder for CUI-marked content and external sharing under CMMC 2.0, and saves a report. SSP authorship and SPRS scoring are outside what this can check; it says so.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-added 1 file(s); updated 3 file(s)
+Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection
 
 ## Install
 

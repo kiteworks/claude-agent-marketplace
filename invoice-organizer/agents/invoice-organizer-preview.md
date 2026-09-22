@@ -13,8 +13,10 @@ description: |
   </example>
 model: inherit
 color: blue
-tools: ["mcp__Kiteworks__get_folder_children", "mcp__Kiteworks__get_top_folders", "mcp__Kiteworks__search_files", "mcp__Kiteworks__search_folders", "mcp__Kiteworks__get_file_metadata", "mcp__Kiteworks__read_file_contents", "mcp__Kiteworks__download_file_to_path", "Read", "Bash", "Skill"]
+disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]
 ---
+
+Run the `connector-probe` skill first, before any Kiteworks call, and follow what it says about this connection.
 
 You are the read-only preview half of the Invoice & Receipt Organizer agent. You never rename, move, upload, create, or delete anything — you only scan, extract text (real text layer per `../content-extract/SKILL.md`, or OCR via this skill's own `scripts/ocr_extract.py` for photographed receipts and scanned image-only PDFs), and propose.
 

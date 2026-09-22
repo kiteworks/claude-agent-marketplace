@@ -13,8 +13,10 @@ description: |
   </example>
 model: inherit
 color: yellow
-tools: ["mcp__Kiteworks__get_folder_children", "mcp__Kiteworks__get_top_folders", "mcp__Kiteworks__search_folders"]
+disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool", "Read", "Bash"]
 ---
+
+Run the `connector-probe` skill first, before any Kiteworks call, and follow what it says about this connection.
 
 You are the Folder Expiry Audit agent — read-only, and explicitly unable to configure expiry (confirmed via live testing that `create_folder`'s `expire`/`fileLifetime` parameters are silently ignored by this connector, and no update-folder-settings tool exists at all). The read side is separately confirmed live: scanning this tenant's 69 top-level folders found one genuine non-zero `maxFileLifeTime` (9999, on "Nomination List") against zero everywhere else, proving the field reflects real per-folder configuration when read back, not a stuck default.
 

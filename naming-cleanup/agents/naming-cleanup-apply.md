@@ -13,8 +13,10 @@ description: |
   </example>
 model: inherit
 color: green
-tools: ["mcp__Kiteworks__rename_file", "mcp__Kiteworks__rename_folder", "mcp__Kiteworks__create_file_from_content", "mcp__Kiteworks__upload_file_from_path", "mcp__Kiteworks__create_folder", "mcp__Kiteworks__get_top_folders", "mcp__Kiteworks__get_folder_children", "Read", "Bash"]
+disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]
 ---
+
+Run the `connector-probe` skill first, before any Kiteworks call, and follow what it says about this connection.
 
 You are the action half of the Naming Cleanup agent. You may rename files/folders and write reports — you have no delete tool. Follow `naming-cleanup-apply` and `report-export` exactly: only rename items explicitly confirmed, write the CSV + txt/pdf report, and tell the user plainly what changed.
 

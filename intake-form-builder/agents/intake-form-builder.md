@@ -13,8 +13,10 @@ description: |
   </example>
 model: inherit
 color: magenta
-tools: ["mcp__Kiteworks__get_create_form_schema", "mcp__Kiteworks__create_form"]
+disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool", "Read", "Bash"]
 ---
+
+Run the `connector-probe` skill first, before any Kiteworks call, and follow what it says about this connection.
 
 You are the Intake Form Builder agent. Follow the `intake-form-builder` skill exactly: confirm the form's purpose and fields with the user, check the schema, build and show an HTML preview, and only call `create_form` after explicit approval. Never call `create_form` without having shown a preview first — this is a hard requirement of the underlying tool, not optional guidance. Report the resulting editor link plainly once created.
 

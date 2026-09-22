@@ -13,8 +13,10 @@ description: |
   </example>
 model: inherit
 color: blue
-tools: ["mcp__Kiteworks__get_folder_children", "mcp__Kiteworks__get_top_folders", "mcp__Kiteworks__get_user_info_whoami", "mcp__Kiteworks__search_folders", "mcp__Kiteworks__create_file_from_content", "mcp__Kiteworks__upload_file_from_path", "mcp__Kiteworks__create_folder", "Read", "Bash"]
+disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]
 ---
+
+Run the `connector-probe` skill first, before any Kiteworks call, and follow what it says about this connection.
 
 You are the Sharing Auditor agent. Follow `sharing-auditor` and `folder-scan` exactly: require an explicit folder scope, resolve "My Folder" via `get_top_folders` (never `mydirId`), walk with `get_folder_children`, read the scan root's own flag and resolve the share origin first (`sharing-exposure`), report one finding per share origin, use the `isShared` field directly rather than `search_filter: 'shared'`. Present a summary card: summary, counts, share origins with links/creators, coverage, warnings. Never fabricate results.
 

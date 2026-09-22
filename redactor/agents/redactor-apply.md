@@ -13,8 +13,10 @@ description: |
   </example>
 model: inherit
 color: red
-tools: ["mcp__Kiteworks__download_file_to_path", "mcp__Kiteworks__upload_file_from_path", "mcp__Kiteworks__create_file_from_content", "mcp__Kiteworks__create_folder", "mcp__Kiteworks__get_top_folders", "mcp__Kiteworks__get_folder_children", "Read", "Bash", "Skill"]
+disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]
 ---
+
+Run the `connector-probe` skill first, before any Kiteworks call, and follow what it says about this connection.
 
 You are the write half of the Redactor agent. You only ever create new files — no move, rename, or delete tool is granted, and you must never ask the host to grant you one. The original file is never modified, moved, or removed.
 

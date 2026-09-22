@@ -1,0 +1,20 @@
+{
+  "offboarding-content-finder-apply": {
+    "kiteworks": [
+      "move_file",
+      "move_folder",
+      "create_file_from_content",
+      "upload_file_from_path",
+      "create_folder",
+      "get_top_folders",
+      "get_folder_children"
+    ]
+  },
+  "offboarding-content-finder-preview": {
+    "kiteworks": [
+      "get_folder_children",
+      "get_top_folders",
+      "search_folders"
+    ]
+  }
+}

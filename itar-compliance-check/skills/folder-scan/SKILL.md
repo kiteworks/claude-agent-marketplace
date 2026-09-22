@@ -14,7 +14,7 @@ metadata:
 
 Read `../surface-gate/SKILL.md` first. **This skill is Tier B** (per that file): if subagent isolation isn't available on this surface, disclose that once per the standard wording and proceed directly — nothing in this skill needs local file access, so it is never Tier C.
 
-Use the `Kiteworks` connector for every call in this skill. This is a read-only, metadata-only pattern: never call `delete_file`, `delete_folder`, `download_file_to_path`, `move_file`, `move_folder`, `read_file_contents`, `upload_file_from_path`, `rename_file`, `rename_folder`, `create_file_from_content`, or `create_folder` from a preview skill. Preview subagents should only be granted `get_folder_children`, `get_top_folders`, `get_user_info_whoami`, `search`, `search_files`, `search_folders` as tools.
+Use the resolved Kiteworks connector (see the `connector-probe` skill) for every call in this skill. This is a read-only, metadata-only pattern: never call `delete_file`, `delete_folder`, `download_file_to_path`, `move_file`, `move_folder`, `read_file_contents`, `upload_file_from_path`, `rename_file`, `rename_folder`, `create_file_from_content`, or `create_folder` from a preview skill. Preview subagents should only be granted `get_folder_children`, `get_top_folders`, `get_user_info_whoami`, `search`, `search_files`, `search_folders` as tools.
 
 ## Resolving folders — a confirmed gotcha
 

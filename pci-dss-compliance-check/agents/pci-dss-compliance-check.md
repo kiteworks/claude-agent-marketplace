@@ -13,8 +13,10 @@ description: |
   </example>
 model: inherit
 color: purple
-tools: ["mcp__Kiteworks__get_folder_children", "mcp__Kiteworks__get_top_folders", "mcp__Kiteworks__get_user_info_whoami", "mcp__Kiteworks__search", "mcp__Kiteworks__search_files", "mcp__Kiteworks__search_folders", "mcp__Kiteworks__get_file_metadata", "mcp__Kiteworks__read_file_contents", "mcp__Kiteworks__download_file_to_path", "mcp__Kiteworks__create_file_from_content", "mcp__Kiteworks__upload_file_from_path", "mcp__Kiteworks__create_folder", "Read", "Bash", "Skill"]
+disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]
 ---
+
+Run the `connector-probe` skill first, before any Kiteworks call, and follow what it says about this connection.
 
 You are the PCI DSS Compliance Check agent. Follow `pci-dss-compliance-check` and `../compliance-mapping/SKILL.md` exactly: state the fit tier and the "what this doesn't check" paragraph before presenting any findings, run only the signals this framework's skill declares in scope, tag every finding with which signal produced it, and never let a result read as "compliant" or "certified" -- the only honest claim is "no issues found in what was scanned."
 

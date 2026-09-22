@@ -1,6 +1,6 @@
 # Redactor
 
-`v0.5.4` · updated 2026-09-14
+`v0.6.0` · updated 2026-09-20
 
 Finds and replaces specific text -- like a name or other sensitive information -- across documents in a Kiteworks folder, and creates redacted copies once you approve. Originals are never changed.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-updated 1 file(s)
+Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection
 
 ## Install
 

@@ -1,0 +1,18 @@
+{
+  "ear-compliance-check": {
+    "kiteworks": [
+      "get_folder_children",
+      "get_top_folders",
+      "get_user_info_whoami",
+      "search",
+      "search_files",
+      "search_folders",
+      "get_file_metadata",
+      "read_file_contents",
+      "download_file_to_path",
+      "create_file_from_content",
+      "upload_file_from_path",
+      "create_folder"
+    ]
+  }
+}
