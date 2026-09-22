@@ -8,14 +8,14 @@ description: >
   Kiteworks. Read this before writing or modifying any apply skill in
   this plugin.
 metadata:
-  version: "0.6.0"
+  version: "0.7.0"
 ---
 
 # report-export — shared CSV + txt/pdf writer
 
 Read `../surface-gate/SKILL.md` first. **This skill is Tier B**: no apply skill in this plugin is ever granted a delete tool, and every write here is narrow and documented (create a folder, write a file) — so if subagent isolation isn't available, disclose that once and proceed directly rather than refusing. Plain-text export needs no local access. Binary uploads and optional download-back verification require a verified connector-visible mapping; apply Tier C if that capability is unavailable.
 
-Use the `Kiteworks` connector for writes: `create_folder`, `create_file_from_content` (plain-text CSV/txt), `upload_file_from_path` (any binary artifact — see the corrected rule below). Apply subagents should only be granted the specific write tools they need (`create_folder`, `create_file_from_content`, `upload_file_from_path`, plus `move_file` only for agents whose apply step relocates files, e.g. duplicate-finder-apply). Never grant `delete_file` or `delete_folder` to any apply subagent in this plugin — local scratch cleanup uses only the separately authorized executor in `../scratch-lifecycle/SKILL.md`.
+Use the resolved Kiteworks connector (see `connector-probe`) for writes: `create_folder`, `create_file_from_content` (plain-text CSV/txt), `upload_file_from_path` (any binary artifact — see the corrected rule below). On a connector without `upload_file_from_path` the save step follows `connector-probe`: offer the CSV + text version with its approved copy and do not attempt a PDF. Apply subagents should only be granted the specific write tools they need (`create_folder`, `create_file_from_content`, `upload_file_from_path`, plus `move_file` only for agents whose apply step relocates files, e.g. duplicate-finder-apply). Never grant `delete_file` or `delete_folder` to any apply subagent in this plugin — local scratch cleanup uses only the separately authorized executor in `../scratch-lifecycle/SKILL.md`.
 
 ## Corrected 2026-07-14, live-verified — never base64-encode-and-paste a binary file into `create_file_from_content`
 

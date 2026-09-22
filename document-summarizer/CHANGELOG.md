@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.6.0 — 2026-09-20
+
+Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection <!-- whats-new: consolidated -->
+
+- added: hooks/allowlist.json
+- added: hooks/hooks.json
+- added: hooks/kw-allowlist.sh
+- added: skills/connector-probe/SKILL.md
+- changed: agents/document-summarizer.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/kw-pdf-report/SKILL.md
+- changed: skills/report-export/SKILL.md
+
 ## 0.5.3 — 2026-09-09
 
 Own temporary document artifacts, honor cleanup permissions, and report residual files accurately.

@@ -7,10 +7,12 @@ description: >
   or modifying report-export's PDF generation step, or any skill that
   builds a table inside a PDF.
 metadata:
-  version: "0.5.0"
+  version: "0.6.0"
 ---
 
 # kw-pdf-report — shared branded PDF builder
+
+The branded PDF requires `upload_file_from_path` on the resolved Kiteworks connector; when `connector-probe` reports it missing, do not attempt the PDF and use the report-export CSV + text path.
 
 This skill's token table below is self-contained — it works standalone even where `kw-brand-visual` isn't installed, which matters since this plugin ships and installs independently of that skill. `kw-brand-visual` (a separate, marketing-owned skill, not bundled in this plugin) is the canonical source if you ever want to double-check a token value is still current; if it happens to be installed in the same environment, cross-check there directly by name, but never reference it via a `../<name>/SKILL.md`-style relative path — this plugin's build script auto-vendors anything referenced that way, and `kw-brand-visual` isn't part of this plugin's source tree to vendor. This skill adapts those tokens for a printed, light-background report rather than the dark web/deck canvas they were designed for.
 

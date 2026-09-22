@@ -4,7 +4,7 @@ description: >
   Shared internal reference for bounded retrieval of real Kiteworks content.
   Read before binary extraction, OCR, redaction, or accessibility analysis.
 metadata:
-  version: "0.4.0"
+  version: "0.5.0"
 ---
 
 # content-extract â€” one owned scratch lifecycle
@@ -23,8 +23,12 @@ extracted or partial text, parser intermediate, OCR image, and verification copy
 Text files (txt, csv, json, xml, md, log): use `read_file_contents` with the file
 ID; check metadata/size first. No local download is needed.
 
-Binary files: verify the download executor's device, authorized host folder,
-readable host/sandbox mapping and working format parser before downloading.
+Binary files: `connector-probe` decides first. Without `download_file_to_path`
+on the resolved Kiteworks connector, binaries are metadata-only: list them by
+name, size, owner and sharing, label them "not content-checked", and skip the
+rest of this section. Otherwise verify the download executor's device,
+authorized host folder, readable host/sandbox mapping and working format
+parser before downloading.
 Check AV/DLP status; do not process blocked files. A shell in a Chat sandbox or
 Cowork VM does not prove access to a connector's host path. Chat may have code/file
 creation; missing hooks/subagents does not mean parsing is unavailable.

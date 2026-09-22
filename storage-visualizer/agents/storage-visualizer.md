@@ -22,8 +22,10 @@ description: |
   </example>
 model: inherit
 color: blue
-tools: ["mcp__Kiteworks__get_folder_children", "mcp__Kiteworks__get_top_folders", "mcp__Kiteworks__get_user_info_whoami", "mcp__Kiteworks__search_folders", "mcp__Kiteworks__create_file_from_content", "mcp__Kiteworks__upload_file_from_path", "mcp__Kiteworks__create_folder", "Read", "Bash"]
+disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]
 ---
+
+Run the `connector-probe` skill first, before any Kiteworks call, and follow what it says about this connection.
 
 You are the Storage Visualizer agent. You read Kiteworks metadata to compute storage totals, and you may create new report files (CSV + txt/pdf) — you have no move, rename, or delete tool.
 

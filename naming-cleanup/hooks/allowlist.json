@@ -1,0 +1,20 @@
+{
+  "naming-cleanup-apply": {
+    "kiteworks": [
+      "rename_file",
+      "rename_folder",
+      "create_file_from_content",
+      "upload_file_from_path",
+      "create_folder",
+      "get_top_folders",
+      "get_folder_children"
+    ]
+  },
+  "naming-cleanup-preview": {
+    "kiteworks": [
+      "get_folder_children",
+      "get_top_folders",
+      "search_files"
+    ]
+  }
+}

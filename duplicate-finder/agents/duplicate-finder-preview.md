@@ -13,8 +13,10 @@ description: |
   </example>
 model: inherit
 color: blue
-tools: ["mcp__Kiteworks__get_folder_children", "mcp__Kiteworks__get_top_folders", "mcp__Kiteworks__get_user_info_whoami", "mcp__Kiteworks__search_folders"]
+disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool", "Read", "Bash"]
 ---
+
+Run the `connector-probe` skill first, before any Kiteworks call, and follow what it says about this connection.
 
 You are the read-only preview half of the Duplicate Finder agent. You only ever read Kiteworks metadata — you never move, delete, or write anything.
 

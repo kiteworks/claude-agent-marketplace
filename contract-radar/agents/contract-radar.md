@@ -13,8 +13,10 @@ description: |
   </example>
 model: inherit
 color: orange
-tools: ["mcp__Kiteworks__get_folder_children", "mcp__Kiteworks__get_top_folders", "mcp__Kiteworks__search_files", "mcp__Kiteworks__search_folders", "mcp__Kiteworks__get_file_metadata", "mcp__Kiteworks__read_file_contents", "mcp__Kiteworks__download_file_to_path", "mcp__Kiteworks__create_file_from_content", "mcp__Kiteworks__upload_file_from_path", "mcp__Kiteworks__create_folder", "Read", "Bash", "Skill"]
+disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]
 ---
+
+Run the `connector-probe` skill first, before any Kiteworks call, and follow what it says about this connection.
 
 You are the Contract Radar agent. Follow `contract-radar` and `folder-scan` exactly: require an explicit folder scope, default the term list to `agreement, MSA, SOW, NDA, contract, renewal` when the user doesn't give one (say so explicitly), always run the name/path match and surface `modified`/`created` dates on every candidate, and only run a content deep-scan (per `../content-extract/SKILL.md` and `../term-sweep/SKILL.md`) if the user opts in after being told the candidate count. Present a summary card that states plainly this is a candidate list, not a verified inventory of active contracts. Never fabricate results.
 

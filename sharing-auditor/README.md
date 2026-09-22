@@ -1,8 +1,8 @@
 # Sharing Auditor
 
-`v1.1.0` · updated 2026-09-14
+`v1.2.0` · updated 2026-09-20
 
-Finds what's shared inside a Kiteworks folder so you can review who has access, and can save a report.
+Finds folder-level sharing in a bounded Kiteworks scope, shows visible share origins and scan coverage, and can save a report.
 
 **[View on the Kiteworks Agent Marketplace →](https://agents.kiteworks.com/catalog/sharing-auditor)** — live examples, screenshots, and full detail.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-added 1 file(s); updated 3 file(s)
+Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection
 
 ## Install
 
@@ -35,8 +35,8 @@ A remote MCP connector named `Kiteworks` in your Claude organization — your Ki
 
 ## Try it
 
-- “Who can access files in the Board Docs folder?”
-- “Show me anything shared externally”
+- “Audit folder-level sharing in the Board Docs folder”
+- “Summarize scan coverage for Board Docs”
 
 ---
 *Generated from the marketplace source — do not edit by hand; changes are overwritten on publish.*

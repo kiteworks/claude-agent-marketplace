@@ -1,0 +1,13 @@
+{
+  "activity-digest": {
+    "kiteworks": [
+      "get_folder_children",
+      "get_top_folders",
+      "search_files",
+      "search_folders",
+      "create_file_from_content",
+      "upload_file_from_path",
+      "create_folder"
+    ]
+  }
+}

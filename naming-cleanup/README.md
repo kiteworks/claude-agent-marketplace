@@ -1,6 +1,6 @@
 # Naming Cleanup
 
-`v0.5.4` · updated 2026-09-14
+`v0.6.0` · updated 2026-09-20
 
 Cleans up inconsistent or version-sprawled file names in a Kiteworks folder, and renames them once you approve.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-updated 1 file(s)
+Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection
 
 ## Install
 

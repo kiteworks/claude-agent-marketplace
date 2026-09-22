@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 — 2026-09-20
+
+Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection <!-- whats-new: consolidated -->
+
+- added: hooks/allowlist.json
+- added: hooks/hooks.json
+- added: hooks/kw-allowlist.sh
+- added: skills/connector-probe/SKILL.md
+- changed: agents/folder-expiry-audit.md
+- changed: skills/folder-scan/SKILL.md
+
 ## 0.2.4 — 2026-09-14
 
 updated 1 file(s) <!-- whats-new: consolidated -->
