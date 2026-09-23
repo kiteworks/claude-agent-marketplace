@@ -2,7 +2,7 @@
 name: compliance-mapping
 description: >
   Shared internal reference skill, not invoked by users directly. Every
-  <framework>-compliance-check skill in this plugin (hipaa-compliance-check,
+  framework-specific compliance-check skill in this plugin (hipaa-compliance-check,
   gdpr-compliance-check, cmmc-compliance-check, and 23 others) reads this
   file for the mechanism every one of them shares: which of three
   observable Kiteworks signals to run, how to run them, and how to write

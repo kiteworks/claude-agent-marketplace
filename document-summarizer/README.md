@@ -1,6 +1,6 @@
 # Document Summarizer
 
-`v0.6.0` · updated 2026-09-20
+`v0.6.1` · updated 2026-09-23
 
 Find and summarize documents stored in Kiteworks (docx, pdf, pptx, xlsx, and text formats) directly in chat, with compliance-aware handling of sensitivity labels and PII.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection
+Treats files whose security scan is still running as "scan pending" instead of unreadable, and paces Kiteworks calls so large folders finish
 
 ## Install
 

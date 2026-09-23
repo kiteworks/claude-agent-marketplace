@@ -10,7 +10,7 @@ description: >
   files already attached to the conversation — those can be read directly,
   no Kiteworks lookup needed.
 metadata:
-  version: "0.3.0"
+  version: "0.3.1"
 ---
 
 Delegate to the `document-summarizer` subagent. If it reports no tools available, or returns a summary without making any Kiteworks tool calls, treat the result as fabricated, discard it, and ask the user to check the `Kiteworks` connector is connected. On other surfaces, follow this skill directly.
@@ -26,7 +26,7 @@ Ported and rebuilt from an alpha `kiteworks-document-summarizer` plugin Rick had
 
 ## Kept from the alpha, because they're genuinely good and don't exist elsewhere in this plugin yet
 
-- **Check the file before reading it.** Call `get_file_metadata` and look at `avStatus`/`dlpStatus` before summarizing — confirmed live 2026-07-14 that this Kiteworks tenant's `get_file_metadata` really does return both fields (its own tool description undersells this, listing only "filename, size, dates, type, and owner"). If either status isn't a clean "allowed," say so and stop rather than summarizing a file that hasn't cleared scanning. A sensitivity/classification label (e.g. an MSIP tag) was NOT present in this tenant's metadata payload when checked live — if a future tenant's metadata does expose one, surface it in the summary; don't assume it's always there.
+- **Check the file before reading it.** Call `get_file_metadata` and look at `avStatus`/`dlpStatus` before summarizing — confirmed live 2026-07-14 that this Kiteworks tenant's `get_file_metadata` really does return both fields (its own tool description undersells this, listing only "filename, size, dates, type, and owner"). If either status is `scanning`, wait about 30 seconds and re-check once; if it is still `scanning`, say that the security scan is still running and to ask again in a minute; if either is blocked or flagged, say so and stop rather than summarizing a file that has not cleared scanning. A sensitivity/classification label (e.g. an MSIP tag) was NOT present in this tenant's metadata payload when checked live — if a future tenant's metadata does expose one, surface it in the summary; don't assume it's always there.
 - **Ambiguous match → ask, don't guess.** If a name/description search returns more than one candidate, list path + last-modified for each and ask which one.
 - **Never reproduce sensitive identifiers verbatim in the summary.** Government IDs, full financial account numbers, credentials, or similarly sensitive strings get described generically ("a sample ID number"), never quoted — even if the source is explicitly a test file. Same spirit as `term-sweep`'s "never print matched values," generalized to free-text summarization.
 - **Traceable by default.** Every summary states the file's path and last-modified date, and restates the AV/DLP check result (and sensitivity label, if one existed) alongside the summary — not just logged internally.
@@ -46,7 +46,7 @@ The alpha's Step 1 said to search "using the name or description the user gave" 
 
 ## Step 2 — Check the file
 
-`get_file_metadata` on the matched file. `avStatus`/`dlpStatus` must both read as clean/allowed before proceeding — if either shows scanning-in-progress, blocked, or flagged, tell the user and stop. Note any sensitivity/classification field if present.
+`get_file_metadata` on the matched file. `avStatus`/`dlpStatus` must both read as clean/allowed before proceeding — if either is `scanning`, wait about 30 seconds and re-check once, then if still `scanning` tell the user the security scan is still running and to ask again in a minute; if either is blocked or flagged, tell the user and stop. Note any sensitivity/classification field if present.
 
 ## Step 3 — Get the content
 

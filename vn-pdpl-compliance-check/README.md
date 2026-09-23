@@ -1,6 +1,6 @@
 # Vietnam PDPL Compliance Check
 
-`v1.2.0` · updated 2026-09-20
+`v1.2.2` · updated 2026-09-23
 
 Scans a Kiteworks folder for personal data, external sharing, and retention gaps under Vietnam's PDPL, and saves a report.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection
+Maintenance release: internal skill metadata cleanup.
 
 ## Install
 

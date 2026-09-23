@@ -7,7 +7,7 @@ description: >
   it. Read this before writing or modifying any skill that calls
   get_folder_children, get_top_folders, or search*.
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # folder-scan — shared metadata-walk helper
@@ -34,7 +34,22 @@ The single, correct mechanism for scanning a folder and everything beneath it is
 
 Bounded walk — do not exceed max_depth=25, max_pages=50, max_items=20000 for `get_folder_children` recursion. This is a best-effort walk, not guaranteed to reach every item. When any limit is hit, say so explicitly in the result: state how many folders/files were scanned, and present the result as partial coverage.
 
-Call Kiteworks tools sequentially or in small batches (at most 5 in parallel) — large parallel bursts can fail at the connector proxy.
+## Rate limit
+
+The connector enforces a per-method rate limit: after a burst of calls to one
+tool it answers the RPC error "method rate limit reached" (verified live
+2026-09-23, Kiteworks MCP 0.9.5). Rules:
+
+- Call tools sequentially, paced at about one call per second per tool; never
+  fire parallel bursts.
+- On "method rate limit reached": wait about 5 seconds and retry that one call
+  once. If it fails again, record the folder or file as skipped and continue
+  the walk. The result states the skipped count next to the scanned counts, and
+  a non-zero skipped count makes the result partial coverage.
+- Prefer server-side filters over per-item calls: `options.name` on
+  `get_folder_children`, `path_contains` and date bounds on `search*`. A tool
+  that accepts a list of ids in one call (the admin activity log does) is one
+  call, not one per id.
 
 ## Metadata fields worth using directly
 
