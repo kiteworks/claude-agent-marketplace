@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.2 — 2026-09-23
+
+Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->
+
+- changed: skills/compliance-mapping/SKILL.md
+
+## 1.1.1 — 2026-09-23
+
+Treats files whose security scan is still running as "scan pending" instead of unreadable, and paces Kiteworks calls so large folders finish <!-- whats-new: consolidated -->
+
+- changed: skills/content-extract/SKILL.md
+- changed: skills/folder-scan/SKILL.md
+
 ## 1.1.0 — 2026-09-20
 
 Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection <!-- whats-new: consolidated -->

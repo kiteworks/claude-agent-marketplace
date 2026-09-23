@@ -4,9 +4,10 @@ description: >
   Shared internal reference skill, run first by every marketplace agent.
   Resolves which MCP server is the Kiteworks connector, checks that the tools
   this run needs exist on it, and fixes what the agent says and does when one
-  is missing. Read before any Kiteworks call.
+  is missing, and says how to learn whether this user may call an
+  admin-gated tool. Read before any Kiteworks call.
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # connector-probe — resolve the connector, check its tools, degrade honestly
@@ -48,6 +49,41 @@ Check the resolved server's tool list for every tool this run will call, not
 only the path tools. A tool exists when it is in that list; nothing else
 counts. Never infer a tool from the server name, the host, the product name or
 a previous run. Probe at every agent run; there is no cache.
+
+## Admin-gated tools
+
+Some tools are advertised to every user but only work for a tenant admin:
+the Kiteworks admin API answers everyone else with an in-band 403 error whose
+body carries `ERR_ACCESS_ADMIN` or `ERR_ACCESS_ADMIN_COMPONENT`. The tool
+list is identical for admins and other users, and `get_user_info_whoami`
+carries no role flag, so a tool being listed never implies permission.
+
+An agent that uses such a tool declares it in its body on one line, for
+example `Admin-gated tools this agent uses: get_admin_activity.` Then:
+
+- There is no separate probe call. The first real call to a declared
+  read-only admin tool is the permission check: a 403 whose body carries
+  `ERR_ACCESS_ADMIN` or `ERR_ACCESS_ADMIN_COMPONENT` means the signed-in
+  user is not an admin on this tenant. Any other error is an ordinary tool
+  error, not a permission answer.
+- On that 403, say which capability is lost, in one sentence, in outcome
+  language, at the moment it matters ("I cannot read the activity log on this
+  connection, so who changed each item is not shown"), then continue with
+  the user-level path. Say it once per run, do not retry the tool, and do
+  not call another admin tool to check again.
+- A declared admin tool that changes something (create, assign, update) is
+  never used to learn a permission. The read-only admin tool declared beside
+  it goes first, as part of the task; the write follows only after that read
+  succeeded.
+- Never infer admin status from `get_user_info_whoami`, from the tool being
+  listed, from the user's job title, or from a previous run.
+- Do not add a confirmation of your own before an admin-gated call. Tools
+  that need one carry it server-side (`confirmation_token`): the server
+  either prompts the user itself or tells you to relay its question, and you
+  follow what it returns.
+
+An admin-gated tool that is missing from the tool list altogether is handled
+like any other missing tool (below), not as a permission answer.
 
 ## Silent while nothing is lost
 

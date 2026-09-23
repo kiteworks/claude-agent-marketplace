@@ -13,7 +13,7 @@
     {
       "name": "activity-digest",
       "source": "./activity-digest",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "displayName": "🕘 Activity Digest",
       "description": "Summarizes what's new or changed in a Kiteworks folder over a time window, and can save a report.",
       "author": {
@@ -30,7 +30,7 @@
     {
       "name": "ccpa-compliance-check",
       "source": "./ccpa-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ CCPA Compliance Check",
       "description": "Scans a Kiteworks folder for personal information, external sharing, and retention gaps under CCPA/CPRA, and saves a report.",
       "author": {
@@ -48,7 +48,7 @@
     {
       "name": "cis-controls-compliance-check",
       "source": "./cis-controls-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ CIS Controls Compliance Check",
       "description": "Scans a Kiteworks folder for sensitive content and external sharing under CIS Controls v8's Data Protection control, and saves a report. Most of CIS Controls is outside what this can check; it says so.",
       "author": {
@@ -66,7 +66,7 @@
     {
       "name": "cmmc-compliance-check",
       "source": "./cmmc-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ CMMC Compliance Check",
       "description": "Scans a Kiteworks folder for CUI-marked content and external sharing under CMMC 2.0, and saves a report. SSP authorship and SPRS scoring are outside what this can check; it says so.",
       "author": {
@@ -85,7 +85,7 @@
     {
       "name": "contract-radar",
       "source": "./contract-radar",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "displayName": "⚖️ Contract Radar",
       "description": "Finds contracts, agreements, and renewal-related documents in a Kiteworks folder, and can save a report.",
       "author": {
@@ -102,7 +102,7 @@
     {
       "name": "document-summarizer",
       "source": "./document-summarizer",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "displayName": "✔️ Document Summarizer",
       "description": "Finds a file in Kiteworks (Word, PDF, PowerPoint, Excel, or text) and summarizes it for you, checking it's virus/DLP-clean first and never repeating sensitive numbers like IDs verbatim -- and can save the summary back next to the file.",
       "author": {
@@ -119,7 +119,7 @@
     {
       "name": "dora-compliance-check",
       "source": "./dora-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ DORA Compliance Check",
       "description": "Checks a Kiteworks folder for external sharing of ICT-related documentation under DORA, and saves a report. Most of DORA is outside what this can check; it says so.",
       "author": {
@@ -137,7 +137,7 @@
     {
       "name": "dpdpa-compliance-check",
       "source": "./dpdpa-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ DPDPA Compliance Check",
       "description": "Scans a Kiteworks folder for personal data, external sharing, and retention gaps under India's DPDPA, and saves a report.",
       "author": {
@@ -155,7 +155,7 @@
     {
       "name": "duplicate-finder",
       "source": "./duplicate-finder",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "displayName": "📑 Duplicate Finder",
       "description": "Finds duplicate files in a Kiteworks folder and, once you approve, moves the extra copies to a review folder so you can reclaim space.",
       "author": {
@@ -172,7 +172,7 @@
     {
       "name": "ear-compliance-check",
       "source": "./ear-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ EAR Compliance Check",
       "description": "Scans a Kiteworks folder for export-controlled technology descriptions and external/foreign sharing under EAR, and saves a report. ECCN classification is outside what this can check; it says so.",
       "author": {
@@ -190,7 +190,7 @@
     {
       "name": "eu-ai-act-compliance-check",
       "source": "./eu-ai-act-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ EU AI Act Compliance Check",
       "description": "Checks a Kiteworks folder for AI-related documents that are shared externally or contain personal/biometric data, under the EU AI Act. Most of the EU AI Act is outside what this can check; it says so.",
       "author": {
@@ -208,7 +208,7 @@
     {
       "name": "fedramp-compliance-check",
       "source": "./fedramp-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ FedRAMP Compliance Check",
       "description": "Checks a Kiteworks folder for the narrow slice of FedRAMP a file-sharing platform can actually see -- sensitive content and external sharing -- and saves a report. Most of FedRAMP is outside what this can check; it says so.",
       "author": {
@@ -226,7 +226,7 @@
     {
       "name": "folder-expiry-audit",
       "source": "./folder-expiry-audit",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "displayName": "📅 Folder Expiry Audit",
       "description": "Reports which Kiteworks folders have an expiry/retention policy configured and which don't.",
       "author": {
@@ -243,7 +243,7 @@
     {
       "name": "gdpr-compliance-check",
       "source": "./gdpr-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ GDPR Compliance Check",
       "description": "Scans a Kiteworks folder for personal data, external sharing, and files older than your retention policy under GDPR, and saves a report. Covers the same ground GDPR's storage-limitation and exposure concerns care about.",
       "author": {
@@ -261,7 +261,7 @@
     {
       "name": "hipaa-compliance-check",
       "source": "./hipaa-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ HIPAA Compliance Check",
       "description": "Scans a Kiteworks folder for PHI-shaped content, external sharing, and files past HIPAA's 6-year documentation-retention window, and saves a report.",
       "author": {
@@ -279,7 +279,7 @@
     {
       "name": "inbox-triage",
       "source": "./inbox-triage",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "displayName": "🗂️ Inbox Triage",
       "description": "Sorts files sitting in a Kiteworks inbox or uploads folder into the right project folders, and moves them once you approve the matches.",
       "author": {
@@ -313,7 +313,7 @@
     {
       "name": "invoice-organizer",
       "source": "./invoice-organizer",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "displayName": "💳 Invoice Organizer",
       "description": "Finds invoices and receipts in a Kiteworks folder (including photos and scans), pulls out vendor, date, amount, and tax info, and -- once you approve -- renames them consistently and gives you a categorized spreadsheet for expenses or taxes.",
       "author": {
@@ -330,7 +330,7 @@
     {
       "name": "ism-au-compliance-check",
       "source": "./ism-au-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ ISM (Australia) Compliance Check",
       "description": "Checks a Kiteworks folder for classification-marked content and external sharing under Australia's ISM, and saves a report. Most of ISM is outside what this can check; it says so.",
       "author": {
@@ -348,7 +348,7 @@
     {
       "name": "iso27001-compliance-check",
       "source": "./iso27001-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ ISO 27001 Compliance Check",
       "description": "Checks a Kiteworks folder for the narrow slice of ISO 27001 a file-sharing platform can actually see -- sensitive content and external sharing -- and saves a report. Most of ISO 27001 is outside what this can check; it says so.",
       "author": {
@@ -366,7 +366,7 @@
     {
       "name": "iso27701-compliance-check",
       "source": "./iso27701-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ ISO 27701 Compliance Check",
       "description": "Scans a Kiteworks folder for personal data, external sharing, and retention gaps under ISO 27701's privacy management scope, and saves a report.",
       "author": {
@@ -384,7 +384,7 @@
     {
       "name": "iso42001-compliance-check",
       "source": "./iso42001-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ ISO 42001 Compliance Check",
       "description": "Checks a Kiteworks folder for AI-related documents that are shared externally or contain personal data, under ISO 42001. Most of ISO 42001 is outside what this can check; it says so.",
       "author": {
@@ -402,7 +402,7 @@
     {
       "name": "itar-compliance-check",
       "source": "./itar-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ ITAR Compliance Check",
       "description": "Scans a Kiteworks folder for ITAR-controlled technical-data content and external/foreign sharing, and saves a report. Export licensing determinations are outside what this can check; it says so.",
       "author": {
@@ -420,7 +420,7 @@
     {
       "name": "lgpd-compliance-check",
       "source": "./lgpd-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ LGPD Compliance Check",
       "description": "Scans a Kiteworks folder for personal data, external sharing, and retention gaps under Brazil's LGPD, and saves a report.",
       "author": {
@@ -438,7 +438,7 @@
     {
       "name": "naming-cleanup",
       "source": "./naming-cleanup",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "displayName": "🏷️ Naming Cleanup",
       "description": "Cleans up inconsistent or version-sprawled file names in a Kiteworks folder, and renames them once you approve.",
       "author": {
@@ -455,7 +455,7 @@
     {
       "name": "nis2-compliance-check",
       "source": "./nis2-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ NIS2 Compliance Check",
       "description": "Checks a Kiteworks folder for external sharing of flagged documentation under NIS2, and saves a report. Most of NIS2 is outside what this can check; it says so.",
       "author": {
@@ -473,7 +473,7 @@
     {
       "name": "nist-800-53-compliance-check",
       "source": "./nist-800-53-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ NIST SP 800-53 Compliance Check",
       "description": "Scans a Kiteworks folder for CUI/PII-shaped content and external sharing under NIST SP 800-53, and saves a report. Most of the control catalog is outside what this can check; it says so.",
       "author": {
@@ -491,7 +491,7 @@
     {
       "name": "nist-ai-rmf-compliance-check",
       "source": "./nist-ai-rmf-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ NIST AI RMF Compliance Check",
       "description": "Checks a Kiteworks folder for AI-related documents that are shared externally or contain personal data, under NIST AI RMF. Most of NIST AI RMF is outside what this can check; it says so.",
       "author": {
@@ -509,7 +509,7 @@
     {
       "name": "nist-csf-compliance-check",
       "source": "./nist-csf-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ NIST CSF Compliance Check",
       "description": "Checks a Kiteworks folder for external sharing exposure, the one sliver of NIST CSF's Protect function a file-sharing platform can see, and saves a report. Most of NIST CSF is outside what this can check; it says so.",
       "author": {
@@ -527,7 +527,7 @@
     {
       "name": "nzism-compliance-check",
       "source": "./nzism-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ NZISM Compliance Check",
       "description": "Checks a Kiteworks folder for classification-marked content and external sharing under New Zealand's NZISM, and saves a report. Most of NZISM is outside what this can check; it says so.",
       "author": {
@@ -545,7 +545,7 @@
     {
       "name": "offboarding-content-finder",
       "source": "./offboarding-content-finder",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "displayName": "🚪 Offboarding Content Finder",
       "description": "Finds everything a departing or transferring employee owns across Kiteworks, and moves confirmed items to a holding folder for review.",
       "author": {
@@ -562,7 +562,7 @@
     {
       "name": "pci-dss-compliance-check",
       "source": "./pci-dss-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ PCI DSS Compliance Check",
       "description": "Scans a Kiteworks folder for card-data-shaped content and external sharing under PCI DSS, and saves a report. Network/tokenisation architecture is outside what this can check; it says so.",
       "author": {
@@ -580,7 +580,7 @@
     {
       "name": "redactor",
       "source": "./redactor",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "displayName": "🙈 Redactor",
       "description": "Finds and replaces specific text -- like a name or other sensitive information -- across documents in a Kiteworks folder, and creates redacted copies once you approve. Originals are never changed.",
       "author": {
@@ -597,7 +597,7 @@
     {
       "name": "retention-sweeper",
       "source": "./retention-sweeper",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "displayName": "🕒 Retention Sweeper",
       "description": "Finds files in a Kiteworks folder that are past a retention deadline you set, and can save a report of what it found.",
       "author": {
@@ -614,7 +614,7 @@
     {
       "name": "section-508-compliance-check",
       "source": "./section-508-compliance-check",
-      "version": "1.1.0",
+      "version": "1.1.2",
       "displayName": "✅ Section 508 Compliance Check",
       "description": "Runs a real accessibility structure check (tagged PDFs, document metadata, alt text across PDF/DOCX/PPTX/HTML) over documents in a Kiteworks folder under Section 508, and saves a report. This is not a full VPAT/ACR conformance test.",
       "author": {
@@ -632,7 +632,7 @@
     {
       "name": "sensitive-content-scanner",
       "source": "./sensitive-content-scanner",
-      "version": "1.4.0",
+      "version": "1.4.1",
       "displayName": "📋 Sensitive Content Scanner",
       "description": "Scans a Kiteworks folder for sensitive terms and common PII (like SSNs, credit card numbers, and IBANs) before you share it, and can save a report.",
       "author": {
@@ -649,7 +649,7 @@
     {
       "name": "sharing-auditor",
       "source": "./sharing-auditor",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "displayName": "👥 Sharing Auditor",
       "description": "Finds what's shared inside a Kiteworks folder so you can review who has access, and can save a report.",
       "author": {
@@ -666,7 +666,7 @@
     {
       "name": "soc2-compliance-check",
       "source": "./soc2-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ SOC 2 Compliance Check",
       "description": "Checks a Kiteworks folder for the narrow slice of SOC 2 a file-sharing platform can actually see -- sensitive content and external sharing -- and saves a report. Most of SOC 2 is outside what this can check; it says so.",
       "author": {
@@ -684,7 +684,7 @@
     {
       "name": "storage-visualizer",
       "source": "./storage-visualizer",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "displayName": "📊 Storage Visualizer",
       "description": "Shows what's taking up space in a Kiteworks folder -- totals, the largest files and folders, and how much is shared -- and can save a report.",
       "author": {
@@ -701,7 +701,7 @@
     {
       "name": "vn-pdpl-compliance-check",
       "source": "./vn-pdpl-compliance-check",
-      "version": "1.2.0",
+      "version": "1.2.2",
       "displayName": "✅ Vietnam PDPL Compliance Check",
       "description": "Scans a Kiteworks folder for personal data, external sharing, and retention gaps under Vietnam's PDPL, and saves a report.",
       "author": {
@@ -719,7 +719,7 @@
     {
       "name": "wcag-compliance-check",
       "source": "./wcag-compliance-check",
-      "version": "1.1.0",
+      "version": "1.1.2",
       "displayName": "✅ WCAG Compliance Check",
       "description": "Runs a real accessibility structure check (tagged PDFs, document metadata, alt text across PDF/DOCX/PPTX/HTML) over documents in a Kiteworks folder under WCAG, and saves a report. This is not a full WCAG conformance test.",
       "author": {

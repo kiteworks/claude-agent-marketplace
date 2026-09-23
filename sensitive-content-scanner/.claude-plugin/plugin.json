@@ -10,5 +10,5 @@
   "license": "Apache-2.0",
   "name": "sensitive-content-scanner",
   "repository": "https://github.com/kiteworks/claude-agent-marketplace",
-  "version": "1.4.0"
+  "version": "1.4.1"
 }

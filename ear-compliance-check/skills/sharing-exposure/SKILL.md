@@ -10,7 +10,7 @@ description: >
   sharing starts. Read this before writing or modifying any
   sharing-related check.
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # sharing-exposure — effective sharing exposure, resolved once per scan
@@ -53,7 +53,7 @@ Read `../folder-scan/SKILL.md` first; this skill only adds the sharing semantics
 4. **Stop at the first level whose flag is true.** That folder is the share origin; every level below it cascades true, so the remaining levels need no call. Record per level: name, id, flag, `creator.email`. The visible top is segment 1's record.
 5. Caps: 25 levels, 3 pages per level. On a cap, a missing segment, a name mismatch, or an ambiguous top-level name, stop: the ancestry is *partially resolved*, the share origin is unknown, and the exposure source is `ancestor at or above the scan root (not resolved: <reason>)`. The root is still exposed; its own flag said so.
 
-Cost: at most one call per level between the visible top and the scan root, plus pagination, once per scan. Sequential or at most 5 in parallel, per `folder-scan`.
+Cost: at most one call per level between the visible top and the scan root, plus pagination, once per scan. Sequential, paced per the rate-limit rule in `folder-scan`.
 
 ## Step 3: flag during the walk, report at the share origin only
 

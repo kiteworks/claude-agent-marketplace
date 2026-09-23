@@ -4,7 +4,7 @@ description: >
   Shared internal reference for bounded retrieval of real Kiteworks content.
   Read before binary extraction, OCR, redaction, or accessibility analysis.
 metadata:
-  version: "0.5.0"
+  version: "0.6.0"
 ---
 
 # content-extract â€” one owned scratch lifecycle
@@ -29,7 +29,8 @@ name, size, owner and sharing, label them "not content-checked", and skip the
 rest of this section. Otherwise verify the download executor's device,
 authorized host folder, readable host/sandbox mapping and working format
 parser before downloading.
-Check AV/DLP status; do not process blocked files. A shell in a Chat sandbox or
+Check AV/DLP status per the scan-pending rule below; do not process blocked
+files. A shell in a Chat sandbox or
 Cowork VM does not prove access to a connector's host path. Chat may have code/file
 creation; missing hooks/subagents does not mean parsing is unavailable.
 
@@ -43,6 +44,32 @@ If access acquisition fails, the Desktop connection is offline/revoked, the loca
 VM is unavailable, or no parser/mapping exists: do not download. Metadata-only
 matching may be useful for a scanner, but a summarizer must say it cannot
 summarize this binary. Never label filename matching as content analysis.
+
+## Scan pending is not a permission failure
+
+File rows from `get_folder_children` and `get_file_metadata` carry `avStatus`
+and `dlpStatus` on every tenant probed so far; read them before any
+`read_file_contents` or `download_file_to_path` call (a walked tree needs no
+extra call). A row without the keys is read as if `allowed`; the read itself
+then answers.
+
+- Either status `scanning`: do not read yet. Mark the row
+  "scan pending, not content-checked" and continue the walk. Never describe a
+  scan-pending file as "not permitted" or as a permission problem.
+- A read or download that answers a bare `API error 403` (empty body) is the
+  same scan gate, whatever the row said at walk time (verified live
+  2026-09-23, Kiteworks MCP 0.9.5: the identical call succeeds once the scan
+  finishes). Mark that row scan pending too.
+- `blocked`, `flagged`, `quarantined` or any other status that is not
+  `allowed`: list the file by name, size, owner and sharing, name the status,
+  and do not read it.
+- A 403 whose body names an error code (`ERR_ACCESS_USER` and the like) is a
+  real access failure: report it as such, once, and move on.
+- At the end of the run, retry the scan-pending rows once: re-read
+  `get_file_metadata` for each, read or download only those now `allowed`, and
+  leave the rest pending. A retried download is a new write: reserve its own
+  path per `../scratch-lifecycle/SKILL.md` and count it against the per-run
+  caps. Say in one header sentence how many rows stayed pending.
 
 ## Disclose the cleanup limits up front
 
