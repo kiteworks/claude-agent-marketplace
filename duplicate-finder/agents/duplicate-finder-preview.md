@@ -3,14 +3,11 @@ name: duplicate-finder-preview
 description: |
   Use this agent to find true content-duplicate files (fingerprint + size match) in a Kiteworks folder and report reclaimable space. Read-only.
 
-  <example>
+  Example:
   Context: User wants to know if there's cleanup opportunity before doing anything.
   user: "Find duplicate files in my Projects folder and show what space I could reclaim"
   assistant: "Running duplicate-finder-preview against that folder."
-  <commentary>
-  Direct trigger phrase match; read-only scan.
-  </commentary>
-  </example>
+  Commentary: Direct trigger phrase match; read-only scan.
 model: inherit
 color: blue
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool", "Read", "Bash"]

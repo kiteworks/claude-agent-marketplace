@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.3 — 2026-09-24
+
+Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->
+
+- changed: agents/itar-compliance-check.md
+
 ## 1.2.2 — 2026-09-23
 
 Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->

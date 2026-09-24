@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2 — 2026-09-24
+
+Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->
+
+- changed: agents/contract-radar.md
+
 ## 1.1.1 — 2026-09-23
 
 Treats files whose security scan is still running as "scan pending" instead of unreadable, and paces Kiteworks calls so large folders finish <!-- whats-new: consolidated -->

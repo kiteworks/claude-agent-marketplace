@@ -1,6 +1,6 @@
 # Sharing Auditor
 
-`v1.2.1` · updated 2026-09-23
+`v1.2.2` · updated 2026-09-24
 
 Finds folder-level sharing in a bounded Kiteworks scope, shows visible share origins and scan coverage, and can save a report.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Treats files whose security scan is still running as "scan pending" instead of unreadable, and paces Kiteworks calls so large folders finish
+Maintenance release: internal skill metadata cleanup.
 
 ## Install
 

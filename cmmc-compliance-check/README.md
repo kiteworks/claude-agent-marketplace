@@ -1,6 +1,6 @@
 # CMMC Compliance Check
 
-`v1.2.2` · updated 2026-09-23
+`v1.2.3` · updated 2026-09-24
 
 Scans a Kiteworks folder for CUI-marked content and external sharing under CMMC 2.0, and saves a report. SSP authorship and SPRS scoring are outside what this can check; it says so.
 

@@ -1,6 +1,6 @@
 # NIS2 Compliance Check
 
-`v1.2.2` · updated 2026-09-23
+`v1.2.3` · updated 2026-09-24
 
 Checks a Kiteworks folder for external sharing of flagged documentation under NIS2, and saves a report. Most of NIS2 is outside what this can check; it says so.
 

@@ -3,14 +3,11 @@ name: inbox-triage-apply
 description: |
   Use this agent to move user-confirmed inbox items to their confirmed destinations and write a report. Never call without explicit per-item confirmation.
 
-  <example>
+  Example:
   Context: User reviewed proposals and confirmed most of them.
   user: "File the ones you're confident about, skip the uncertain ones"
   assistant: "Moving only the confirmed items via inbox-triage-apply, leaving the uncertain ones in place."
-  <commentary>
-  Per-item confirmation required; uncertain items must not be moved.
-  </commentary>
-  </example>
+  Commentary: Per-item confirmation required; uncertain items must not be moved.
 model: inherit
 color: green
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

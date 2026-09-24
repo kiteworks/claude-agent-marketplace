@@ -3,14 +3,11 @@ name: contract-radar
 description: |
   Use this agent to find contracts, agreements, or renewal-related documents in a Kiteworks folder by name/path (default term list: agreement, MSA, SOW, NDA, contract, renewal) and optional content deep-scan, surfacing dates for staleness/renewal review, and — on confirmation — write a CSV + txt/pdf report. Single-phase: no separate apply agent.
 
-  <example>
+  Example:
   Context: User wants to find agreements before a renewal cycle.
   user: "What contracts do we have sitting in the Legal folder?"
   assistant: "Running contract-radar against that folder with the default contract term list, then I'll offer to save a report."
-  <commentary>
-  No custom term list given, so the default list applies; the save offer comes at the end automatically.
-  </commentary>
-  </example>
+  Commentary: No custom term list given, so the default list applies; the save offer comes at the end automatically.
 model: inherit
 color: orange
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

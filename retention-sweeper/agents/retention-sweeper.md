@@ -3,23 +3,17 @@ name: retention-sweeper
 description: |
   Use this agent to scan a Kiteworks folder for files past a retention threshold, report candidates, and — on confirmation — write a CSV + txt/pdf report. Single-phase: no separate apply agent, since its only write action is the report itself.
 
-  <example>
+  Example:
   Context: User wants to know what's past retention before doing anything else.
   user: "Show me what's past retention in Marketing Drafts at 18 months"
   assistant: "I'll run the retention-sweeper agent against that folder, then offer to save a report."
-  <commentary>
-  Direct trigger phrase match. Scans, presents results, and actively offers the save step at the end rather than waiting to be asked.
-  </commentary>
-  </example>
+  Commentary: Direct trigger phrase match. Scans, presents results, and actively offers the save step at the end rather than waiting to be asked.
 
-  <example>
+  Example:
   Context: User already saw results and wants them saved.
   user: "Yes, save that report"
   assistant: "Writing the CSV and PDF now."
-  <commentary>
-  Confirmation of the save offer made at the end of the scan — same agent, same conversation, no separate handoff.
-  </commentary>
-  </example>
+  Commentary: Confirmation of the save offer made at the end of the scan — same agent, same conversation, no separate handoff.
 model: inherit
 color: blue
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

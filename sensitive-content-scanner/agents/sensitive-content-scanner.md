@@ -3,14 +3,11 @@ name: sensitive-content-scanner
 description: |
   Use this agent to sweep a Kiteworks folder for sensitive terms and built-in PII/secret patterns (credit card, IBAN, AWS key, US SSN, Dutch BSN, all on by default) by name and content, with checksum validation plus context-keyword confirmation, and — on confirmation — write a CSV + txt/pdf report. Single-phase: no separate apply agent.
 
-  <example>
+  Example:
   Context: User wants a compliance-style sweep.
   user: "Scan the Marketing folder for anything mentioning 'confidential' or client names"
   assistant: "Running sensitive-content-scanner with that term list — if you opt into the content deep-scan, I'll also check all the built-in PII/secret patterns by default, then offer to save a report."
-  <commentary>
-  Explicit term list plus a folder scope; every built-in pattern preset runs automatically during any content deep-scan unless the user opts out; results only name categories that got a hit, not the full checked list; the save offer comes at the end automatically.
-  </commentary>
-  </example>
+  Commentary: Explicit term list plus a folder scope; every built-in pattern preset runs automatically during any content deep-scan unless the user opts out; results only name categories that got a hit, not the full checked list; the save offer comes at the end automatically.
 model: inherit
 color: red
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

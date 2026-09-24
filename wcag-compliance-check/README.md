@@ -1,6 +1,6 @@
 # WCAG Compliance Check
 
-`v1.1.2` · updated 2026-09-23
+`v1.1.3` · updated 2026-09-24
 
 Runs a shallow accessibility structure check (tagged PDFs, document/slide metadata, alt text, and HTML heading structure) over PDF, Word, PowerPoint, and HTML files in a Kiteworks folder under WCAG, and saves a report. This is not a full WCAG conformance test.
 

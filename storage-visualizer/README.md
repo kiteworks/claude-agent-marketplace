@@ -1,6 +1,6 @@
 # Storage Visualizer
 
-`v1.1.1` · updated 2026-09-23
+`v1.1.2` · updated 2026-09-24
 
 Shows what's taking up space in a Kiteworks folder -- totals, the largest files and folders, and how much is shared -- and can save a report.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Treats files whose security scan is still running as "scan pending" instead of unreadable, and paces Kiteworks calls so large folders finish
+Maintenance release: internal skill metadata cleanup.
 
 ## Install
 

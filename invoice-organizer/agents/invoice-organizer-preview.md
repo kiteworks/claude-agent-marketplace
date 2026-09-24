@@ -3,14 +3,11 @@ name: invoice-organizer-preview
 description: |
   Use this agent to find invoices/receipts in a Kiteworks folder, extract vendor/date/amount/tax/payment-method fields (via real text extraction or OCR for scans/photos), propose consistent renames, and categorize for expense/tax prep. Read-only, creates and changes nothing.
 
-  <example>
+  Example:
   Context: User wants their receipts folder cleaned up before tax season.
   user: "Organize the receipts in my Expenses 2026 folder for taxes"
   assistant: "Running invoice-organizer-preview against that folder -- I'll extract vendor, date, and amount from each file, flag anything OCR had to guess at, and propose a categorized rename before touching anything."
-  <commentary>
-  Folder-scoped extraction request; OCR-derived and low-confidence files get flagged rather than silently included.
-  </commentary>
-  </example>
+  Commentary: Folder-scoped extraction request; OCR-derived and low-confidence files get flagged rather than silently included.
 model: inherit
 color: blue
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

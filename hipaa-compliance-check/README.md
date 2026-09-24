@@ -1,6 +1,6 @@
 # HIPAA Compliance Check
 
-`v1.2.2` · updated 2026-09-23
+`v1.2.3` · updated 2026-09-24
 
 Scans a Kiteworks folder for PHI-shaped content, external sharing, and files past HIPAA's 6-year documentation-retention window, and saves a report.
 

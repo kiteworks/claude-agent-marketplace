@@ -3,14 +3,11 @@ name: duplicate-finder-apply
 description: |
   Use this agent to move user-confirmed duplicate files into a review folder and write a CSV + txt/pdf report. Never deletes anything. Never call without per-set user confirmation of which files to move.
 
-  <example>
+  Example:
   Context: User has reviewed the duplicate sets and wants to act.
   user: "Move those duplicates to a review folder and give me the report"
   assistant: "I'll confirm which files per set, then hand this to duplicate-finder-apply."
-  <commentary>
-  Explicit confirmed action request; still needs per-set confirmation before moving.
-  </commentary>
-  </example>
+  Commentary: Explicit confirmed action request; still needs per-set confirmation before moving.
 model: inherit
 color: green
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

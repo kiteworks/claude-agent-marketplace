@@ -1,6 +1,6 @@
 # CIS Controls Compliance Check
 
-`v1.2.2` · updated 2026-09-23
+`v1.2.3` · updated 2026-09-24
 
 Scans a Kiteworks folder for sensitive content and external sharing under CIS Controls v8's Data Protection control, and saves a report. Most of CIS Controls is outside what this can check; it says so.
 
