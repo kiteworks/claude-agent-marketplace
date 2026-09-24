@@ -3,14 +3,11 @@ name: folder-expiry-audit
 description: |
   Use this agent to report which folders in a Kiteworks scope have expiry/lifecycle settings configured. Read-only. Cannot set expiry — that was tested and does not currently work via this connector.
 
-  <example>
+  Example:
   Context: User wonders about folder lifecycle hygiene.
   user: "Which folders in Sales don't have an expiry set?"
   assistant: "Running folder-expiry-audit — note this only reports existing settings, it can't configure new ones."
-  <commentary>
-  Read-only audit; the agent must disclose the known create_folder expiry limitation.
-  </commentary>
-  </example>
+  Commentary: Read-only audit; the agent must disclose the known create_folder expiry limitation.
 model: inherit
 color: yellow
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool", "Read", "Bash"]

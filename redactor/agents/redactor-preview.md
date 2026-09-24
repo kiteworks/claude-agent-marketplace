@@ -3,14 +3,11 @@ name: redactor-preview
 description: |
   Use this agent to propose find-and-replace or PII-pattern redaction across documents in a Kiteworks folder, checking format support per file (high-confidence for text/docx/xlsx/pptx, flagged for manual review on PDFs, unsupported on legacy binary formats). Read-only, creates and changes nothing.
 
-  <example>
+  Example:
   Context: User wants a name scrubbed from a set of documents before sharing externally.
   user: "Find all documents in the Vendor folder that mention 'Rick Goud' and replace it with 'John Doe'"
   assistant: "Running redactor-preview against that folder with that literal replacement, then I'll show format support per file before proposing apply."
-  <commentary>
-  Literal find-and-replace mode; PDFs and legacy formats in scope get flagged separately rather than silently included.
-  </commentary>
-  </example>
+  Commentary: Literal find-and-replace mode; PDFs and legacy formats in scope get flagged separately rather than silently included.
 model: inherit
 color: red
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

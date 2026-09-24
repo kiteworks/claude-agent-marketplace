@@ -3,14 +3,11 @@ name: naming-cleanup-preview
 description: |
   Use this agent to flag version sprawl and inconsistent file names in a Kiteworks folder and propose standardized names. Read-only, renames nothing.
 
-  <example>
+  Example:
   Context: User has messy file names.
   user: "Find version sprawl in my Docs folder"
   assistant: "Running naming-cleanup-preview against that folder."
-  <commentary>
-  Version-sprawl trigger phrase against a named folder.
-  </commentary>
-  </example>
+  Commentary: Version-sprawl trigger phrase against a named folder.
 model: inherit
 color: blue
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool", "Read", "Bash"]

@@ -3,14 +3,11 @@ name: redactor-apply
 description: |
   Use this agent to create redacted/find-replaced COPIES of confirmed files from a redactor-preview result, and write a CSV + txt/pdf manifest. Never call without a confirmed file list, replacement, and destination. Never touches or overwrites the originals.
 
-  <example>
+  Example:
   Context: User approved the preview's high-confidence file set.
   user: "Go ahead and create those redacted copies"
   assistant: "Handing this to redactor-apply — writing the redacted copies plus a manifest, originals untouched."
-  <commentary>
-  Confirmed apply request following a preview result.
-  </commentary>
-  </example>
+  Commentary: Confirmed apply request following a preview result.
 model: inherit
 color: red
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

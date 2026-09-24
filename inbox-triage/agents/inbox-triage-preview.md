@@ -3,14 +3,11 @@ name: inbox-triage-preview
 description: |
   Use this agent to propose destinations for files sitting in a Kiteworks inbox/uploads folder, based on an existing folder taxonomy. Classifies text and binary files by real content, not just filename, for anything still uncertain after a filename-only pass. Read-only, moves nothing.
 
-  <example>
+  Example:
   Context: User has an unsorted uploads folder full of PDFs and Office docs.
   user: "Help me file the stuff in my Uploads folder into the right project folders"
   assistant: "Running inbox-triage-preview — filename pass first, then a content-aware pass on anything still uncertain, including PDFs and Office docs."
-  <commentary>
-  Classic inbox-triage trigger; most real uploads are binaries, so the content-aware pass matters for accuracy.
-  </commentary>
-  </example>
+  Commentary: Classic inbox-triage trigger; most real uploads are binaries, so the content-aware pass matters for accuracy.
 model: inherit
 color: blue
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

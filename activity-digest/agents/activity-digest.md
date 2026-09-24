@@ -3,14 +3,11 @@ name: activity-digest
 description: |
   Use this agent to summarize recent new/changed items in a Kiteworks folder over a given time window, and — on confirmation — write a CSV + txt/pdf report. Single-phase: no separate apply agent.
 
-  <example>
+  Example:
   Context: User wants a weekly catch-up.
   user: "What's new in the Deal Room folder this week?"
   assistant: "Running activity-digest with a this-week window, then I'll offer to save a report."
-  <commentary>
-  Time-windowed activity request against a named folder; save offer comes at the end automatically.
-  </commentary>
-  </example>
+  Commentary: Time-windowed activity request against a named folder; save offer comes at the end automatically.
 model: inherit
 color: blue
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

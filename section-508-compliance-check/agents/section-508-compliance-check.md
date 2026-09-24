@@ -3,14 +3,11 @@ name: section-508-compliance-check
 description: |
   Use this agent to run a Kiteworks content-governance scan against Section 508, checking only what a file-sharing platform can observe (fit tier: Accessibility -- see the skill for what's in and out of scope), and -- on confirmation -- write a CSV + txt/pdf report. Single-phase: no separate apply agent.
 
-  <example>
+  Example:
   Context: User wants to know their Section 508 exposure before an audit or review.
   user: "Check the Legal folder against Section 508"
   assistant: "Running the section-508-compliance-check agent against that folder -- I'll be upfront about what this can and can't actually verify for Section 508, then offer to save a report."
-  <commentary>
-  Direct trigger phrase match. States the fit tier before presenting findings, and actively offers the save step at the end rather than waiting to be asked.
-  </commentary>
-  </example>
+  Commentary: Direct trigger phrase match. States the fit tier before presenting findings, and actively offers the save step at the end rather than waiting to be asked.
 model: inherit
 color: purple
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

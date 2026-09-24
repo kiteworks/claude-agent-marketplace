@@ -3,14 +3,11 @@ name: sharing-auditor
 description: |
   Use this agent to find files and folders exposed through folder-level sharing within a Kiteworks folder scope (the isShared flag on folder records, resolved per the sharing-exposure skill), and — on confirmation — write a CSV + txt/pdf report. Single-phase: no separate apply agent.
 
-  <example>
+  Example:
   Context: User wants visibility into what's exposed.
   user: "What's shared in my Projects folder?"
   assistant: "Running sharing-auditor against that folder, then I'll offer to save a report."
-  <commentary>
-  Direct trigger phrase; isShared field makes this a straightforward metadata walk, and the save offer comes at the end automatically.
-  </commentary>
-  </example>
+  Commentary: Direct trigger phrase; isShared field makes this a straightforward metadata walk, and the save offer comes at the end automatically.
 model: inherit
 color: blue
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

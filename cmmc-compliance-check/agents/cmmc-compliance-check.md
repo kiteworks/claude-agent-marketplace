@@ -3,14 +3,11 @@ name: cmmc-compliance-check
 description: |
   Use this agent to run a Kiteworks content-governance scan against CMMC 2.0, checking only what a file-sharing platform can observe (fit tier: Good -- see the skill for what's in and out of scope), and -- on confirmation -- write a CSV + txt/pdf report. Single-phase: no separate apply agent.
 
-  <example>
+  Example:
   Context: User wants to know their CMMC 2.0 exposure before an audit or review.
   user: "Check the Legal folder against CMMC 2.0"
   assistant: "Running the cmmc-compliance-check agent against that folder -- I'll be upfront about what this can and can't actually verify for CMMC 2.0, then offer to save a report."
-  <commentary>
-  Direct trigger phrase match. States the fit tier before presenting findings, and actively offers the save step at the end rather than waiting to be asked.
-  </commentary>
-  </example>
+  Commentary: Direct trigger phrase match. States the fit tier before presenting findings, and actively offers the save step at the end rather than waiting to be asked.
 model: inherit
 color: purple
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

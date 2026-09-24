@@ -3,14 +3,11 @@ name: invoice-organizer-apply
 description: |
   Use this agent to rename user-confirmed invoices/receipts (optionally sorting into category subfolders) from an invoice-organizer-preview result, and write a categorized CSV + narrative report. Never call without explicit per-item confirmation.
 
-  <example>
+  Example:
   Context: User approved the preview's high-confidence rename list.
   user: "Go ahead and rename those receipts, and export the CSV"
   assistant: "Applying those via invoice-organizer-apply -- renaming the confirmed set and writing the categorized CSV and report."
-  <commentary>
-  Per-item confirmed renames only; Low-confidence files stay excluded unless the user hand-corrected them first.
-  </commentary>
-  </example>
+  Commentary: Per-item confirmed renames only; Low-confidence files stay excluded unless the user hand-corrected them first.
 model: inherit
 color: green
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

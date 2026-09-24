@@ -3,14 +3,11 @@ name: intake-form-builder
 description: |
   Use this agent to design and create a Kiteworks intake/request form from a plain-language brief. Always builds an HTML preview and gets explicit user approval before creating anything.
 
-  <example>
+  Example:
   Context: User needs a vendor document collection form.
   user: "Build a form to collect signed NDAs and W9s from new vendors"
   assistant: "I'll draft the fields, show you an HTML preview, and only create it in Kiteworks once you approve."
-  <commentary>
-  Direct-action trigger; the mandatory preview-then-approve step is non-negotiable.
-  </commentary>
-  </example>
+  Commentary: Direct-action trigger; the mandatory preview-then-approve step is non-negotiable.
 model: inherit
 color: magenta
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool", "Read", "Bash"]

@@ -1,6 +1,6 @@
 # ISO 27701 Compliance Check
 
-`v1.2.2` · updated 2026-09-23
+`v1.2.3` · updated 2026-09-24
 
 Scans a Kiteworks folder for personal data, external sharing, and retention gaps under ISO 27701's privacy management scope, and saves a report.
 

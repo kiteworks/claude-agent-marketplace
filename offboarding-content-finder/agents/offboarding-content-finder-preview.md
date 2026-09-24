@@ -3,14 +3,11 @@ name: offboarding-content-finder-preview
 description: |
   Use this agent to find content owned by a named person in Kiteworks. Defaults to a tenant-wide sweep across every top-level folder (no server-side owner filter exists, so this walks and filters client-side); can be narrowed to specific folders on request. Read-only.
 
-  <example>
+  Example:
   Context: Someone is leaving the team and their content needs review.
   user: "Find Jane Smith's files before she leaves"
   assistant: "Running offboarding-content-finder-preview as a tenant-wide sweep — this covers every top-level folder, not just one."
-  <commentary>
-  Named person, defaults to tenant-wide since that's the real offboarding question; narrows to a specific folder only if the user asks for that instead.
-  </commentary>
-  </example>
+  Commentary: Named person, defaults to tenant-wide since that's the real offboarding question; narrows to a specific folder only if the user asks for that instead.
 model: inherit
 color: blue
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool", "Read", "Bash"]

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.2 — 2026-09-24
+
+Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->
+
+- changed: agents/duplicate-finder-apply.md
+- changed: agents/duplicate-finder-preview.md
+
 ## 0.6.1 — 2026-09-23
 
 Treats files whose security scan is still running as "scan pending" instead of unreadable, and paces Kiteworks calls so large folders finish <!-- whats-new: consolidated -->

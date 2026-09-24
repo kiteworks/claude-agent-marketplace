@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1 — 2026-09-24
+
+Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->
+
+- changed: agents/intake-form-builder.md
+
 ## 0.2.0 — 2026-09-20
 
 Ensure it works with any Kiteworks connector name and explains what it can and cannot do over your connection <!-- whats-new: consolidated -->

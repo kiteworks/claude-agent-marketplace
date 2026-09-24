@@ -3,14 +3,11 @@ name: offboarding-content-finder-apply
 description: |
   Use this agent to move user-confirmed, owned-by-a-departing-person items into a holding folder and write a report. Never deletes, never changes ownership. Never call without explicit confirmation of the item set.
 
-  <example>
+  Example:
   Context: User reviewed the owned items and wants them staged.
   user: "Move those into a holding folder for reassignment"
   assistant: "Handing this to offboarding-content-finder-apply."
-  <commentary>
-  Confirmed relocation request; still no deletion or ownership change.
-  </commentary>
-  </example>
+  Commentary: Confirmed relocation request; still no deletion or ownership change.
 model: inherit
 color: green
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]

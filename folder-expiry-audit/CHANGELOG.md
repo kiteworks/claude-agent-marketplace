@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2 — 2026-09-24
+
+Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->
+
+- changed: agents/folder-expiry-audit.md
+
 ## 0.3.1 — 2026-09-23
 
 Treats files whose security scan is still running as "scan pending" instead of unreadable, and paces Kiteworks calls so large folders finish <!-- whats-new: consolidated -->

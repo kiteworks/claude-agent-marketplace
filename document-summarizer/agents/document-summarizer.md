@@ -3,14 +3,11 @@ name: document-summarizer
 description: |
   Use this agent to find a named file in Kiteworks and summarize it — Word docs, PDFs, PowerPoint, Excel, or plain text — checking AV/DLP status first and never quoting sensitive identifiers verbatim. Single-phase: it can optionally save the summary back to Kiteworks on confirmation, but there's no separate apply agent.
 
-  <example>
+  Example:
   Context: User wants the contents of a specific file without opening it themselves.
   user: "What's in Q3 update.pdf in My Folder/Reports?"
   assistant: "Running document-summarizer on that file — I'll check it's clean first, then summarize it with the source path and last-modified date so it's traceable."
-  <commentary>
-  A single named file, not a folder sweep; the AV/DLP check happens before any content is read, and the summary always cites its source.
-  </commentary>
-  </example>
+  Commentary: A single named file, not a folder sweep; the AV/DLP check happens before any content is read, and the summary always cites its source.
 model: inherit
 color: blue
 disallowedTools: ["Write", "Edit", "MultiEdit", "NotebookEdit", "NotebookRead", "WebFetch", "WebSearch", "Agent", "Task", "TaskOutput", "TaskStop", "ListAgents", "SendMessage", "PowerShell", "Glob", "Grep", "KillShell", "BashOutput", "TodoWrite", "AskUserQuestion", "Config", "EnterPlanMode", "ExitPlanMode", "EnterWorktree", "ExitWorktree", "Artifact", "ReportFindings", "DesignSync", "CronCreate", "CronDelete", "CronList", "Monitor", "PushNotification", "RemoteTrigger", "ListMcpResourcesTool", "ReadMcpResourceTool", "ReadMcpResourceDirTool"]
