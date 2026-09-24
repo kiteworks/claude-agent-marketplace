@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install invoice-organizer@kiteworks-lite
 ```
 
-**Claude Desktop:** download `invoice-organizer.plugin` (or the identical `invoice-organizer.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `invoice-organizer.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

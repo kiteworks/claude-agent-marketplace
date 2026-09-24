@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install cmmc-compliance-check@kiteworks-lite
 ```
 
-**Claude Desktop:** download `cmmc-compliance-check.plugin` (or the identical `cmmc-compliance-check.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `cmmc-compliance-check.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

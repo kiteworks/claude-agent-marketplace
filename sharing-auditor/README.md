@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install sharing-auditor@kiteworks-lite
 ```
 
-**Claude Desktop:** download `sharing-auditor.plugin` (or the identical `sharing-auditor.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `sharing-auditor.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install intake-form-builder@kiteworks-lite
 ```
 
-**Claude Desktop:** download `intake-form-builder.plugin` (or the identical `intake-form-builder.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `intake-form-builder.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

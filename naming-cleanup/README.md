@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install naming-cleanup@kiteworks-lite
 ```
 
-**Claude Desktop:** download `naming-cleanup.plugin` (or the identical `naming-cleanup.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `naming-cleanup.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

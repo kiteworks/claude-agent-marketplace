@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install sensitive-content-scanner@kiteworks-lite
 ```
 
-**Claude Desktop:** download `sensitive-content-scanner.plugin` (or the identical `sensitive-content-scanner.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `sensitive-content-scanner.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

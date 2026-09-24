@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install redactor@kiteworks-lite
 ```
 
-**Claude Desktop:** download `redactor.plugin` (or the identical `redactor.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `redactor.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

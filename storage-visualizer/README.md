@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install storage-visualizer@kiteworks-lite
 ```
 
-**Claude Desktop:** download `storage-visualizer.plugin` (or the identical `storage-visualizer.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `storage-visualizer.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

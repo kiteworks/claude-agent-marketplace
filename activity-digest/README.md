@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install activity-digest@kiteworks-lite
 ```
 
-**Claude Desktop:** download `activity-digest.plugin` (or the identical `activity-digest.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `activity-digest.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

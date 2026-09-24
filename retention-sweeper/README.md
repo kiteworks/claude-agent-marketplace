@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install retention-sweeper@kiteworks-lite
 ```
 
-**Claude Desktop:** download `retention-sweeper.plugin` (or the identical `retention-sweeper.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `retention-sweeper.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

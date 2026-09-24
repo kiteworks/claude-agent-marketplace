@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install eu-ai-act-compliance-check@kiteworks-lite
 ```
 
-**Claude Desktop:** download `eu-ai-act-compliance-check.plugin` (or the identical `eu-ai-act-compliance-check.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `eu-ai-act-compliance-check.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

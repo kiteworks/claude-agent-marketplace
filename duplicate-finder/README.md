@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install duplicate-finder@kiteworks-lite
 ```
 
-**Claude Desktop:** download `duplicate-finder.plugin` (or the identical `duplicate-finder.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `duplicate-finder.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 
