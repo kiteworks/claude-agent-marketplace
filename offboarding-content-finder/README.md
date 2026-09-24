@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install offboarding-content-finder@kiteworks-lite
 ```
 
-**Claude Desktop:** download `offboarding-content-finder.plugin` (or the identical `offboarding-content-finder.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `offboarding-content-finder.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

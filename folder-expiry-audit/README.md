@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install folder-expiry-audit@kiteworks-lite
 ```
 
-**Claude Desktop:** download `folder-expiry-audit.plugin` (or the identical `folder-expiry-audit.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `folder-expiry-audit.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

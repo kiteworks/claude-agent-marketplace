@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install soc2-compliance-check@kiteworks-lite
 ```
 
-**Claude Desktop:** download `soc2-compliance-check.plugin` (or the identical `soc2-compliance-check.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `soc2-compliance-check.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

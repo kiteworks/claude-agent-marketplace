@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install nist-ai-rmf-compliance-check@kiteworks-lite
 ```
 
-**Claude Desktop:** download `nist-ai-rmf-compliance-check.plugin` (or the identical `nist-ai-rmf-compliance-check.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `nist-ai-rmf-compliance-check.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

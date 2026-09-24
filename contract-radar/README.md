@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install contract-radar@kiteworks-lite
 ```
 
-**Claude Desktop:** download `contract-radar.plugin` (or the identical `contract-radar.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `contract-radar.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

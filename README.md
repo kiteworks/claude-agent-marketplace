@@ -29,7 +29,7 @@ Add this marketplace by URL, then install any agent by name:
 /plugin install <agent>@kiteworks-lite
 ```
 
-**Claude Desktop (single plugin):** download an `<agent>.plugin` bundle and upload it via **Customize → Personal plugins → Upload plugin** (or, org-wide, **Organization settings → Plugins → Add plugins → Upload a file**). If the uploader rejects `.plugin`, upload the identical `<agent>.zip`.
+**Claude Desktop (single plugin):** download an `<agent>.plugin` bundle and upload it via **Customize → Personal plugins → Upload plugin** (or, org-wide, **Organization settings → Plugins → Add plugins → Upload a file**).
 
 ## Agents (41)
 
@@ -94,7 +94,7 @@ Explore and try each agent on the website — the list below links straight to e
 - `.claude-plugin/marketplace.json` — the marketplace catalog (`kiteworks-lite`).
 - `LICENSE` — Apache License 2.0.
 - `<agent>/` — the plugin directory (skills, agents, connector setup, per-agent README).
-- `<agent>.plugin` and `<agent>.zip` — single-plugin bundles (identical bytes; `.zip` works around a Claude Desktop uploader that rejects `.plugin`).
+- `<agent>.plugin` — the single-plugin bundle for Claude Desktop upload.
 
 ## Notes
 

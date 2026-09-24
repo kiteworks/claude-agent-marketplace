@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install document-summarizer@kiteworks-lite
 ```
 
-**Claude Desktop:** download `document-summarizer.plugin` (or the identical `document-summarizer.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `document-summarizer.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

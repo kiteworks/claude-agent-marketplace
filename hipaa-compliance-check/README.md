@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install hipaa-compliance-check@kiteworks-lite
 ```
 
-**Claude Desktop:** download `hipaa-compliance-check.plugin` (or the identical `hipaa-compliance-check.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `hipaa-compliance-check.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

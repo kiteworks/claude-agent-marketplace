@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install inbox-triage@kiteworks-lite
 ```
 
-**Claude Desktop:** download `inbox-triage.plugin` (or the identical `inbox-triage.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `inbox-triage.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 

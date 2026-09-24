@@ -27,7 +27,7 @@ Add the marketplace once, then install this agent:
 /plugin install iso27701-compliance-check@kiteworks-lite
 ```
 
-**Claude Desktop:** download `iso27701-compliance-check.plugin` (or the identical `iso27701-compliance-check.zip` if the uploader rejects `.plugin`) and upload it via **Customize → Personal plugins → Upload plugin**.
+**Claude Desktop:** download `iso27701-compliance-check.plugin` and upload it via **Customize → Personal plugins → Upload plugin**.
 
 ## Requires
 
