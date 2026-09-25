@@ -10,7 +10,7 @@ description: >
   sharing starts. Read this before writing or modifying any
   sharing-related check.
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # sharing-exposure — effective sharing exposure, resolved once per scan
@@ -24,7 +24,8 @@ Read `../folder-scan/SKILL.md` first; this skill only adds the sharing semantics
 - **File records never carry the flag.** A file is exposed exactly when its containing folder is. A file shared directly (file-level share) is invisible to this mechanism; say so once in every report.
 - Nothing on this connector says who the members are or whether they are internal or external. Never claim "external" sharing. Say "sharing exposure" or "in a shared folder tree".
 - `path` on every folder and file record reads `Top folder/Subfolder/.../<own name>`, with no leading slash. Its first segment is the name the same folder has in `get_top_folders`, also for trees shared *to* you.
-- `get_top_folders` is not a clean list of roots: it can include `deleted: true` records and folders whose `parentId` is not `"0"`. Ignore deleted records everywhere (walk, counts, matching). When matching a top-level name, require `parentId == "0"`.
+- `get_top_folders` can include `deleted: true` records. Ignore deleted records everywhere (walk, counts, matching).
+- A top-level folder is any record `get_top_folders` returns that is not deleted, whatever its `parentId`. Never filter on `parentId`: it is `"0"` on some tenants, and on others every record, My Folder included, carries the tenant root's id (seen on eu2.kiteworks.training, 2026-09-24).
 
 ## Vocabulary
 
@@ -48,7 +49,7 @@ Read `../folder-scan/SKILL.md` first; this skill only adds the sharing semantics
 ## Step 2: root shared, so find the share origin (once per scan, never per item)
 
 1. Split the root's `path` on `/`.
-2. Segment 1: find it in `get_top_folders` by exact name among records with `parentId == "0"` that are not deleted. Page with the tool's top-level `offset` if `metadata.total` exceeds what came back. If more than one record matches, stop here: partially resolved, reason "ambiguous top-level name".
+2. Segment 1: find it in `get_top_folders` by exact name among the records that are not deleted, whatever their `parentId`. Page with the tool's top-level `offset` if `metadata.total` exceeds what came back. If more than one record matches, stop here: partially resolved, reason "ambiguous top-level name".
 3. For each further segment, **while the previous level's flag is not true**, call `get_folder_children(parent_id=<matched id>, options={"name": "<segment>"})`. The name filter is server-side and returns the one matching folder; names are unique within a parent, so the match is deterministic.
 4. **Stop at the first level whose flag is true.** That folder is the share origin; every level below it cascades true, so the remaining levels need no call. Record per level: name, id, flag, `creator.email`. The visible top is segment 1's record.
 5. Caps: 25 levels, 3 pages per level. On a cap, a missing segment, a name mismatch, or an ambiguous top-level name, stop: the ancestry is *partially resolved*, the share origin is unknown, and the exposure source is `ancestor at or above the scan root (not resolved: <reason>)`. The root is still exposed; its own flag said so.
@@ -80,6 +81,10 @@ Finding row: `Exposed via <exposure source> (folder-level share). <N> files and 
 Limitation, always: `Sharing exposure is read from the folder-level isShared flag. It does not say who has access or whether they are internal or external. Directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.`
 
 In any CSV or structured output, `share_origin`, `origin_depth` and `creator` are empty when the root is not shared or the origin is not resolved.
+
+## Connector tools this skill uses
+
+- Calls: `get_top_folders`, `get_folder_children`, `search_folders`.
 
 ## Disclaimer
 

@@ -1,6 +1,6 @@
 # GDPR Compliance Check
 
-`v1.2.3` · updated 2026-09-24
+`v1.3.2` · updated 2026-09-25
 
 Scans a Kiteworks folder for personal data, external sharing, and files older than your retention policy under GDPR, and saves a report. Covers the same ground GDPR's storage-limitation and exposure concerns care about.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: internal skill metadata cleanup.
+Maintenance release: reliability improvements.
 
 ## Install
 

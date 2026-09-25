@@ -28,7 +28,7 @@ An earlier version of this skill said to base64-encode a generated PDF/docx and 
 Every agent writes into `My Folder/Agents/<Agent Name>/`, created on first use if missing:
 
 1. Resolve the real "My Folder" id per `folder-scan`'s gotcha (use the `get_top_folders` entry named "My Folder" / `syncdirId` — never `mydirId`, which rejects `create_folder`).
-2. Look for a child folder named "Agents" under it; create it if absent.
+2. Look for a child folder named "Agents" under it (`get_folder_children`); create it if absent.
 3. Look for a child folder named after this agent (e.g. "Retention Sweeper") under "Agents"; create it if absent.
 4. If the user specifies a different destination folder, use that instead — confirm it with the user before writing either way.
 
@@ -67,3 +67,15 @@ Build the metadata list via `standard_metadata(scope_label, scope_name, scanned_
 ## Confirm before every write
 
 Steps, in order: (1) build the result set in the preview phase; (2) show the user counts + a sample and ask them to confirm the action and destination; (3) only then create any folder or file. Never chain preview → apply without an explicit user confirmation in between.
+
+## Connector tools this skill uses
+
+- Calls: `get_top_folders`, `get_folder_children`, `create_folder`,
+  `create_file_from_content`, `upload_file_from_path`, `get_user_info_whoami`.
+- Named only: `move_file`, `delete_file`, `delete_folder`.
+
+The Calls tools are granted to every agent that reads this skill: resolving
+and creating the destination folder, writing the CSV/txt, uploading a binary
+report, and naming who ran it. `move_file` belongs only to apply agents whose
+own skill relocates files; this skill never calls it. The delete tools are
+never granted to an agent that follows this skill.

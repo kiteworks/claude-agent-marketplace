@@ -1,5 +1,51 @@
 # Changelog
 
+## 1.2.2 — 2026-09-25
+
+Maintenance release: reliability improvements. <!-- whats-new: consolidated -->
+
+- changed: agents/wcag-compliance-check.md
+- changed: skills/compliance-mapping/SKILL.md
+- changed: skills/compliance-mapping/scripts/accessibility_check.py
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/surface-gate/SKILL.md
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+- changed: skills/wcag-compliance-check/SKILL.md
+
+## 1.2.1 — 2026-09-24
+
+Reads PowerPoint speaker notes and grouped shapes when checking slide decks, and counts IBANs that run straight into the next field. <!-- whats-new: consolidated -->
+
+- changed: skills/compliance-mapping/SKILL.md
+- changed: skills/compliance-mapping/scripts/accessibility_check.py
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/report-export/SKILL.md
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+- changed: skills/wcag-compliance-check/SKILL.md
+
+## 1.2.0 — 2026-09-24
+
+Cites the correct WCAG success criteria for untagged PDFs, heading levels and slide titles, and reads spreadsheets and Word documents reliably. <!-- whats-new: consolidated -->
+
+- changed: skills/connector-probe/SKILL.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+- changed: skills/wcag-compliance-check/SKILL.md
+
 ## 1.1.3 — 2026-09-24
 
 Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->

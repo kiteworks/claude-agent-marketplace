@@ -8,7 +8,7 @@ metadata:
   version: "0.2.0"
 ---
 
-Delegate to the `naming-cleanup-preview` subagent. Read `../folder-scan/SKILL.md` first.
+Delegate to the `naming-cleanup-preview` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` first.
 
 # Naming Cleanup — preview
 

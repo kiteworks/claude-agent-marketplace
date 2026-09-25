@@ -7,7 +7,7 @@ description: >
   it. Read this before writing or modifying any skill that calls
   get_folder_children, get_top_folders, or search*.
 metadata:
-  version: "0.3.0"
+  version: "0.5.0"
 ---
 
 # folder-scan — shared metadata-walk helper
@@ -30,9 +30,51 @@ Never scan blindly. Collect a folder (path or ID) or a search term from the user
 
 ## Walking a folder tree
 
-The single, correct mechanism for scanning a folder and everything beneath it is a bounded `get_folder_children` recursion — confirmed live and working (nested subfolders returned correctly with full metadata in one call per folder level). Every item it returns carries `modified`, `created`, `creator`, `parentId`, `path`, `permalink`, and (for files) `fingerprint`. **`isShared` is present on folder records only, and only when true** (confirmed live 2026-09-14: file records never carry it, and folders in a private tree omit the key rather than sending `false`). A file's sharing state is its containing folder's state; plugins that judge sharing exposure bundle `../sharing-exposure/SKILL.md` and read it before any sharing-related check. So date windows, sharing checks, and owner checks are all done by **filtering the walked results client-side**, not by pushing the filter to a search call. There is no server-side shortcut for a tree-wide date or term filter; don't design one in.
+The single, correct mechanism for scanning a folder and everything beneath it is a bounded `get_folder_children` recursion — confirmed live and working (nested subfolders returned correctly with full metadata, one listing per folder, paged as set out under "Page every listing call"). Every item it returns carries `modified`, `created`, `creator`, `parentId`, `path`, `permalink`, and (for files) `fingerprint`. **`isShared` is present on folder records only, and only when true** (confirmed live 2026-09-14: file records never carry it, and folders in a private tree omit the key rather than sending `false`). A file's sharing state is its containing folder's state; plugins that judge sharing exposure bundle `../sharing-exposure/SKILL.md` and read it before any sharing-related check. So date windows, sharing checks, and owner checks are all done by **filtering the walked results client-side**, not by pushing the filter to a search call. There is no server-side shortcut for a tree-wide date or term filter; don't design one in.
 
-Bounded walk — do not exceed max_depth=25, max_pages=50, max_items=20000 for `get_folder_children` recursion. This is a best-effort walk, not guaranteed to reach every item. When any limit is hit, say so explicitly in the result: state how many folders/files were scanned, and present the result as partial coverage.
+## Page every listing call
+
+`get_folder_children` and `get_top_folders` return one page of records per
+call. Their input schema takes `limit` and `offset` but documents no default
+page size, so an unpaged call can return the first page of a large folder and
+say nothing about the rest. Page every listing call explicitly:
+
+- Pass `limit: 100` and `offset: 0` on the first call: inside `options` for
+  `get_folder_children`, at the top level for `get_top_folders`.
+- Each response carries `metadata.total`, the folder's full child count
+  (confirmed live 2026-09-25: `limit: 5` on a 14-child folder returned 5
+  records and `total: 14`). Call again with `offset` raised by the number of
+  records received until you hold `metadata.total` records for that folder,
+  even when a page comes back shorter than `limit`: the server may cap its
+  page size below the `limit` you asked for. An empty page before that point
+  leaves the folder incomplete. When `metadata.total` is absent, stop on an
+  empty page or one shorter than `limit`.
+- A folder is fully listed only when its paging loop ended that way. A folder
+  whose loop stopped for any other reason (a cap, a rate-limit skip, an error)
+  is incomplete.
+
+Bounded walk: do not exceed max_depth=25, max_pages=50 per folder (5,000
+children at `limit: 100`), or max_items=20000 records in total. When a cap is
+hit, stop that branch, record which cap was hit and where, and present the
+result as partial coverage.
+
+## Coverage block
+
+Every result built on a walk ends with a coverage block. Fill it from the
+records the calls returned; never estimate or recall a count:
+
+- listing calls made (every page is one call) and folders fully listed;
+- records examined, split into folders and files by each record's `type` field
+  (`d` is a folder, `f` is a file), for the whole walk and per top-level
+  folder, so the per-top-folder counts add up to the totals;
+- folders skipped or incomplete, by path, with the reason: which cap was hit,
+  a rate-limit skip, or an error.
+
+Any skipped or incomplete folder makes the result partial coverage. Say so
+next to every count or finding it affects: "none found" over a partial walk
+means none found in what was listed, never none in the tree.
+
+**Leave `orderBy` out of `get_folder_children` options.** The connector's input schema documents it only as a free string with no allowed values, and a guessed value is rejected: `orderBy: "type:asc"` returned `422 ERR_INVALID_PARAMETER` (seen live 2026-09-24). When order matters, sort the returned records client-side.
 
 ## Rate limit
 
@@ -66,6 +108,19 @@ Folder and file objects returned by `get_top_folders`/`get_folder_children`/`sea
 ## Links
 
 `search` / `search_files` / `search_folders` results include a real `url` field directly (confirmed live, e.g. `https://content.kiteworks.com/web/file/<id>`) — use it as-is when an item came from one of those calls, don't reconstruct it. `get_folder_children` / `get_top_folders` records carry `links.web_url` and `permalink` (confirmed live 2026-09-14, of the form `https://<tenant>/w/f-<id>`); use either as-is. Only when a record carries neither, build the link from the tenant's configured web origin (`KW_WEB_BASE`) plus the object id: `<base>/web/file/<id>` or `<base>/web/folder/<id>`. Never infer an origin from a filename or path. If neither a returned `url` nor a configured origin is available, tell the user the item can be opened in Kiteworks but show no link — never emit a bare, relative, or guessed URL.
+
+## Connector tools this skill uses
+
+- Calls: `get_top_folders`, `get_folder_children`, `search_folders`.
+- Optional: `get_user_info_whoami`, `search`, `search_files`.
+- Named only: `delete_file`, `delete_folder`, `download_file_to_path`, `move_file`, `move_folder`, `read_file_contents`, `upload_file_from_path`, `rename_file`, `rename_folder`, `create_file_from_content`, `create_folder`.
+
+The Calls tools are granted to every agent that reads this skill: the walk,
+the top-level list, and resolving a folder path or name to its id. The
+Optional tools are not granted to every agent. Where one is not, resolve scope
+with `search_folders` and walk with `get_folder_children` instead, and do not
+mention the missing tool in the report. The Named only tools are never called
+from this skill.
 
 ## Disclaimer
 

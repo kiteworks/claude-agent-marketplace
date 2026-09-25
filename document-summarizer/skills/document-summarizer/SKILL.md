@@ -13,7 +13,7 @@ metadata:
   version: "0.3.1"
 ---
 
-Delegate to the `document-summarizer` subagent. If it reports no tools available, or returns a summary without making any Kiteworks tool calls, treat the result as fabricated, discard it, and ask the user to check the `Kiteworks` connector is connected. On other surfaces, follow this skill directly.
+Delegate to the `document-summarizer` subagent. If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools available, or returns a summary without making any Kiteworks tool calls, treat the result as fabricated, discard it, and ask the user to check the `Kiteworks` connector is connected. On other surfaces, follow this skill directly.
 
 Read `../content-extract/SKILL.md` first for how binary files (.docx, .pdf, .pptx, .xlsx) actually get their text out — this agent never re-implements that bridge itself.
 
@@ -50,7 +50,7 @@ The alpha's Step 1 said to search "using the name or description the user gave" 
 
 ## Step 3 — Get the content
 
-Text-based (`.txt`, `.csv`, `.json`, `.xml`, `.md`, `.log`): read directly per `content-extract`'s text path. Binary (`.docx`, `.pdf`, `.pptx`, `.xlsx`, `.doc`, `.ppt`, `.xls`): route through `content-extract`'s binary path (it verifies actual download, parser and cleanup capabilities). Anything else (encrypted, image-only scans without OCR, unrecognized format): say plainly that this format isn't supported yet — don't attempt a partial read.
+Text-based (`.txt`, `.csv`, `.json`, `.xml`, `.md`, `.log`): read directly per `content-extract`'s text path. Binary (`.docx`, `.pdf`, `.pptx`, `.xlsx`, `.doc`, `.ppt`, `.xls`) and images (`.jpg`, `.jpeg`, `.png`, `.tif`, `.tiff`): route through `content-extract`'s binary path (it verifies actual download, parser and cleanup capabilities, and OCRs images and scanned PDFs when tesseract is present). If its result carries `not_content_checked`, tell the user that reason plainly instead of a summary. Anything else (encrypted, other image formats, unrecognized format): say plainly that this format isn't supported yet — don't attempt a partial read.
 
 ## Step 4 — Write the summary
 

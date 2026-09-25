@@ -1,6 +1,6 @@
 # FedRAMP Compliance Check
 
-`v1.2.3` · updated 2026-09-24
+`v1.3.2` · updated 2026-09-25
 
 Checks a Kiteworks folder for the narrow slice of FedRAMP a file-sharing platform can actually see -- sensitive content and external sharing -- and saves a report. Most of FedRAMP is outside what this can check; it says so.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: internal skill metadata cleanup.
+Maintenance release: reliability improvements.
 
 ## Install
 

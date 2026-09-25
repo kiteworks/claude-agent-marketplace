@@ -9,7 +9,9 @@
       "create_file_from_content",
       "upload_file_from_path",
       "create_folder",
-      "get_user_info_whoami"
+      "get_user_info_whoami",
+      "get_top_folders",
+      "get_folder_children"
     ]
   }
 }

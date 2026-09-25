@@ -8,7 +8,7 @@ metadata:
   version: "0.1.0"
 ---
 
-Delegate to the `offboarding-content-finder-apply` subagent, passing only user-confirmed items and destination. Read `../report-export/SKILL.md`.
+Delegate to the `offboarding-content-finder-apply` subagent, passing only user-confirmed items and destination. If you already are that subagent, do not delegate again: follow this skill directly. Read `../report-export/SKILL.md`.
 
 # Offboarding Content Finder — apply
 

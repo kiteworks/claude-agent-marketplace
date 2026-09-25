@@ -1,5 +1,47 @@
 # Changelog
 
+## 1.5.2 — 2026-09-25
+
+Maintenance release: reliability improvements. <!-- whats-new: consolidated -->
+
+- changed: agents/sensitive-content-scanner.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/sensitive-content-scanner/SKILL.md
+- changed: skills/surface-gate/SKILL.md
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+
+## 1.5.1 — 2026-09-24
+
+Reads PowerPoint speaker notes and grouped shapes when checking slide decks, and counts IBANs that run straight into the next field. <!-- whats-new: consolidated -->
+
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/report-export/SKILL.md
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+
+## 1.5.0 — 2026-09-24
+
+Matches terms in folder names, reads spreadsheets and Word document titles reliably, and deletes its temporary local copies when a read-only run ends. <!-- whats-new: consolidated -->
+
+- changed: hooks/allowlist.json
+- changed: skills/connector-probe/SKILL.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/sensitive-content-scanner/SKILL.md
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+
 ## 1.4.2 — 2026-09-24
 
 Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->

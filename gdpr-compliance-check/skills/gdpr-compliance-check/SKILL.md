@@ -10,7 +10,7 @@ metadata:
   version: "0.3.3"
 ---
 
-Delegate to the `gdpr-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `gdpr-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # GDPR Compliance Check -- fit tier: Strong
 
@@ -22,7 +22,7 @@ The EU's comprehensive data protection regulation covering lawful basis, consent
 
 ## Signals this agent runs
 
-Signals: **A, B, C, E (dormant)**. Signal A's default term list for this framework: "personal data", "special category data", "health data", "biometric", "racial or ethnic origin" (plus the built-in PII/secret presets, plus anything the user adds). Signal C's retention threshold: GDPR sets no fixed number -- Art. 5(1)(e) storage limitation requires data kept 'no longer than necessary'; ask the user for their own documented retention schedule. Signal E (cross-border transfer) is dormant per `../compliance-mapping/SKILL.md` -- Art. 44 governs it, but no Kiteworks field to check it against exists today.
+Signals: **A, B, C, E (dormant)**. Signal A's default term list for this framework: "personal data", "special category data", "health data", "biometric", "racial or ethnic origin" (plus the built-in PII/secret presets, plus anything the user adds). When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=gdpr`: that adds the email preset to the general built-in presets. Signal C's retention threshold: GDPR sets no fixed number -- Art. 5(1)(e) storage limitation requires data kept 'no longer than necessary'; ask the user for their own documented retention schedule. Signal E (cross-border transfer) is dormant per `../compliance-mapping/SKILL.md` -- Art. 44 governs it, but no Kiteworks field to check it against exists today.
 
 ## Control citations
 

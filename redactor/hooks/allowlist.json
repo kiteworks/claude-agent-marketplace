@@ -6,7 +6,10 @@
       "create_file_from_content",
       "create_folder",
       "get_top_folders",
-      "get_folder_children"
+      "get_folder_children",
+      "get_user_info_whoami",
+      "get_file_metadata",
+      "read_file_contents"
     ]
   },
   "redactor-preview": {
@@ -17,7 +20,8 @@
       "search_folders",
       "get_file_metadata",
       "read_file_contents",
-      "download_file_to_path"
+      "download_file_to_path",
+      "get_user_info_whoami"
     ]
   }
 }

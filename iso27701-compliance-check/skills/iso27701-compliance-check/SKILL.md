@@ -10,7 +10,7 @@ metadata:
   version: "0.3.3"
 ---
 
-Delegate to the `iso27701-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `iso27701-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # ISO 27701 Compliance Check -- fit tier: Strong
 
@@ -22,7 +22,7 @@ A privacy information management system (PIMS) extension to ISO 27001, covering 
 
 ## Signals this agent runs
 
-Signals: **A, B, C**. Signal A's default term list for this framework: "personal data", "PII", "data subject", "privacy notice" (plus the built-in PII/secret presets, plus anything the user adds). Signal C's retention threshold: ask the user -- ISO 27701 requires a documented retention schedule but sets no universal fixed number.
+Signals: **A, B, C**. Signal A's default term list for this framework: "personal data", "PII", "data subject", "privacy notice" (plus the built-in PII/secret presets, plus anything the user adds). When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=iso27701`: that adds the email preset to the general built-in presets. Signal C's retention threshold: ask the user -- ISO 27701 requires a documented retention schedule but sets no universal fixed number.
 
 ## Control citations
 

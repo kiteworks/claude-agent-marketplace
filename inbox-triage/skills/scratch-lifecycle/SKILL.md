@@ -54,21 +54,46 @@ with the same OS identity or malicious filesystem driver is outside this boundar
 Each run has `_kiteworks-content-tmp/<run-uuid>/manifest.json`. Opaque relative
 paths carry roles, ownership identity, execution host/location and cleanup states.
 Bookkeeping never contains document text. The manifest is authenticated with a
-random recovery key held by the caller, never stored beside it or in a deliverable.
-Do not log the key or pass it on a command line; use `KITEWORKS_SCRATCH_KEY` in
-the executor's environment for later calls. Keep the key through finalization;
-without it, automatic recovery is unavailable and manual inspection is required.
+random recovery key that is never stored beside it or in a deliverable. `init`
+writes the key to a key file in the user profile, outside every scratch folder
+(Windows: `%LOCALAPPDATA%\Kiteworks\scratch-keys\<run-id>.key`, with an ACL for
+the current user only; elsewhere `~/.local/state/kiteworks/scratch-keys/`, mode
+0600). Later commands find it by run id, so you never pass the key anywhere.
+Complete cleanup removes the key file. If `init` reports
+`key_file_protection: profile-default`, the explicit ACL could not be set and
+the profile's default access applies; say so to the user. Without the key file,
+automatic recovery is unavailable and manual inspection is required.
+
+**Never show the key.** No command prints the key value, and you must never read
+the key file into chat, a result, a report, a log or a command. A recovery
+instruction refers to "the key file" and never contains the value. Error output
+carries a key-free `recovery` command where one applies; copy it as it is.
+`KITEWORKS_SCRATCH_KEY` remains only as an optional override for older callers.
 
 The executable ships at `scripts/scratch_lifecycle.py` alongside this skill
 (and alongside content-extract's parser). Run it with Python:
 
-- `init --parent <verified-private-folder> --location <device-and-execution-location> --owner-pid <session-process-id>`
-  requires a verified live, long-lived session process on the same device and returns root/key.
-  If no such owner can be established, this multi-call CLI is unsupported; use
-  the single-process native Python API only when that executor is available. Default cleanup is retain. Select `--mode delete --authorized`
-  only after applicable authorization; `--mode truncate --authorized` requires
-  separate explicit overwrite authorization. Flags assert a verified decision;
-  they never replace a runtime permission prompt.
+- `init --parent <verified-private-folder> --location <device-and-execution-location> --mode delete --authorized`
+  returns root, key file path and protection, and the resolved `owner_pid`.
+  `--mode` is required; `init` without it fails. The session owner must be a
+  live, long-lived session process on the same device. By default the helper
+  finds it itself: it walks the real parent chain and skips shells and
+  interpreter launchers (Git Bash/MSYS bash, cmd, PowerShell, python). Do not
+  pass `--owner-pid $PPID`: under Git Bash `$PPID` is 1 or an MSYS-only PID.
+  If the helper cannot find an owner, set `KITEWORKS_SCRATCH_OWNER_PID` to the
+  Windows (or POSIX) PID of the agent session process, or pass `--owner-pid`.
+  Never start a keeper process (`Start-Sleep`, `sleep`, a background shell) to
+  act as the owner. If no real owner can be established, this multi-call CLI is
+  unsupported; use the single-process native Python API only when that executor
+  is available.
+  At the end of a read-only run, delete is the default: pass
+  `--mode delete --authorized` at `init`, after any required platform deletion
+  approval. Use `--mode retain` only when the user explicitly asked to keep the
+  copies, or when the platform declined or did not answer the deletion
+  permission; then report every retained path. `--mode truncate --authorized`
+  requires separate explicit overwrite authorization. Flags assert a verified
+  decision; they never replace a runtime permission prompt. Later calls without
+  `--mode`/`--authorized` apply the policy recorded at `init`.
 - `reserve --root <run> --role download --suffix .pdf` persists a plan before
   exclusive file creation and returns its opaque path. Valid roles: download,
   retry, staging, text, partial, ocr, parser_temp, upload_verification.
@@ -78,7 +103,8 @@ The executable ships at `scripts/scratch_lifecycle.py` alongside this skill
 - `release --root <run> --path <owned-file> --mode delete --authorized` verifies
   identity, deletes one file and checks absence. Truncation uses the same checks.
   In a Python consumer use `try/finally: run.release(path)` with its authorized
-  run policy. Missing/replaced/planned-only files stay failed, not DONE.
+  run policy. Releasing a file already `removed` (and still absent) is a
+  no-op. Otherwise missing/replaced/planned-only files stay failed, not DONE.
 - `finalize --root <run> --mode delete --authorized` releases remaining owned
   files, keeps unexpected entries, and removes only its owned empty run directory
   after bookkeeping. It never removes the reused container/root recursively.
@@ -88,7 +114,9 @@ The executable ships at `scripts/scratch_lifecycle.py` alongside this skill
   manually; never suggest deleting a whole reused parent.
 
 Always finalize in a consumer finally block after releasing needed text/originals.
-Explicit retain mode does no destructive operation. A successful parser cannot
+If `finalize` lists `retained` files and the user did not ask to keep them, run
+the returned `next_step` delete command. Downloaded tenant documents must not be
+left on disk by default. Explicit retain mode does no destructive operation. A successful parser cannot
 convert failed cleanup into completion. A hard kill, torn manifest, bridge loss
 or lost recovery key has no automatic guarantee.
 
@@ -100,7 +128,9 @@ destructive cleanup. Select exactly one known manifest and use the original key.
 nonblocking exclusive manifest lock, authenticates root/paths/identities and
 refuses a recorded live session owner or active operation (including PID reuse).
 The session owner remains recorded between CLI calls; closing an operation does
-not end the session lease. Age alone is irrelevant.
+not end the session lease. Age alone is irrelevant. If an earlier call crashed
+and left a stale `active_pid`, the next call reclaims the run automatically once
+that process has exited; no recovery flag is needed while the owner lives.
 Revalidate applicable authorization for recovery. Corrupt manifests, changed
 devices, active runs and missing keys require manual inspection. Other runs and
 unexpected files remain untouched.

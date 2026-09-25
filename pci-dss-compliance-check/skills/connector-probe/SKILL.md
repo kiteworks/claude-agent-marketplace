@@ -7,7 +7,7 @@ description: >
   is missing, and says how to learn whether this user may call an
   admin-gated tool. Read before any Kiteworks call.
 metadata:
-  version: "1.2.0"
+  version: "1.3.0"
 ---
 
 # connector-probe — resolve the connector, check its tools, degrade honestly
@@ -127,3 +127,12 @@ the server, or by a Claude Desktop per-tool permission. When one this run needs
 is missing, say which capability is lost in one sentence at the moment it
 matters, in outcome language ("I cannot move files on this connection, so the
 review-folder step is skipped"), then continue with what is possible.
+
+## Connector tools this skill uses
+
+- Calls: `get_user_info_whoami`.
+- Named only: `get_top_folders`, `read_file_contents`, `download_file_to_path`, `upload_file_from_path`, `create_file_from_content`, `get_admin_activity`.
+
+Every agent is granted `get_user_info_whoami`: this skill uses it to name the
+tenant. The named tools belong to the agent's own steps; this skill only
+checks whether the connector lists them.

@@ -1,5 +1,47 @@
 # Changelog
 
+## 0.6.5 — 2026-09-25
+
+Maintenance release: reliability improvements. <!-- whats-new: consolidated -->
+
+- changed: agents/invoice-organizer-apply.md
+- changed: agents/invoice-organizer-preview.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/invoice-organizer-apply/SKILL.md
+- changed: skills/invoice-organizer-preview/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/surface-gate/SKILL.md
+
+## 0.6.4 — 2026-09-24
+
+Reads PowerPoint speaker notes and grouped shapes in slide decks, and masks IBANs that run straight into the next field in previews. <!-- whats-new: consolidated -->
+
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/invoice-organizer-preview/SKILL.md
+- changed: skills/invoice-organizer-preview/scripts/mask_sensitive_numbers.py
+- changed: skills/report-export/SKILL.md
+
+## 0.6.3 — 2026-09-24
+
+Masks IBANs in the invoice preview, reads spreadsheets reliably, and cleans up its temporary local files at the end of each run. <!-- whats-new: consolidated -->
+
+- changed: agents/invoice-organizer-preview.md
+- changed: hooks/allowlist.json
+- changed: skills/connector-probe/SKILL.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/invoice-organizer-preview/SKILL.md
+- changed: skills/invoice-organizer-preview/scripts/mask_sensitive_numbers.py
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+
 ## 0.6.2 — 2026-09-24
 
 Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->

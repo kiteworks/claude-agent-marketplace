@@ -1,5 +1,51 @@
 # Changelog
 
+## 1.3.2 — 2026-09-25
+
+Maintenance release: reliability improvements. <!-- whats-new: consolidated -->
+
+- changed: agents/iso27701-compliance-check.md
+- changed: skills/compliance-mapping/SKILL.md
+- changed: skills/compliance-mapping/scripts/accessibility_check.py
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/iso27701-compliance-check/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/surface-gate/SKILL.md
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+
+## 1.3.1 — 2026-09-24
+
+Reads PowerPoint speaker notes and grouped shapes when checking slide decks, and counts IBANs that run straight into the next field. <!-- whats-new: consolidated -->
+
+- changed: skills/compliance-mapping/SKILL.md
+- changed: skills/compliance-mapping/scripts/accessibility_check.py
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/report-export/SKILL.md
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+
+## 1.3.0 — 2026-09-24
+
+Detects email addresses, matches terms in folder names, reads spreadsheets and Word document titles reliably, and deletes its temporary local copies when a read-only run ends. <!-- whats-new: consolidated -->
+
+- changed: skills/connector-probe/SKILL.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/iso27701-compliance-check/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/sharing-exposure/SKILL.md
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+
 ## 1.2.3 — 2026-09-24
 
 Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->

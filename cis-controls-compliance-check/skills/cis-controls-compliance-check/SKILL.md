@@ -10,7 +10,7 @@ metadata:
   version: "0.3.3"
 ---
 
-Delegate to the `cis-controls-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `cis-controls-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # CIS Controls v8 Compliance Check -- fit tier: Light
 
@@ -22,7 +22,7 @@ The Center for Internet Security's 18 controls and 153 safeguards for essential 
 
 ## Signals this agent runs
 
-Signals: **A, B**.
+Signals: **A, B**. When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=cis-controls`: that adds the plaintext-credential preset (`password = <value>`-style assignments, placeholder values excluded) to the general built-in presets.
 
 ## Control citations
 

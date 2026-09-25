@@ -9,7 +9,7 @@ metadata:
   version: "0.2.1"
 ---
 
-Delegate to the `inbox-triage-preview` subagent. Read `../folder-scan/SKILL.md` and `../content-extract/SKILL.md` first.
+Delegate to the `inbox-triage-preview` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` and `../content-extract/SKILL.md` first.
 
 # Inbox Triage — preview
 

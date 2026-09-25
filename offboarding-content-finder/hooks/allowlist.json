@@ -7,14 +7,16 @@
       "upload_file_from_path",
       "create_folder",
       "get_top_folders",
-      "get_folder_children"
+      "get_folder_children",
+      "get_user_info_whoami"
     ]
   },
   "offboarding-content-finder-preview": {
     "kiteworks": [
       "get_folder_children",
       "get_top_folders",
-      "search_folders"
+      "search_folders",
+      "get_user_info_whoami"
     ]
   }
 }

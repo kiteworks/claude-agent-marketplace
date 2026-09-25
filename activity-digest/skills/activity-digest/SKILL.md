@@ -10,7 +10,7 @@ metadata:
   version: "1.0.2"
 ---
 
-Delegate to the `activity-digest` subagent. Read `../folder-scan/SKILL.md` first.
+Delegate to the `activity-digest` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` first.
 
 # Activity Digest
 

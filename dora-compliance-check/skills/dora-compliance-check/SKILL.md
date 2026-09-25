@@ -10,7 +10,7 @@ metadata:
   version: "0.5.1"
 ---
 
-Delegate to the `dora-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `dora-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # DORA Compliance Check -- fit tier: Good
 

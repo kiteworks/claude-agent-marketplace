@@ -7,14 +7,17 @@
       "upload_file_from_path",
       "create_folder",
       "get_top_folders",
-      "get_folder_children"
+      "get_folder_children",
+      "get_user_info_whoami"
     ]
   },
   "naming-cleanup-preview": {
     "kiteworks": [
       "get_folder_children",
       "get_top_folders",
-      "search_files"
+      "search_files",
+      "get_user_info_whoami",
+      "search_folders"
     ]
   }
 }

@@ -10,7 +10,7 @@ metadata:
   version: "0.5.0"
 ---
 
-Delegate to the `section-508-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `section-508-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # Section 508 Compliance Check -- fit tier: Accessibility
 
@@ -32,7 +32,7 @@ Drawn directly from 36 CFR Part 1194 (the Access Board's 2017/2018 Section 508 R
 
 ## Operational status: Operational (as of 2026-07-14)
 
-Signal D now runs a real check -- `../compliance-mapping/scripts/accessibility_check.py` (pikepdf + python-docx + python-pptx, plus the stdlib `html.parser` for HTML) -- against every PDF/DOCX/PPTX/HTML file in scope: whether a PDF is genuinely tagged (`MarkInfo.Marked` + a real `StructTreeRoot`), document/deck-level language and Title metadata (PDF/DOCX/PPTX), per-slide title coverage (PPTX), heading-level hierarchy and `<html lang>`/`<title>` presence (HTML), and alt-text coverage on figures/inline images/picture shapes/`<img>` elements. Format coverage was PDF/DOCX-only from the 2026-07-14 launch through a same-day follow-up pass that added `.pptx` and `.html`/`.htm`. Before 2026-07-14 this signal was described but had no working implementation at all (`content-extract` only shells out to `pdftotext`/`pandoc`, neither of which can see PDF tag structure) -- treat any report or documentation from before that date as describing a check that did not actually run.
+Signal D now runs a real check -- `../compliance-mapping/scripts/accessibility_check.py` (pikepdf + python-docx + python-pptx, plus the stdlib `html.parser` for HTML) -- against every PDF/DOCX/PPTX/HTML file in scope: whether a PDF is genuinely tagged (`MarkInfo.Marked` + a real `StructTreeRoot`), document/deck-level language and Title metadata (PDF/DOCX/PPTX), per-slide title coverage (PPTX), heading-level hierarchy and `<html lang>`/`<title>` presence (HTML), and alt-text coverage on figures/inline images/picture shapes/`<img>` elements. Format coverage was PDF/DOCX-only from the 2026-07-14 launch through a same-day follow-up pass that added `.pptx` and `.html`/`.htm`. Before 2026-07-14 this signal was described but had no working implementation at all (`content-extract` is a text extractor: `pdftotext` for PDF and its own standard-library reader for DOCX, PPTX and XLSX, none of which can see PDF tag structure) -- treat any report or documentation from before that date as describing a check that did not actually run.
 
 ## What this doesn't check
 

@@ -10,7 +10,7 @@ metadata:
   version: "0.4.4"
 ---
 
-Delegate to the `vn-pdpl-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `vn-pdpl-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # Vietnam PDPL Compliance Check -- fit tier: Strong
 
@@ -22,7 +22,7 @@ Vietnam's first comprehensive personal data protection law, applying extraterrit
 
 ## Signals this agent runs
 
-Signals: **A, B, C, E (dormant)**. Signal A's default term list for this framework: "personal data" (plus the built-in PII/secret presets, plus anything the user adds). Signal C's retention threshold: ask the user -- the Act states a purpose-limitation retention principle, not a fixed number (see below). Signal E (cross-border transfer) is dormant per `../compliance-mapping/SKILL.md` -- Art. 20 governs it, but no Kiteworks field to check it against exists today.
+Signals: **A, B, C, E (dormant)**. Signal A's default term list for this framework: "personal data" (plus the built-in PII/secret presets, plus anything the user adds). When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=vn-pdpl`: that adds the Vietnamese CCCD preset (12 digits, documented province-code prefix) and the email preset to the general built-in presets. Signal C's retention threshold: ask the user -- the Act states a purpose-limitation retention principle, not a fixed number (see below). Signal E (cross-border transfer) is dormant per `../compliance-mapping/SKILL.md` -- Art. 20 governs it, but no Kiteworks field to check it against exists today.
 
 ## Control citations
 

@@ -10,7 +10,7 @@ metadata:
   version: "0.1.0"
 ---
 
-Delegate to the `invoice-organizer-apply` subagent, passing only the user-confirmed file list (with each file's extracted fields and proposed new name). Read `../report-export/SKILL.md` first.
+Delegate to the `invoice-organizer-apply` subagent, passing only the user-confirmed file list (with each file's extracted fields and proposed new name). If you already are that subagent, do not delegate again: follow this skill directly. Read `../report-export/SKILL.md` first.
 
 # Invoice & Receipt Organizer — apply
 

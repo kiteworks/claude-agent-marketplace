@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.6.5 — 2026-09-25
+
+Maintenance release: reliability improvements. <!-- whats-new: consolidated -->
+
+- changed: agents/inbox-triage-apply.md
+- changed: agents/inbox-triage-preview.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/inbox-triage-apply/SKILL.md
+- changed: skills/inbox-triage-preview/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/surface-gate/SKILL.md
+
+## 0.6.4 — 2026-09-24
+
+Reads PowerPoint speaker notes and grouped shapes in slide decks. <!-- whats-new: consolidated -->
+
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/report-export/SKILL.md
+
+## 0.6.3 — 2026-09-24
+
+Checks which Kiteworks account it is connected to without being interrupted, reads spreadsheets and Word documents reliably, and cleans up its temporary local files at the end of each run. <!-- whats-new: consolidated -->
+
+- changed: hooks/allowlist.json
+- changed: skills/connector-probe/SKILL.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+
 ## 0.6.2 — 2026-09-24
 
 Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->
