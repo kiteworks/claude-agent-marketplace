@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.2.5 — 2026-09-25
+
+Maintenance release: reliability improvements. <!-- whats-new: consolidated -->
+
+- changed: agents/sharing-auditor.md
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/surface-gate/SKILL.md
+
+## 1.2.4 — 2026-09-24
+
+Clarifies how documents are read and which Kiteworks tools each step uses. <!-- whats-new: consolidated -->
+
+- changed: skills/report-export/SKILL.md
+
+## 1.2.3 — 2026-09-24
+
+Recognizes top-level folders on every Kiteworks tenant and cleans up its temporary local files at the end of each run. <!-- whats-new: consolidated -->
+
+- changed: hooks/allowlist.json
+- changed: skills/connector-probe/SKILL.md
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/sharing-exposure/SKILL.md
+
 ## 1.2.2 — 2026-09-24
 
 Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->

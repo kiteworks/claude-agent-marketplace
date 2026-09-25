@@ -10,7 +10,7 @@ metadata:
   version: "1.0.3"
 ---
 
-Delegate to the `contract-radar` subagent. Read `../folder-scan/SKILL.md` first, and `../term-sweep/SKILL.md` if a content deep-scan is confirmed.
+Delegate to the `contract-radar` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` first, and `../term-sweep/SKILL.md` if a content deep-scan is confirmed.
 
 # Contract Radar
 
@@ -24,7 +24,7 @@ A folder scope (required). Term list is optional — default to `agreement, MSA,
 
 ## Sweep
 
-Name/path match against the term list per `term-sweep`, always on. Surface `modified`/`created` dates on every candidate — contract radar is inherently about staleness/renewal timing, so dates matter even before any content check.
+Name/path match against the term list per `term-sweep`, always on. Folder names in each item's path count, so a file under a `Contracts/` folder matches "contract" even when its own name does not; `search_files(path_contains=...)` alone would miss it, because it matches file names only. Surface `modified`/`created` dates on every candidate — contract radar is inherently about staleness/renewal timing, so dates matter even before any content check.
 
 Content matching is a separate, opt-in "deep scan" (real per-file work — a download and parse per candidate, per `../content-extract/SKILL.md`): ask the user whether they want it, tell them roughly how many candidates are in scope, and only run it if they confirm. Respect `content-extract`'s per-run cap and disclose how many files were actually checked vs. in scope.
 

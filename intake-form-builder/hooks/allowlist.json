@@ -2,7 +2,8 @@
   "intake-form-builder": {
     "kiteworks": [
       "get_create_form_schema",
-      "create_form"
+      "create_form",
+      "get_user_info_whoami"
     ]
   }
 }

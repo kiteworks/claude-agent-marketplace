@@ -10,7 +10,7 @@ metadata:
   version: "0.5.0"
 ---
 
-Delegate to the `wcag-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `wcag-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # WCAG Compliance Check -- fit tier: Accessibility
 
@@ -28,11 +28,25 @@ Signals: **D**.
 
 Drawn directly from the W3C's WCAG 2.1 Recommendation (June 2018), not the third-party GRC skill library.
 
-- **Signal D** (accessibility structure): 1.1.1 Non-text Content (Level A -- text alternatives for images/icons/charts), 2.4.2 Page Titled (Level A -- descriptive page/document titles), 3.1.1 Language of Page (Level A -- default human language is programmatically determinable), and 4.1.2 Name, Role, Value (Level A -- UI components expose semantic information to assistive technology) are the four Level-A success criteria closest to what the structural heuristic below actually tests for.
+- **Signal D** (accessibility structure): 1.1.1 Non-text Content (Level A -- text alternatives for images/icons/charts), 1.3.1 Info and Relationships (Level A -- structure such as headings and tags is programmatically determinable, not just visual), 2.4.2 Page Titled (Level A -- a descriptive title for the page/document as a whole), and 3.1.1 Language of Page (Level A -- default human language is programmatically determinable) are the four Level-A success criteria closest to what the structural heuristic below actually tests for.
+
+Which finding cites which criterion (use exactly these; do not improvise others):
+
+| Finding | Cite | Why |
+|---|---|---|
+| Untagged PDF / no structure tree | 1.3.1 | Without tags, headings, lists and tables exist only visually (W3C technique PDF9 is a 1.3.1 technique). Not 4.1.2: that criterion is about UI components, which a static document does not have. |
+| HTML heading level skipped (e.g. h1 -> h3) | 1.3.1 | Heading structure is information-and-relationships content (techniques H42, G141). You may add 2.4.6 Headings and Labels (Level AA) as a best-practice note, but do not report the skip as a 2.4.6 failure: 2.4.6 is about headings being descriptive, not about level order. |
+| HTML page with no h1 | none (best practice) | WCAG does not require an h1. Report it as a best-practice note, not as a failure of any success criterion. |
+| Slide with no title-placeholder text | 1.3.1 | A slide title is that slide's heading; text typed into a free text box instead of the title placeholder is not exposed as one. Not 2.4.2: W3C's Understanding SC 2.4.2 is about "each web page" having a title, and WCAG2ICT applies it to a non-web document as a whole, so for a deck it is the deck's Title metadata, not each slide. 2.4.6 (AA) may be added as a best-practice note. |
+| Document/deck Title metadata or HTML `<title>` missing | 2.4.2 | The title of the document as a whole. |
+| Language metadata or `<html lang>` missing | 3.1.1 | |
+| Figures/images/picture shapes without alt text | 1.1.1 | |
+
+This mapping was corrected on 2026-09-24: heading skips and untagged PDFs were previously cited as 4.1.2 and missing slide titles as 2.4.2. It has not yet been confirmed by an accessibility reviewer.
 
 ## Operational status: Operational (as of 2026-07-14)
 
-Signal D now runs a real check -- `../compliance-mapping/scripts/accessibility_check.py` (pikepdf + python-docx + python-pptx, plus the stdlib `html.parser` for HTML) -- against every PDF/DOCX/PPTX/HTML file in scope, mapping directly to the four cited success criteria: tagged-PDF + structure tree presence, or an HTML heading-hierarchy/landmark reading (feeds 4.1.2's "structure exposed to AT" requirement), document/deck-level language metadata or `<html lang>` (3.1.1), Title metadata or `<title>` (2.4.2), and alt-text coverage on figures/inline images/picture shapes/`<img>` elements (1.1.1). Format coverage was PDF/DOCX-only from the 2026-07-14 launch through a same-day follow-up pass that added `.pptx` and `.html`/`.htm`. Before 2026-07-14 this signal was described but had no working implementation at all (`content-extract` only shells out to `pdftotext`/`pandoc`, neither of which can see PDF tag structure) -- treat any report or documentation from before that date as describing a check that did not actually run.
+Signal D now runs a real check -- `../compliance-mapping/scripts/accessibility_check.py` (pikepdf + python-docx + python-pptx, plus the stdlib `html.parser` for HTML) -- against every PDF/DOCX/PPTX/HTML file in scope, mapping directly to the four cited success criteria: tagged-PDF + structure tree presence, HTML heading hierarchy, or per-slide title placeholders (1.3.1, structure exposed to assistive technology), document/deck-level language metadata or `<html lang>` (3.1.1), Title metadata or `<title>` (2.4.2), and alt-text coverage on figures/inline images/picture shapes/`<img>` elements (1.1.1). Format coverage was PDF/DOCX-only from the 2026-07-14 launch through a same-day follow-up pass that added `.pptx` and `.html`/`.htm`. Before 2026-07-14 this signal was described but had no working implementation at all (`content-extract` is a text extractor: `pdftotext` for PDF and its own standard-library reader for DOCX, PPTX and XLSX, none of which can see PDF tag structure) -- treat any report or documentation from before that date as describing a check that did not actually run.
 
 ## What this doesn't check
 

@@ -11,7 +11,7 @@ metadata:
   version: "0.3.0"
 ---
 
-Delegate to the `redactor-preview` subagent. Read `../content-extract/SKILL.md` first, and `../term-sweep/SKILL.md` if the user wants built-in PII pattern redaction rather than a literal term.
+Delegate to the `redactor-preview` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../content-extract/SKILL.md` first, and `../term-sweep/SKILL.md` if the user wants built-in PII pattern redaction rather than a literal term.
 
 # Redactor — preview
 

@@ -10,7 +10,7 @@ metadata:
   version: "0.4.4"
 ---
 
-Delegate to the `nist-ai-rmf-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `nist-ai-rmf-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # NIST AI RMF Compliance Check -- fit tier: Light
 

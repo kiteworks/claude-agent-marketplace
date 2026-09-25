@@ -10,7 +10,7 @@ metadata:
   version: "0.3.3"
 ---
 
-Delegate to the `hipaa-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `hipaa-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # HIPAA Compliance Check -- fit tier: Strong
 
@@ -22,7 +22,7 @@ The US health-data privacy and security law (Privacy Rule, Security Rule, Breach
 
 ## Signals this agent runs
 
-Signals: **A, B, C**. Signal A's default term list for this framework: "PHI", "ePHI", "protected health information", "patient", "diagnosis", "medical record number" (plus the built-in PII/secret presets, plus anything the user adds). Signal C's retention threshold: 6 years from creation or last effective date, per the HIPAA Security Rule documentation-retention requirement (45 CFR 164.316(b)(2)).
+Signals: **A, B, C**. Signal A's default term list for this framework: "PHI", "ePHI", "protected health information", "patient", "diagnosis", "medical record number" (plus the built-in PII/secret presets, plus anything the user adds). When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=hipaa`: that adds the NPI preset (80840-prefixed Luhn check, NPI keyword required), the medical record number preset and the health-plan member ID preset (both only directly after their label) to the general built-in presets, which already include SSN. Signal C's retention threshold: 6 years from creation or last effective date, per the HIPAA Security Rule documentation-retention requirement (45 CFR 164.316(b)(2)).
 
 ## Control citations
 

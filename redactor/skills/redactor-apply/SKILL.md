@@ -9,7 +9,7 @@ metadata:
   version: "0.3.0"
 ---
 
-Delegate to the `redactor-apply` subagent after confirming the file list, replacement, and destination. Read `../content-extract/SKILL.md` and `../report-export/SKILL.md`.
+Delegate to the `redactor-apply` subagent after confirming the file list, replacement, and destination. If you already are that subagent, do not delegate again: follow this skill directly. Read `../content-extract/SKILL.md` and `../report-export/SKILL.md`.
 
 # Redactor — apply
 

@@ -1,6 +1,6 @@
 # Duplicate Finder
 
-`v0.6.2` · updated 2026-09-24
+`v0.6.5` · updated 2026-09-25
 
 Finds duplicate files in a Kiteworks folder and, once you approve, moves the extra copies to a review folder so you can reclaim space.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: internal skill metadata cleanup.
+Maintenance release: reliability improvements.
 
 ## Install
 

@@ -10,7 +10,7 @@ metadata:
   version: "1.3.0"
 ---
 
-Delegate to the `sensitive-content-scanner` subagent. Read `../term-sweep/SKILL.md` first — it has the confirmed caveat about `content_contains` reliability; do not skip it.
+Delegate to the `sensitive-content-scanner` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../term-sweep/SKILL.md` first — it has the confirmed caveat about `content_contains` reliability; do not skip it.
 
 # Sensitive Content Scanner
 
@@ -24,15 +24,15 @@ A folder scope (required) and a term list (required — never assume a default l
 
 ## Sweep
 
-Always run the name/path match per `term-sweep` — fast, one call, always on.
+Always run the name/path match per `term-sweep` — metadata only, always on. It matches each term against the full `path` of every walked item, so a file inside a folder named for the term (e.g. `Confidential/`) is flagged even when its own name is neutral; `search_files(path_contains=...)` alone matches file names only and would miss it.
 
 Content matching is a separate, opt-in "deep scan": ask the user whether they want it (it's real per-file work — a download and parse per candidate file, per `../content-extract/SKILL.md`), tell them roughly how many files are in scope, and only run it if they confirm. Respect `content-extract`'s per-run cap and disclose how many files were actually checked vs. in scope.
 
 ## Built-in PII/secret pattern presets — all run by default
 
-This is what makes this agent an actual *sensitive-content* scanner rather than just a keyword search the user has to fully configure themselves. Whenever the content deep-scan runs, also run `../term-sweep/SKILL.md`'s built-in pattern presets (`scripts/pii_patterns.py`) against the same extracted text, alongside whatever custom terms the user gave. **Every built-in category runs by default** — mention once, briefly, that this happens and that it can be turned off if the user only wants their own term list; don't ask them to pick categories up front or single out any one category (e.g. a country-specific one) as needing special permission.
+This is what makes this agent an actual *sensitive-content* scanner rather than just a keyword search the user has to fully configure themselves. Whenever the content deep-scan runs, also run `../term-sweep/SKILL.md`'s built-in pattern presets (`scripts/pii_patterns.py`) against the same extracted text with `--framework=sensitive-content-scanner`, alongside whatever custom terms the user gave. **Every general built-in category runs by default**, and the flag adds the plaintext-credential preset (`password = <value>`-style assignments, placeholder values excluded) — mention once, briefly, that this happens and that it can be turned off if the user only wants their own term list; don't ask them to pick categories up front or single out any one category (e.g. a country-specific one) as needing special permission.
 
-**Keep the narration terse.** Don't preamble-list every category before running (per `term-sweep`'s presentation rule). In the summary card, name only the categories that actually got a hit, plus a one-line total count of categories checked. The full per-category breakdown — including zero-hit categories — goes into the exported report, not the chat turn. If the user asks what's checked, or wants to scan for a narrower subset (e.g. "just financial patterns," or by region), offer `term-sweep`'s tag-based `--categories` selector (`region:<value>`, `type:<value>`, exact category names, or `all`) — but only when they ask or it's clearly useful, not as a standing question before every scan.
+**Keep the narration terse.** Don't preamble-list every category before running (per `term-sweep`'s presentation rule). In the summary card, name only the categories that actually got a hit, plus a one-line total count of categories checked. The full per-category breakdown — including zero-hit categories — goes into the exported report, not the chat turn. If the user asks what's checked, or wants to scan for a narrower subset (e.g. "just financial patterns," or by region), offer `term-sweep`'s tag-based `--categories` selector (`region:<value>`, `type:<value>`, exact category names, or `all`). The privacy-framework-gated presets (Aadhaar, CPF/CNPJ, Vietnamese CCCD, email, lat/lon) do not run by default here; select them by exact name if the user asks for them — but only when they ask or it's clearly useful, not as a standing question before every scan.
 
 Each category also carries a `context_confirmed` count alongside its raw `valid` count — whether a relevant keyword (e.g. "BSN," "SSN," "IBAN," "card number") appeared within 60 characters of the match. A shape/checksum-valid match with no nearby keyword still counts as a hit (real PII is often unlabeled), but report both numbers so the user can see how many hits also have contextual support, not just checksum validity.
 

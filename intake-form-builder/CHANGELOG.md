@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.3 — 2026-09-25
+
+Maintenance release: reliability improvements. <!-- whats-new: consolidated -->
+
+- changed: agents/intake-form-builder.md
+- changed: skills/intake-form-builder/SKILL.md
+
+## 0.2.2 — 2026-09-24
+
+Checks which Kiteworks account it is connected to without being interrupted. <!-- whats-new: consolidated -->
+
+- changed: hooks/allowlist.json
+- changed: skills/connector-probe/SKILL.md
+
 ## 0.2.1 — 2026-09-24
 
 Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->

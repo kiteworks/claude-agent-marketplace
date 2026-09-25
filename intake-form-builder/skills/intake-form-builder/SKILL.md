@@ -11,7 +11,7 @@ metadata:
   version: "0.1.0"
 ---
 
-Delegate to the `intake-form-builder` subagent, or follow this directly.
+Delegate to the `intake-form-builder` subagent, or follow this directly. If you already are that subagent, do not delegate again: follow this skill directly.
 
 # Intake Form Builder
 

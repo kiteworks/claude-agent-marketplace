@@ -7,7 +7,7 @@ metadata:
   version: "0.1.0"
 ---
 
-Delegate to the `naming-cleanup-apply` subagent, passing only user-confirmed old-name→new-name pairs. Read `../report-export/SKILL.md`.
+Delegate to the `naming-cleanup-apply` subagent, passing only user-confirmed old-name→new-name pairs. If you already are that subagent, do not delegate again: follow this skill directly. Read `../report-export/SKILL.md`.
 
 # Naming Cleanup — apply
 

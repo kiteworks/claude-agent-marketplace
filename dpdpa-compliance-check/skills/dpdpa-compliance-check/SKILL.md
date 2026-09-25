@@ -10,7 +10,7 @@ metadata:
   version: "0.3.3"
 ---
 
-Delegate to the `dpdpa-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `dpdpa-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # DPDPA (India) Compliance Check -- fit tier: Strong
 
@@ -22,7 +22,7 @@ India's Digital Personal Data Protection Act, covering Data Fiduciary obligation
 
 ## Signals this agent runs
 
-Signals: **A, B, C, E (dormant)**. Signal A's default term list for this framework: "personal data", "aadhaar", "personal information" (plus the built-in PII/secret presets, plus anything the user adds). Signal C's retention threshold: ask the user -- DPDPA requires erasure once the specified purpose is served (see citation below), with no universal fixed number. Signal E (cross-border transfer) is dormant per `../compliance-mapping/SKILL.md` -- Section 16 governs it, but no Kiteworks field to check it against exists today.
+Signals: **A, B, C, E (dormant)**. Signal A's default term list for this framework: "personal data", "aadhaar", "personal information" (plus the built-in PII/secret presets, plus anything the user adds). When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=dpdpa`: that adds the Aadhaar preset (12 digits, Verhoeff check) and the email preset to the general built-in presets. Signal C's retention threshold: ask the user -- DPDPA requires erasure once the specified purpose is served (see citation below), with no universal fixed number. Signal E (cross-border transfer) is dormant per `../compliance-mapping/SKILL.md` -- Section 16 governs it, but no Kiteworks field to check it against exists today.
 
 ## Control citations
 

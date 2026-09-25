@@ -3,7 +3,8 @@
     "kiteworks": [
       "get_folder_children",
       "get_top_folders",
-      "search_folders"
+      "search_folders",
+      "get_user_info_whoami"
     ]
   }
 }

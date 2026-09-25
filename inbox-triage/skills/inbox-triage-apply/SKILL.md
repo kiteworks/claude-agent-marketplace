@@ -8,7 +8,7 @@ metadata:
   version: "0.1.0"
 ---
 
-Delegate to the `inbox-triage-apply` subagent, passing only user-confirmed item→destination pairs. Read `../report-export/SKILL.md` for the export half.
+Delegate to the `inbox-triage-apply` subagent, passing only user-confirmed item→destination pairs. If you already are that subagent, do not delegate again: follow this skill directly. Read `../report-export/SKILL.md` for the export half.
 
 # Inbox Triage — apply
 

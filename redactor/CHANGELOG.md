@@ -1,5 +1,49 @@
 # Changelog
 
+## 0.7.2 — 2026-09-25
+
+Maintenance release: reliability improvements. <!-- whats-new: consolidated -->
+
+- changed: agents/redactor-apply.md
+- changed: agents/redactor-preview.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/redactor-apply/SKILL.md
+- changed: skills/redactor-preview/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/surface-gate/SKILL.md
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+
+## 0.7.1 — 2026-09-24
+
+Reads PowerPoint speaker notes and grouped shapes, counts IBANs that run straight into the next field, and checks a file's scan status before reading it. <!-- whats-new: consolidated -->
+
+- changed: hooks/allowlist.json
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/report-export/SKILL.md
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+
+## 0.7.0 — 2026-09-24
+
+Matches terms in folder names, reads spreadsheets and Word document titles reliably, and deletes its temporary local copies when a read-only run ends. <!-- whats-new: consolidated -->
+
+- changed: hooks/allowlist.json
+- changed: skills/connector-probe/SKILL.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/folder-scan/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/term-sweep/SKILL.md
+- changed: skills/term-sweep/scripts/pii_patterns.py
+
 ## 0.6.2 — 2026-09-24
 
 Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->

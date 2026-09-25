@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.6.5 — 2026-09-25
+
+Maintenance release: reliability improvements. <!-- whats-new: consolidated -->
+
+- changed: agents/document-summarizer.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/document-summarizer/SKILL.md
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+- changed: skills/surface-gate/SKILL.md
+
+## 0.6.4 — 2026-09-24
+
+Reads PowerPoint speaker notes and grouped shapes when summarizing slide decks, and can find the destination folder when saving a summary. <!-- whats-new: consolidated -->
+
+- changed: hooks/allowlist.json
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/report-export/SKILL.md
+
+## 0.6.3 — 2026-09-24
+
+Reads spreadsheets and Word document titles reliably and deletes its temporary local copies when it finishes. <!-- whats-new: consolidated -->
+
+- changed: skills/connector-probe/SKILL.md
+- changed: skills/content-extract/SKILL.md
+- changed: skills/content-extract/scripts/extract_and_cleanup.py
+- changed: skills/content-extract/scripts/scratch_lifecycle.py
+- changed: skills/scratch-lifecycle/SKILL.md
+- changed: skills/scratch-lifecycle/scripts/scratch_lifecycle.py
+
 ## 0.6.2 — 2026-09-24
 
 Maintenance release: internal skill metadata cleanup. <!-- whats-new: consolidated -->
