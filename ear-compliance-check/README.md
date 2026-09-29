@@ -1,6 +1,6 @@
 # EAR Compliance Check
 
-`v1.3.2` · updated 2026-09-25
+`v1.3.4` · updated 2026-09-29
 
 Scans a Kiteworks folder for export-controlled technology descriptions and external/foreign sharing under EAR, and saves a report. ECCN classification is outside what this can check; it says so.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: reliability improvements.
+Maintenance release: cleanup and reliability improvements.
 
 ## Install
 

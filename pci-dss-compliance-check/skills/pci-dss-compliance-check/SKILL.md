@@ -22,7 +22,7 @@ The payment card industry's data security standard for any organization that sto
 
 ## Signals this agent runs
 
-Signals: **A, B, C**. Signal A's default term list for this framework: "cardholder data", "primary account number", "PAN", "CVV", "card verification" (plus the built-in PII/secret presets, plus anything the user adds). Signal C's retention threshold: **ask the user** -- Requirement 3.2.1 requires a documented cardholder-data retention/disposal policy but deliberately states no fixed number of its own (see below); this is bucket 2 of the general Signal C policy in `../compliance-mapping/SKILL.md`, the same pattern as GDPR.
+Signals: **A, B, C**. Signal A's default term list for this framework: "cardholder data", "primary account number", "PAN", "CVV", "card verification" (plus the built-in PII/secret presets, plus anything the user adds). Count these terms, and the user's own terms, only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --framework=pci-dss --framework-terms [--terms-file=<user-terms.txt>]`: the script holds this exact list and applies one fixed matching rule, so never count them yourself. Signal C's retention threshold: **ask the user** -- Requirement 3.2.1 requires a documented cardholder-data retention/disposal policy but deliberately states no fixed number of its own (see below); this is bucket 2 of the general Signal C policy in `../compliance-mapping/SKILL.md`, the same pattern as GDPR.
 
 ## Control citations
 

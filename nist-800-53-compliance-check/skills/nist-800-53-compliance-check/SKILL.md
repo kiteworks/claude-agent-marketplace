@@ -22,7 +22,7 @@ NIST's federal security and privacy controls catalog (Rev 5) underlying FISMA, R
 
 ## Signals this agent runs
 
-Signals: **A, B**. Signal A's default term list for this framework: "CUI", "federal information", "controlled unclassified" (plus the built-in PII/secret presets, plus anything the user adds). When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=nist-800-53`: that adds the plaintext-credential preset (`password = <value>`-style assignments, placeholder values excluded) to the general built-in presets.
+Signals: **A, B**. Signal A's default term list for this framework: "CUI", "federal information", "controlled unclassified" (plus the built-in PII/secret presets, plus anything the user adds). Count these terms, and the user's own terms, only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --framework=nist-800-53 --framework-terms [--terms-file=<user-terms.txt>]`: the script holds this exact list and applies one fixed matching rule, so never count them yourself. When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=nist-800-53`: that adds the plaintext-credential preset (`password = <value>`-style assignments, placeholder values excluded) to the general built-in presets.
 
 ## Control citations
 

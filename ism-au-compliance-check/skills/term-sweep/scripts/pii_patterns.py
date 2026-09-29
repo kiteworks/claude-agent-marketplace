@@ -46,10 +46,14 @@ Vietnamese CCCD, email and lat/lon pairs are only meaningful signals under
 specific privacy frameworks (an email address in a CMMC scan is noise, in a
 GDPR scan it is personal data). Plaintext credential assignments (#291) are
 the security-side counterpart: gated to soc2, cis-controls, iso27001,
-nist-800-53 and sensitive-content-scanner, kept out of the privacy
-frameworks. HIPAA identifiers (#292) -- NPI, medical record number,
-health-plan member ID -- are gated to hipaa; SSN stays general. Each
-carries a `frameworks` tuple and runs only when the caller passes
+nist-800-53, cmmc, fedramp (#300) and sensitive-content-scanner, kept out
+of the privacy frameworks. HIPAA identifiers (#292) -- NPI, medical record
+number, health-plan member ID -- are gated to hipaa; SSN stays general.
+Medical record number and health-plan member ID also count a labelled
+table column (#301), not only a value glued to its label on one line,
+since a real CSV/XLSX export puts the label in the header and the
+values in the rows beneath it.
+Each carries a `frameworks` tuple and runs only when the caller passes
 --framework=<slug> for one of them, or selects it explicitly by
 key/region/type. Without either it is reported as skipped,
 never silently missing.
@@ -62,15 +66,47 @@ Adding a new built-in category later is purely additive -- one new
 CATEGORY_SPECS entry with its own pattern/validator/tags, no change to
 scan() or the CLI.
 
+Deterministic term counting (2026-09-29, #308): framework terms ("CUI",
+"dual-use", "OFFICIAL: Sensitive") and user terms used to be counted by the
+agent itself, so case, word boundaries and hyphens were decided anew every
+run and the same file gave different counts. --framework-terms counts the
+built-in FRAMEWORK_TERMS list of --framework=<slug>; --terms-file counts a
+plain UTF-8 file of one term per line (no JSON, no escaping; a BOM, CRLF
+line ends, blank lines and duplicates are handled). Both may be combined and
+the union is counted, framework terms first. One matching rule, always:
+  1. Text and terms are normalised with Unicode NFKC and casefold(), so
+     matching ignores case. A framework marking written in capitals
+     ("SECRET", "RESTRICTED") therefore also counts the ordinary lower-case
+     word; read those counts as "mentions", not as proven markings.
+  2. Any run of whitespace, "-", "_", ":" or "/" between two words of a term
+     is one separator: "dual use", "dual-use" and "dual_use" all match
+     "dual-use"; "OFFICIAL Sensitive" matches "OFFICIAL: Sensitive". At least
+     one separator is required ("dualuse" does not match). Every other
+     character in a term ("&", ".", "(") must appear literally.
+  3. Whole words only: a match may not start or end inside a run of letters
+     or digits ("ITAR" never counts inside "military", "CUI" never inside
+     "circuit"). "_" is a separator, not a letter, so "CUI_marked" counts.
+     Plurals are other words: "patient" does not count "patients".
+  4. Every non-overlapping occurrence counts.
+Two terms that normalise to the same words are one term, reported under the
+spelling seen first. The result gains "terms": {"<term as given>": count}.
+Counts only -- never the matched text or its surroundings. The patterns are
+escaped literals joined by one fixed separator class, so they cannot
+backtrack pathologically and need no length cap or timeout.
+
 Usage:
   python3 pii_patterns.py <path-to-extracted-text-file>
   python3 pii_patterns.py <path-to-extracted-text-file> <path-to-custom-patterns.json>
   python3 pii_patterns.py <path-to-extracted-text-file> --categories=<selector>
   python3 pii_patterns.py <path-to-extracted-text-file> --framework=<slug>
   python3 pii_patterns.py <path-to-extracted-text-file> --categories=<selector> <path-to-custom-patterns.json>
+  python3 pii_patterns.py <path-to-extracted-text-file> --framework=<slug> --framework-terms
+  python3 pii_patterns.py <path-to-extracted-text-file> --framework=<slug> --framework-terms --terms-file=<user-terms.txt>
   python3 pii_patterns.py --help
 
-  --categories and --framework, if given, may appear anywhere in argv.
+  --categories, --framework, --framework-terms and --terms-file, if given,
+  may appear anywhere in argv. --framework-terms needs --framework; a
+  framework without a built-in term list (FRAMEWORK_TERMS) adds no terms.
   Omit --categories (or pass --categories=all) to run every general
   built-in category -- the default. A <selector> is a comma-separated list
   where each item is one of:
@@ -80,13 +116,16 @@ Usage:
   Items are unioned together, e.g.
     --categories=region:US,region:NL,aws_access_key
   runs every US- and NL-tagged category plus aws_access_key specifically.
-  --framework=<slug> (e.g. dpdpa, lgpd, vn-pdpl, ccpa, gdpr, iso27701,
-  soc2, cis-controls, iso27001, nist-800-53, sensitive-content-scanner,
-  hipaa) adds
-  that framework's gated presets on top of the --categories selection.
-  An unrecognized category key, region, type or framework is a hard error
-  (exit 1, clear message naming the valid options) rather than a silent
-  no-op.
+  --framework=<slug> accepts any framework slug the marketplace ships (see
+  KNOWN_FRAMEWORKS): ccpa, cis-controls, cmmc, dora, dpdpa, ear, eu-ai-act,
+  fedramp, gdpr, hipaa, ism-au, iso27001, iso27701, iso42001, itar, lgpd,
+  nis2, nist-800-53, nist-ai-rmf, nist-csf, nzism, pci-dss, section-508,
+  soc2, vn-pdpl, wcag, sensitive-content-scanner. It adds that framework's
+  gated presets on top of the --categories selection when it has any; a
+  framework with no gated preset is accepted as a no-op, not an error
+  (#304) -- only a slug outside this list is a hard error. An unrecognized
+  category key, region, type or framework is a hard error (exit 1, clear
+  message naming the valid options) rather than a silent no-op.
 
   custom-patterns.json is a JSON array of objects:
     [{"label": "employee_id", "regex": "EMP-\\d{6}", "context_keywords": ["employee id"]}, ...]
@@ -97,17 +136,22 @@ match count and the context-confirmed subset of it, e.g.
 {"ssn_shaped": {"valid": 2, "context_confirmed": 1},
  "bsn_shaped": {"skipped": true, "region": "NL", "type": "national_id", "reason": "..."},
  "credit_card_luhn_valid": {"valid": 0, "context_confirmed": 0}, ...,
- "custom": {"employee_id": {"valid": 3, "context_confirmed": 3, "error": null}}}
+ "custom": {"employee_id": {"valid": 3, "context_confirmed": 3, "error": null}},
+ "terms": {"CVV": 2, "card verification": 1}}
+"terms" is present only when --framework-terms or --terms-file was given.
 
 Never prints the matched values themselves -- per this plugin's privacy rule
 (term-sweep / content-extract), only counts and categories are safe to surface.
 """
 
 import argparse
+import csv
+import io
 import json
 import re
 import signal
 import sys
+import unicodedata
 
 SSN_SHAPED = re.compile(r"\b(?!000|666|9\d{2})\d{3}-(?!00)\d{2}-(?!0000)\d{4}\b")
 BSN_SHAPED = re.compile(r"\b\d{9}\b")
@@ -241,11 +285,15 @@ _DECIMAL = re.compile(r"-?\d+\.\d+")
 # A hyphen after a label ("NPI-1234567893") is fine, one after a digit is not.
 NPI_CANDIDATE = re.compile(r"(?<!\d)(?<!\d-)[12]\d{9}(?![\d-])")
 # A medical record number or a health-plan member ID has no fixed shape or
-# checksum, so only a value directly after its label counts ("MRN: 00482131",
-# "Member ID: XKV123456789"). A number of that shape with no label, or a
-# label with prose after it, never matches. The separator is one whitespace
-# run, then at most "#:", ":", "#" or "=", then one whitespace run: two
-# adjacent [ \t]* would backtrack quadratically on a long run of spaces.
+# checksum, so counting relies on its label being nearby: either directly
+# before it on the same line ("MRN: 00482131", "Member ID: XKV123456789"),
+# or as a table-column header with one value per row beneath it -- a real
+# CSV/XLSX export usually looks like the latter (see column_labels /
+# find_labelled_columns below, #301). A number of that shape with no label
+# anywhere, or a label with prose after it, never matches. The separator is
+# one whitespace run, then at most "#:", ":", "#" or "=", then one
+# whitespace run: two adjacent [ \t]* would backtrack quadratically on a
+# long run of spaces.
 _ID_SEPARATOR = r"[ \t]*(?:\([A-Za-z]{2,5}\)[ \t]*)?(?:(?:#:|[:#=])[ \t]*)?"
 MRN_LABELLED = re.compile(
     r"(?i:\bmrn\b|\bmedical[ \t]+record(?:[ \t]+(?:number|no\.?))?"
@@ -279,6 +327,151 @@ _HEALTH_CONTEXT = [
     "claim",
     "phi",
 ]
+
+# Column-aware counting for label-style presets (#301). A medical record
+# number or a health-plan member ID also commonly appears as a table
+# column -- a CSV/TSV export with the label as the header and one value
+# per row -- rather than glued to its label on every line. A preset opts
+# in by giving its CATEGORY_SPECS entry a "column_labels" list of header
+# names (case-insensitive, matched whole-cell or as a clear prefix, e.g.
+# "MRN (legacy)" still matches "mrn"). content-extract's extract_xlsx
+# renders each sheet as tab-joined rows with sheets separated by a blank
+# line, so a tab-separated block is detected the same way a comma or
+# semicolon CSV block is.
+_TABLE_DELIMITERS = ("\t", ",", ";")
+
+
+def _normalize_header_cell(cell: str) -> str:
+    return " ".join(cell.strip().lower().split())
+
+
+def _header_cell_matches_label(header_cell: str, label: str) -> bool:
+    if header_cell == label:
+        return True
+    if header_cell.startswith(label):
+        rest = header_cell[len(label) :]
+        return not rest[0].isalnum()
+    return False
+
+
+_MAX_HEADER_CELL_LENGTH = 40
+_SENTENCE_PUNCTUATION = (".", "!", "?")
+
+
+def _header_row_is_plausible(header_cells) -> bool:
+    # Guards against prose that happens to split into the same cell
+    # count as the line beneath it (a false table). A real header: at
+    # least 2 non-empty cells, none longer than 40 characters
+    # (normalized) or ending in sentence punctuation -- a full sentence
+    # does not read like a column name.
+    non_empty_cells = [
+        _normalize_header_cell(value) for _, _, value in header_cells if value
+    ]
+    if len(non_empty_cells) < 2:
+        return False
+    for cell in non_empty_cells:
+        if len(cell) > _MAX_HEADER_CELL_LENGTH:
+            return False
+        if cell.endswith(_SENTENCE_PUNCTUATION):
+            return False
+    return True
+
+
+def _detect_table_delimiter(line: str):
+    for delimiter in _TABLE_DELIMITERS:
+        try:
+            row = next(csv.reader(io.StringIO(line), delimiter=delimiter))
+        except StopIteration:
+            continue
+        if len(row) >= 2:
+            return delimiter
+    return None
+
+
+def _parse_table_row(line: str, delimiter: str):
+    try:
+        row = next(csv.reader(io.StringIO(line), delimiter=delimiter))
+    except StopIteration:
+        return []
+    cells = []
+    cursor = 0
+    for raw_cell in row:
+        index = line.find(raw_cell, cursor) if raw_cell else cursor
+        if index == -1:
+            index = cursor
+        start, end = index, index + len(raw_cell)
+        cursor = end
+        cells.append((start, end, raw_cell.strip()))
+    return cells
+
+
+def find_labelled_columns(text: str, column_labels) -> list:
+    normalized_labels = [_normalize_header_cell(label) for label in column_labels]
+    lines = text.splitlines(keepends=True)
+    line_starts = []
+    offset = 0
+    for line in lines:
+        line_starts.append(offset)
+        offset += len(line)
+
+    spans = []
+    i = 0
+    total = len(lines)
+    while i < total:
+        header_line = lines[i].rstrip("\r\n")
+        if not header_line.strip():
+            i += 1
+            continue
+        delimiter = _detect_table_delimiter(header_line)
+        if delimiter is None:
+            i += 1
+            continue
+        header_cells = _parse_table_row(header_line, delimiter)
+        if not _header_row_is_plausible(header_cells):
+            i += 1
+            continue
+        matched_column = None
+        for column_index, (_, _, cell_value) in enumerate(header_cells):
+            normalized_cell = _normalize_header_cell(cell_value)
+            if any(
+                _header_cell_matches_label(normalized_cell, label)
+                for label in normalized_labels
+            ):
+                matched_column = column_index
+                break
+        if matched_column is None:
+            i += 1
+            continue
+        expected_cell_count = len(header_cells)
+        row_index = i + 1
+        table_spans = []
+        data_row_count = 0
+        while row_index < total:
+            row_line = lines[row_index].rstrip("\r\n")
+            if not row_line.strip():
+                break
+            row_cells = _parse_table_row(row_line, delimiter)
+            if len(row_cells) != expected_cell_count:
+                break
+            data_row_count += 1
+            start, end, value = row_cells[matched_column]
+            if value:
+                table_spans.append(
+                    (
+                        line_starts[row_index] + start,
+                        line_starts[row_index] + end,
+                        value,
+                    )
+                )
+            row_index += 1
+        # A table must yield at least 2 data rows before any of its
+        # column values count -- a single row is too easy to produce
+        # by accident (see _header_row_is_plausible above).
+        if data_row_count >= 2:
+            spans.extend(table_spans)
+        i = row_index
+    return spans
+
 
 # Vietnamese province/city codes that form the first 3 digits of a CCCD
 # number. Source: Circular 07/2016/TT-BCA (Thong tu 07/2016/TT-BCA), Annex I
@@ -540,6 +733,116 @@ def _card_valid(raw: str) -> bool:
     return 13 <= len(digits) <= 19 and luhn_valid(digits)
 
 
+# Every framework slug the marketplace ships: each *-compliance-check
+# plugin's directory name minus that suffix, plus sensitive-content-scanner
+# (a plugin of its own, not a "-compliance-check" one). --framework=<slug>
+# accepts any of these; one with no gated preset below is simply a no-op,
+# not an error (#304) -- a slug outside this tuple still is, so a typo
+# never silently no-ops. tests/test_pii_patterns.py guards this tuple
+# against the actual plugin directory names.
+KNOWN_FRAMEWORKS = (
+    "ccpa",
+    "cis-controls",
+    "cmmc",
+    "dora",
+    "dpdpa",
+    "ear",
+    "eu-ai-act",
+    "fedramp",
+    "gdpr",
+    "hipaa",
+    "ism-au",
+    "iso27001",
+    "iso27701",
+    "iso42001",
+    "itar",
+    "lgpd",
+    "nis2",
+    "nist-800-53",
+    "nist-ai-rmf",
+    "nist-csf",
+    "nzism",
+    "pci-dss",
+    "section-508",
+    "soc2",
+    "vn-pdpl",
+    "wcag",
+    "sensitive-content-scanner",
+)
+
+# Each framework's Signal A default term list, copied exactly from the
+# sentence "Signal A's default term list for this framework: ..." in
+# plugins/<slug>-compliance-check/skills/<slug>-compliance-check/SKILL.md,
+# which also names the list in the agent's report. --framework-terms counts
+# the list of --framework=<slug>. A framework with no list here (a Signal A
+# framework that relies on presets alone, or one without Signal A) adds no
+# terms. tests/test_pii_patterns.py parses every framework SKILL and asserts
+# it equals this dict, so the two cannot drift: change both together.
+FRAMEWORK_TERMS = {
+    "ccpa": [
+        "personal information",
+        "sensitive personal information",
+        "precise geolocation",
+        "biometric",
+    ],
+    "cmmc": [
+        "CUI",
+        "controlled unclassified information",
+        "FOUO",
+        "export controlled",
+        "DFARS",
+    ],
+    "dora": [
+        "ICT risk management framework",
+        "critical or important function",
+        "ICT third-party service provider",
+        "vulnerability assessment",
+        "legacy ICT system",
+    ],
+    "dpdpa": ["personal data", "aadhaar", "personal information"],
+    "ear": ["ECCN", "EAR99", "dual-use", "export controlled", "encryption technology"],
+    "eu-ai-act": ["training data", "model card", "AI system", "biometric"],
+    "fedramp": ["CUI", "FOUO", "controlled unclassified", "federal information"],
+    "gdpr": [
+        "personal data",
+        "special category data",
+        "health data",
+        "biometric",
+        "racial or ethnic origin",
+    ],
+    "hipaa": [
+        "PHI",
+        "ePHI",
+        "protected health information",
+        "patient",
+        "diagnosis",
+        "medical record number",
+    ],
+    "ism-au": ["PROTECTED", "SECRET", "OFFICIAL: Sensitive"],
+    "iso27701": ["personal data", "PII", "data subject", "privacy notice"],
+    "iso42001": ["training data", "model weights", "AI system", "algorithm"],
+    "itar": [
+        "ITAR",
+        "USML",
+        "technical data",
+        "defense article",
+        "export controlled",
+        "technical assistance agreement",
+    ],
+    "lgpd": ["personal data", "dados pessoais", "sensitive data"],
+    "nist-800-53": ["CUI", "federal information", "controlled unclassified"],
+    "nist-ai-rmf": ["training data", "model card", "AI system"],
+    "nzism": ["RESTRICTED", "IN CONFIDENCE", "SENSITIVE"],
+    "pci-dss": [
+        "cardholder data",
+        "primary account number",
+        "PAN",
+        "CVV",
+        "card verification",
+    ],
+    "vn-pdpl": ["personal data"],
+}
+
 # Privacy frameworks that treat a plain email address as personal data.
 _EMAIL_FRAMEWORKS = ("gdpr", "ccpa", "lgpd", "dpdpa", "vn-pdpl", "iso27701")
 # Security frameworks (and the sensitive-content scanner) that treat a
@@ -549,6 +852,8 @@ _CREDENTIAL_FRAMEWORKS = (
     "cis-controls",
     "iso27001",
     "nist-800-53",
+    "cmmc",
+    "fedramp",
     "sensitive-content-scanner",
 )
 
@@ -722,7 +1027,7 @@ CATEGORY_SPECS = {
         "context_whole_word": True,
     },
     "medical_record_number": {
-        "label": "Medical record number directly after its label (MRN, medical record number, patient ID); no checksum exists",
+        "label": "Medical record number directly after its label (MRN, medical record number, patient ID), or one value per row under a matching table-column header; no checksum exists",
         "region": None,
         "type": "health_id",
         "frameworks": ("hipaa",),
@@ -732,9 +1037,17 @@ CATEGORY_SPECS = {
         # it: a health-care setting nearby, not the label confirming itself.
         "context_keywords": _HEALTH_CONTEXT,
         "context_outside_match": True,
+        # Column-aware counting (#301): a table header matching one of
+        # these counts every non-empty value in that column too.
+        "column_labels": [
+            "medical record number",
+            "mrn",
+            "patient id",
+            "medical record",
+        ],
     },
     "health_plan_member_id": {
-        "label": "Health-plan / insurance / member / subscriber / beneficiary / Medicare / Medicaid ID directly after its label; no checksum exists",
+        "label": "Health-plan / insurance / member / subscriber / beneficiary / Medicare / Medicaid ID directly after its label, or one value per row under a matching table-column header; no checksum exists",
         "region": None,
         "type": "health_id",
         "frameworks": ("hipaa",),
@@ -742,6 +1055,17 @@ CATEGORY_SPECS = {
         "validator": None,
         "context_keywords": _HEALTH_CONTEXT,
         "context_outside_match": True,
+        # Column-aware counting (#301): a table header matching one of
+        # these counts every non-empty value in that column too.
+        "column_labels": [
+            "insurance id",
+            "member id",
+            "subscriber id",
+            "health plan id",
+            "medicare id",
+            "medicaid id",
+            "beneficiary id",
+        ],
     },
     "geolocation_latlon": {
         "label": "Decimal lat/lon pair, bare or labelled (lat/latitude then lon/lng/longitude), 3+ decimals, in range (CCPA precise geolocation)",
@@ -785,6 +1109,12 @@ def _known_types():
 
 
 def known_frameworks():
+    """Every framework slug --framework=<slug> accepts (KNOWN_FRAMEWORKS),
+    whether or not it has a gated preset of its own."""
+    return list(KNOWN_FRAMEWORKS)
+
+
+def _frameworks_with_gated_presets():
     return sorted({f for v in CATEGORY_SPECS.values() for f in (v["frameworks"] or ())})
 
 
@@ -806,12 +1136,12 @@ def resolve_categories(arg=None, framework=None):
     extra = set()
     if framework is not None:
         slug = framework.strip().lower()
-        extra = _framework_categories(slug)
-        if not extra:
+        if slug not in KNOWN_FRAMEWORKS:
             errors.append(
-                "unknown framework '%s' -- frameworks with gated presets: %s"
+                "unknown framework '%s' -- known frameworks: %s"
                 % (framework, ", ".join(known_frameworks()))
             )
+        extra = _framework_categories(slug)
 
     if arg is None or arg.strip().lower() == "all":
         if errors:
@@ -947,6 +1277,7 @@ def scan(text: str, enabled=None) -> dict:
             )
         required = spec.get("context_required", False)
         valid = context = 0
+        counted_spans = []
         for start, end, raw in candidates:
             if validator is None or validator(raw):
                 confirmed = bool(keywords) and context_hit(
@@ -956,6 +1287,21 @@ def scan(text: str, enabled=None) -> dict:
                     continue
                 valid += 1
                 context += int(confirmed)
+                counted_spans.append((start, end))
+
+        column_labels = spec.get("column_labels")
+        if column_labels:
+            for col_start, col_end, _value in find_labelled_columns(
+                text, column_labels
+            ):
+                if any(
+                    col_start < end and start < col_end for start, end in counted_spans
+                ):
+                    continue
+                valid += 1
+                context += 1
+                counted_spans.append((col_start, col_end))
+
         result[key] = {"valid": valid, "context_confirmed": context}
     return result
 
@@ -1018,6 +1364,77 @@ def scan_custom(text: str, patterns: list) -> dict:
     return result
 
 
+# Characters that separate two words of a term (rule 2 in the module
+# docstring). A run of any of them is one separator.
+_TERM_SEPARATOR_CLASS = r"[\s\-_:/]+"
+_TERM_SEPARATOR = re.compile(_TERM_SEPARATOR_CLASS)
+
+
+def _is_term_word_char(ch: str) -> bool:
+    """Rule 3's "inside a word": a letter or digit, or a combining mark
+    (Devanagari vowel signs, for one, are neither letters nor digits to
+    Python, yet sit inside words). "_" is deliberately not one, which is
+    also why Python's \\b cannot be used here."""
+    return ch.isalnum() or unicodedata.category(ch).startswith("M")
+
+
+def _normalise_for_terms(value: str) -> str:
+    return unicodedata.normalize(
+        "NFKC", unicodedata.normalize("NFKC", value).casefold()
+    )
+
+
+def _term_words(term: str) -> tuple:
+    return tuple(w for w in _TERM_SEPARATOR.split(_normalise_for_terms(term)) if w)
+
+
+def _count_whole_word(haystack: str, words: tuple) -> int:
+    pattern = re.compile(_TERM_SEPARATOR_CLASS.join(re.escape(w) for w in words))
+    check_before = _is_term_word_char(words[0][0])
+    check_after = _is_term_word_char(words[-1][-1])
+    count = pos = 0
+    while True:
+        match = pattern.search(haystack, pos)
+        if match is None:
+            return count
+        start, end = match.span()
+        inside_word = (
+            check_before and start > 0 and _is_term_word_char(haystack[start - 1])
+        ) or (check_after and end < len(haystack) and _is_term_word_char(haystack[end]))
+        if inside_word:
+            # Retry one character on, so a rejected match never hides a
+            # whole-word one that overlaps it.
+            pos = start + 1
+            continue
+        count += 1
+        pos = end
+
+
+def count_terms(text: str, terms) -> dict:
+    """Count every term in text under the one matching rule in the module
+    docstring. Returns {term as given: count}, in the order given; a term
+    that normalises to the same words as an earlier one is dropped, and a
+    term with no words at all (blank, or separators only) is ignored."""
+    haystack = _normalise_for_terms(text)
+    result = {}
+    seen = set()
+    for term in terms:
+        words = _term_words(term)
+        if not words or words in seen:
+            continue
+        seen.add(words)
+        result[term] = _count_whole_word(haystack, words)
+    return result
+
+
+def load_terms_file(path: str) -> list:
+    """One term per line, UTF-8 with or without a BOM, LF or CRLF line
+    ends. Surrounding whitespace is stripped and blank lines are skipped;
+    duplicates are left for count_terms to collapse."""
+    with open(path, "r", encoding="utf-8-sig") as f:
+        return [line.strip() for line in f.read().splitlines() if line.strip()]
+
+
 class _Parser(argparse.ArgumentParser):
     """Usage errors exit 1, the exit code callers have always relied on
     (argparse's own default is 2). --help still exits 0."""
@@ -1058,9 +1475,28 @@ def _build_parser() -> argparse.ArgumentParser:
         default=None,
         metavar="SLUG",
         help=(
-            "add a framework's gated presets on top of --categories. Known: "
+            "accept any framework slug the marketplace ships, adding its "
+            "gated presets (if it has any) on top of --categories -- a "
+            "framework with none is accepted as a no-op, not an error. "
+            "Known frameworks: "
             + ", ".join(known_frameworks())
+            + ". Frameworks with a gated preset today: "
+            + ", ".join(_frameworks_with_gated_presets())
         ),
+    )
+    parser.add_argument(
+        "--framework-terms",
+        action="store_true",
+        help=(
+            "also count the built-in default term list of --framework "
+            "(frameworks with one: " + ", ".join(sorted(FRAMEWORK_TERMS)) + ")"
+        ),
+    )
+    parser.add_argument(
+        "--terms-file",
+        default=None,
+        metavar="PATH",
+        help="also count the terms in this UTF-8 file, one term per line",
     )
     return parser
 
@@ -1070,6 +1506,8 @@ def main(argv=None) -> int:
     # Intermixed: --categories may sit between the two positionals, as the
     # documented `<text> --categories=... <custom.json>` form requires.
     args = parser.parse_intermixed_args(argv)
+    if args.framework_terms and not args.framework:
+        parser.error("--framework-terms needs --framework=<slug>")
 
     try:
         enabled_categories = resolve_categories(
@@ -1101,6 +1539,19 @@ def main(argv=None) -> int:
             print("custom-patterns.json must be a JSON array", file=sys.stderr)
             return 1
         output["custom"] = scan_custom(content, custom_patterns)
+
+    if args.framework_terms or args.terms_file is not None:
+        terms = []
+        if args.framework_terms:
+            terms.extend(FRAMEWORK_TERMS.get(args.framework.strip().lower(), []))
+        if args.terms_file is not None:
+            try:
+                terms.extend(load_terms_file(args.terms_file))
+            except OSError as e:
+                parser.error("cannot read terms file: %s" % e.strerror)
+            except UnicodeDecodeError:
+                parser.error("terms file is not UTF-8 text")
+        output["terms"] = count_terms(content, terms)
 
     print(json.dumps(output))
     return 0

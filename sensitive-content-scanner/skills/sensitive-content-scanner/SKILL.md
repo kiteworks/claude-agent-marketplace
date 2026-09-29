@@ -26,7 +26,7 @@ A folder scope (required) and a term list (required — never assume a default l
 
 Always run the name/path match per `term-sweep` — metadata only, always on. It matches each term against the full `path` of every walked item, so a file inside a folder named for the term (e.g. `Confidential/`) is flagged even when its own name is neutral; `search_files(path_contains=...)` alone matches file names only and would miss it.
 
-Content matching is a separate, opt-in "deep scan": ask the user whether they want it (it's real per-file work — a download and parse per candidate file, per `../content-extract/SKILL.md`), tell them roughly how many files are in scope, and only run it if they confirm. Respect `content-extract`'s per-run cap and disclose how many files were actually checked vs. in scope.
+Content matching is a separate, opt-in "deep scan": ask the user whether they want it (it's real per-file work — a download and parse per candidate file, per `../content-extract/SKILL.md`), tell them roughly how many files are in scope, and only run it if they confirm. Respect `content-extract`'s per-run cap and disclose how many files were actually checked vs. in scope. Count the terms in each extracted text only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --terms-file=<user-terms.txt>`, per `term-sweep`'s "Counting terms in extracted text"; never count them yourself.
 
 ## Built-in PII/secret pattern presets — all run by default
 

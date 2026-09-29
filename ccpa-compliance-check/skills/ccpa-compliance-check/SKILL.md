@@ -22,7 +22,7 @@ California's consumer privacy law (CCPA/CPRA), covering consumer rights to know,
 
 ## Signals this agent runs
 
-Signals: **A, B, C**. Signal A's default term list for this framework: "personal information", "sensitive personal information", "precise geolocation", "biometric" (plus the built-in PII/secret presets, plus anything the user adds). When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=ccpa`: that adds the precise-geolocation preset (lat/lon pairs) and the email preset to the general built-in presets. Signal C's retention threshold: ask the user -- CPRA requires disclosed retention periods per data category but sets no universal fixed number.
+Signals: **A, B, C**. Signal A's default term list for this framework: "personal information", "sensitive personal information", "precise geolocation", "biometric" (plus the built-in PII/secret presets, plus anything the user adds). Count these terms, and the user's own terms, only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --framework=ccpa --framework-terms [--terms-file=<user-terms.txt>]`: the script holds this exact list and applies one fixed matching rule, so never count them yourself. When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=ccpa`: that adds the precise-geolocation preset (lat/lon pairs) and the email preset to the general built-in presets. Signal C's retention threshold: ask the user -- CPRA requires disclosed retention periods per data category but sets no universal fixed number.
 
 ## Control citations
 

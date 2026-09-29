@@ -25,7 +25,7 @@ import zlib
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
-from scratch_lifecycle import ScratchRun
+from scratch_lifecycle import ScratchRun, normalize_path, read_key_file
 
 PARSE_TIMEOUT_SECONDS = 300
 NATIVE = "native"
@@ -513,6 +513,12 @@ def _ocr_pdf(scratch, source, pages, env, result) -> str | None:
 
 
 def run(scratch, source, fmt, out, *, keep_source=False, timeout=PARSE_TIMEOUT_SECONDS):
+    # Accept the same file however the caller spells it (backslash vs forward
+    # slash, drive-letter case, an 8.3 short name, or Git Bash's /c/... MSYS
+    # form): normalize before any filesystem call, not just the ownership
+    # check inside scratch.check().
+    source = normalize_path(source)
+    out = normalize_path(out)
     scratch.check(source)
     scratch.check(out)
     if source == out or out.stat().st_size:
@@ -644,12 +650,26 @@ def main(argv=None):
             return 3
         return {"parsed": 0, "failed": 1, "unavailable": 2}[result["parse"]]
     except (OSError, ValueError, KeyError, TypeError) as exc:
+        message = str(exc)
+        # Never let a leftover exported key, or the run's own key file, show
+        # up inside an error message. Check both possible sources; a failure
+        # reading either one (a malformed --root, say) must never crash the
+        # handler that is already reporting a different error.
+        candidate_keys = [os.environ.get("KITEWORKS_SCRATCH_KEY", "")]
+        try:
+            candidate_keys.append(read_key_file(Path(args.root).name))
+        except Exception:
+            pass
+        for candidate in candidate_keys:
+            if candidate and len(candidate) >= 16:
+                message = message.replace(candidate, "[redacted]")
         print(
             json.dumps(
                 {
                     "parse": "not_started",
                     "cleanup_complete": False,
                     "error": type(exc).__name__,
+                    "message": message,
                 }
             )
         )

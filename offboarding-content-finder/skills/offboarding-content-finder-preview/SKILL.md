@@ -43,3 +43,7 @@ Never report "0 items owned" when any folder in scope is incomplete or skipped. 
 ## Present the result
 
 Summary card: summary, matched items (path, type, which field matched, last-modified), folders swept vs. skipped, the coverage block, warnings. Hand the confirmed item set forward for apply (staging into a holding folder for reassignment) if the user wants to act on it.
+
+## Preview cannot save a report
+
+This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.

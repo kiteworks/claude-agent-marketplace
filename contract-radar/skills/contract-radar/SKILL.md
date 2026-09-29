@@ -26,7 +26,7 @@ A folder scope (required). Term list is optional — default to `agreement, MSA,
 
 Name/path match against the term list per `term-sweep`, always on. Folder names in each item's path count, so a file under a `Contracts/` folder matches "contract" even when its own name does not; `search_files(path_contains=...)` alone would miss it, because it matches file names only. Surface `modified`/`created` dates on every candidate — contract radar is inherently about staleness/renewal timing, so dates matter even before any content check.
 
-Content matching is a separate, opt-in "deep scan" (real per-file work — a download and parse per candidate, per `../content-extract/SKILL.md`): ask the user whether they want it, tell them roughly how many candidates are in scope, and only run it if they confirm. Respect `content-extract`'s per-run cap and disclose how many files were actually checked vs. in scope.
+Content matching is a separate, opt-in "deep scan" (real per-file work — a download and parse per candidate, per `../content-extract/SKILL.md`): ask the user whether they want it, tell them roughly how many candidates are in scope, and only run it if they confirm. Respect `content-extract`'s per-run cap and disclose how many files were actually checked vs. in scope. Count the terms in each extracted text only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --terms-file=<user-terms.txt>`, per `term-sweep`'s "Counting terms in extracted text"; never count them yourself.
 
 ## Present the result, then actively offer to save it
 

@@ -64,6 +64,49 @@ When the user wants a PDF rather than txt, read `../kw-pdf-report/SKILL.md` and 
 
 Build the metadata list via `standard_metadata(scope_label, scope_name, scanned_by, generated_on, scope_link=, output_folder_name=, output_folder_link=)`, then append this agent's own specific rows before passing the combined list to `build_branded_pdf`'s `metadata` argument. `report_title` must stay generic (e.g. "Sensitive Content Scan Report") — never the specific folder name; that belongs in `metadata`. The hero band itself carries only the logo and the agent name — never the report title or any scope-specific text, which is what caused a visual overlap/redundancy bug once (see `kw-pdf-report/SKILL.md`'s correction note). `build_branded_pdf` already writes the PDF to a local path — pass that same path straight to `upload_file_from_path`, per the corrected rule above; never base64-encode it into `create_file_from_content`.
 
+### Stage with the Write tool, build with `build --json-file`
+
+**The rule: never write .py helper files, and never generate report text through
+heredocs, `printf` or a Python one-liner.** Report text pushed through a shell
+is how apostrophes, `<`/`>`, non-ASCII characters and the Windows
+command-length limit have quietly changed delivered reports (see
+`kw-pdf-report/SKILL.md`). Every local file of a report run goes through the
+Write tool into one staging folder instead:
+
+1. The staging folder is `<base>/_kiteworks-report/`, where `<base>` is a
+   user-private local folder the connector can read for
+   `upload_file_from_path` (the `content-extract` host folder when the run
+   downloads files). Your Write tool is limited to `.json`, `.csv`, `.txt`
+   and `.md` files directly inside a folder named exactly
+   `_kiteworks-report`; every other path is refused.
+2. Write `spec.json` there with the Write tool: a UTF-8 JSON object whose keys
+   are `build_branded_pdf`'s keyword arguments, shaped like the complete
+   example in `../kw-pdf-report/SKILL.md` (tables are
+   `{"data": [[header...], [row...]]}` objects, links in cells are
+   `{"text": ..., "url": ...}` objects). No manual escaping is needed.
+3. Write the CSV there with the Write tool too, under the file name from
+   "What to write, every time" above.
+4. Build: `python ../kw-pdf-report/scripts/branded_pdf.py build --json-file
+   <base>/_kiteworks-report/spec.json --out
+   <base>/_kiteworks-report/<agent-name>-<YYYY-MM-DD>.pdf`. It prints
+   `{"pdf": ..., "pages": ..., "bytes": ..., "spec_removed": true}` and
+   removes the staged spec. A malformed spec exits 2 with an `error:` line
+   naming the expected shape; fix the spec with the Write tool and rerun.
+5. Upload the PDF and the CSV with `upload_file_from_path` into the confirmed
+   destination and compare the response sizes with the local sizes. For a
+   txt report without a PDF, or on a connector without
+   `upload_file_from_path`, write the CSV/txt with `create_file_from_content`
+   as described above instead.
+6. Clean up: `python ../kw-pdf-report/scripts/branded_pdf.py cleanup --dir
+   <base>/_kiteworks-report` deletes the staged files and the empty folder and
+   lists anything it kept. Run it once the local files are no longer needed,
+   whether or not the upload succeeded, and report any kept path.
+
+`scope_caveat` is still required and the published legal footer is still
+fixed, exactly as above. Only when the host has no Write tool at all, fall
+back to `branded_pdf.py spec-append` (base64 chunks, then `build --spec`) as
+`../kw-pdf-report/SKILL.md` describes.
+
 ## Confirm before every write
 
 Steps, in order: (1) build the result set in the preview phase; (2) show the user counts + a sample and ask them to confirm the action and destination; (3) only then create any folder or file. Never chain preview → apply without an explicit user confirmation in between.

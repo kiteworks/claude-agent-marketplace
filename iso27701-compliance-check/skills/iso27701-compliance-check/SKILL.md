@@ -22,7 +22,7 @@ A privacy information management system (PIMS) extension to ISO 27001, covering 
 
 ## Signals this agent runs
 
-Signals: **A, B, C**. Signal A's default term list for this framework: "personal data", "PII", "data subject", "privacy notice" (plus the built-in PII/secret presets, plus anything the user adds). When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=iso27701`: that adds the email preset to the general built-in presets. Signal C's retention threshold: ask the user -- ISO 27701 requires a documented retention schedule but sets no universal fixed number.
+Signals: **A, B, C**. Signal A's default term list for this framework: "personal data", "PII", "data subject", "privacy notice" (plus the built-in PII/secret presets, plus anything the user adds). Count these terms, and the user's own terms, only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --framework=iso27701 --framework-terms [--terms-file=<user-terms.txt>]`: the script holds this exact list and applies one fixed matching rule, so never count them yourself. When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=iso27701`: that adds the email preset to the general built-in presets. Signal C's retention threshold: ask the user -- ISO 27701 requires a documented retention schedule but sets no universal fixed number.
 
 ## Control citations
 

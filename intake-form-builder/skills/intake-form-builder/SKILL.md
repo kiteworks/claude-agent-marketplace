@@ -39,3 +39,7 @@ Confirmed live: `get_create_form_schema` returns a full field-type schema — `t
 - This is a direct-action skill, not part of the preview/apply pattern used elsewhere in this plugin — the tool's own mandatory preview-then-approve flow already provides the safety gate that preview/apply provides elsewhere.
 - **Confirmed live** (with a genuine user-approved test form, not a fake scenario): `create_form` works exactly as documented across five field types tested at once (`name`, `email`, `select`, `file`, `termsOfService`), all accepted without error.
 - **Two things the docs don't tell you, confirmed live:** (1) the created form is NOT filed under this plugin's `My Folder/Agents/` convention — Kiteworks stores it itself at `My Folder/Advanced Forms MCP/<name>.json`, outside your control; don't try to redirect it. (2) the returned `url` is a distinct editor link shape, `https://<tenant>/advancedform/gateway/app/load-from-json/<id>` — not the `/web/file/<id>` pattern `folder-scan` uses elsewhere. Report this URL back to the user exactly as returned; never reconstruct or guess this link format.
+
+## Chat-only, no saved report
+
+This agent is chat-only for reporting: its output is the created form itself, not a separate saved report. If the user asks to save a report, say so immediately, before doing any other work toward saving it.

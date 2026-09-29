@@ -1,6 +1,6 @@
 # Retention Sweeper
 
-`v1.1.5` · updated 2026-09-25
+`v1.1.7` · updated 2026-09-29
 
 Finds files in a Kiteworks folder that are past a retention deadline you set, and can save a report of what it found.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: reliability improvements.
+Maintenance release: cleanup and reliability improvements.
 
 ## Install
 

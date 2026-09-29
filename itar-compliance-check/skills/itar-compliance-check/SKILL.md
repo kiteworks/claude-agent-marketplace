@@ -22,7 +22,7 @@ US defense export controls (22 CFR Parts 120-130) governing defense articles, se
 
 ## Signals this agent runs
 
-Signals: **A, B, E (dormant)**. Signal A's default term list for this framework: "ITAR", "USML", "technical data", "defense article", "export controlled", "technical assistance agreement" (plus the built-in PII/secret presets, plus anything the user adds). Signal E (deemed-export exposure) is dormant per `../compliance-mapping/SKILL.md` -- see the important cap below on what it could ever actually tell you, even active.
+Signals: **A, B, E (dormant)**. Signal A's default term list for this framework: "ITAR", "USML", "technical data", "defense article", "export controlled", "technical assistance agreement" (plus the built-in PII/secret presets, plus anything the user adds). Count these terms, and the user's own terms, only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --framework=itar --framework-terms [--terms-file=<user-terms.txt>]`: the script holds this exact list and applies one fixed matching rule, so never count them yourself. Signal E (deemed-export exposure) is dormant per `../compliance-mapping/SKILL.md` -- see the important cap below on what it could ever actually tell you, even active.
 
 ## Control citations
 

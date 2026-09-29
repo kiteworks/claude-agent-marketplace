@@ -34,3 +34,7 @@ A folder (path or ID) to scan — required, never scan blindly.
 Summary card with: summary, duplicate_sets (each with member files, suggested keeper, links), reclaimable_space (sum of non-keeper file sizes per set), unverified count (fingerprint still generating), coverage, warnings.
 
 Hand the duplicate sets forward in-memory for the apply step.
+
+## Preview cannot save a report
+
+This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.
