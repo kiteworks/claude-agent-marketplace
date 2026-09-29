@@ -22,7 +22,7 @@ The EU's horizontal AI regulation classifying AI systems by risk tier and imposi
 
 ## Signals this agent runs
 
-Signals: **A, B**. Signal A's default term list for this framework: "training data", "model card", "AI system", "biometric" (plus the built-in PII/secret presets, plus anything the user adds).
+Signals: **A, B**. Signal A's default term list for this framework: "training data", "model card", "AI system", "biometric" (plus the built-in PII/secret presets, plus anything the user adds). Count these terms, and the user's own terms, only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --framework=eu-ai-act --framework-terms [--terms-file=<user-terms.txt>]`: the script holds this exact list and applies one fixed matching rule, so never count them yourself.
 
 ## Control citations
 

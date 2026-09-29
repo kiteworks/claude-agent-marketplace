@@ -26,3 +26,7 @@ The inbox/uploads folder to triage (required), and the destination tree to file 
 ## Present the result
 
 Summary card: summary, proposed destination per item with confidence tier and which pass produced it (filename-only vs. content-aware), coverage, warnings. Hand the confirmed item→destination pairs forward for apply.
+
+## Preview cannot save a report
+
+This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.

@@ -24,6 +24,7 @@ import socket
 import stat
 import subprocess
 import sys
+import time
 import uuid
 from pathlib import Path
 
@@ -395,6 +396,127 @@ def _posix(path) -> str:
     return Path(os.path.abspath(path)).as_posix()
 
 
+_MSYS_DRIVE = re.compile(r"^[\\/]([A-Za-z])(?:[\\/](.*))?$", re.DOTALL)
+
+
+def _msys_to_windows(text: str) -> str:
+    """Rewrite a Git Bash / MSYS drive path (``/c/Users/x``) to ``C:\\Users\\x``.
+
+    Only Windows needs this translation: on a POSIX filesystem a leading
+    ``/c/...`` is a real absolute path, not an MSYS spelling of a drive.
+    Windows itself already treats forward and back slashes, and drive-letter
+    case, as the same path, so nothing else needs rewriting here -- except
+    that argparse's own ``type=Path`` already turns ``/c/...`` into
+    ``\\c\\...`` (a plain root-relative path with ``c`` as an ordinary
+    segment, not a drive) before this ever sees it, so both separators are
+    accepted here.
+    """
+    if os.name != "nt":
+        return text
+    match = _MSYS_DRIVE.match(text)
+    if not match:
+        return text
+    drive, rest = match.group(1).upper(), match.group(2) or ""
+    return f"{drive}:\\{rest}"
+
+
+_DRIVE = re.compile(r"^([A-Za-z]):(?=[\\/]|$)")
+
+
+def _expand_short_name(absolute: str) -> str:
+    """Expand a Windows 8.3 short name (``RICK~1.GOU``) to its long form.
+
+    Same algorithm as extract_and_cleanup.py's ``long_path``: progressively
+    resolve the longest existing prefix, so a not-yet-created (or already
+    deleted) tail is returned unresolved rather than raising.
+    ``GetLongPathNameW`` translates each existing component's own short name
+    to its long name without dereferencing a reparse point sitting at any
+    component -- unlike ``realpath``/``GetFinalPathNameByHandleW``, it never
+    launders a junction into its target, so it is safe to call before
+    ``_checked`` has had a chance to reject one.
+    """
+    if os.name != "nt" or "~" not in absolute:
+        return absolute
+    import ctypes
+
+    size = 32768
+    buffer = ctypes.create_unicode_buffer(size)
+    head, tail = absolute, []
+    while True:
+        length = ctypes.windll.kernel32.GetLongPathNameW(head, buffer, size)
+        if 0 < length < size:
+            return os.path.join(buffer.value, *reversed(tail))
+        parent, name = os.path.split(head)
+        if not name or parent == head:
+            return absolute
+        tail.append(name)
+        head = parent
+
+
+def normalize_path(path) -> Path:
+    """Absolute path, resolving every Windows path spelling but a symlink.
+
+    Every path a caller can pass through this CLI must resolve to the same
+    file: backslash or forward slash, an upper- or lower-case drive letter,
+    an 8.3 short name, or the MSYS ``/c/...`` form Git Bash hands out.
+    Windows already treats the first as identical to itself; the drive
+    letter is upper-cased and any short name expanded here so a later plain
+    string or Path comparison (this run's own recorded root, an owned
+    artifact name) sees the identical spelling regardless of which of these
+    named it. This never follows a symlink or reparse point -- that stays
+    ``_checked``'s job, called separately wherever ownership is decided --
+    so a malicious junction is still rejected, not silently resolved through.
+    """
+    text = _msys_to_windows(os.fspath(path))
+    if os.name == "nt":
+        text = _DRIVE.sub(lambda m: m.group(1).upper() + ":", text, count=1)
+    return Path(_expand_short_name(os.path.abspath(text)))
+
+
+STALE_KEY_AGE_SECONDS = 24 * 60 * 60
+
+
+def sweep_stale_keys(now: float | None = None) -> list[str]:
+    """Remove run key files old enough to treat as abandoned.
+
+    A key file outlives its run only so a crash can be recovered from (see
+    "Explicit recovery only" in the scratch-lifecycle SKILL); a run that
+    finalizes cleanly removes its own key file (see ``finalize``). The key
+    file cannot name the arbitrary ``--parent`` folder its run was created
+    under, so there is no way to look its manifest up from here and confirm
+    the run is actually gone -- age is the only signal available. Real runs
+    finish in minutes to a few hours, so a key untouched for over 24h is
+    treated as abandoned and removed. This never touches a manifest, a run
+    directory or any document content, and makes no judgement at all about
+    whether a run itself is done -- a run is still recovered explicitly, by
+    root, never by age. A run that still needs recovery after its key is
+    swept needs manual inspection, exactly as for any other lost key today.
+    """
+    now = time.time() if now is None else now
+    removed = []
+    try:
+        entries = list(key_dir().iterdir())
+    except FileNotFoundError:
+        return removed
+    for entry in entries:
+        if entry.suffix != ".key" or not RUN_ID.fullmatch(entry.stem):
+            continue
+        try:
+            info = entry.lstat()
+        except OSError:
+            continue
+        if not stat.S_ISREG(info.st_mode):
+            continue
+        if now - info.st_mtime < STALE_KEY_AGE_SECONDS:
+            continue
+        try:
+            entry.unlink()
+        except OSError:
+            continue
+        removed.append(str(entry))
+    return removed
+
+
 def recovery_instruction(root) -> str:
     # Only --recover: the cleanup policy recorded at init (delete or retain) applies.
     return (
@@ -420,10 +542,11 @@ class ScratchRun:
     ):
         if mode not in MODES or (mode != "retain" and not authorized):
             raise ValueError("destructive cleanup requires prior authorization")
+        sweep_stale_keys()  # best-effort; a fresh run is a natural time to tidy up
         owner_pid = os.getpid() if owner_pid is None else owner_pid
         if not isinstance(owner_pid, int) or owner_pid <= 1 or not _alive(owner_pid):
             raise ValueError("a verified live session owner is required")
-        parent = Path(os.path.abspath(parent))
+        parent = normalize_path(parent)
         if not stat.S_ISDIR(_checked(parent).st_mode):
             raise ValueError("parent must be a verified private directory")
         container = parent / "_kiteworks-content-tmp"
@@ -492,7 +615,7 @@ class ScratchRun:
     @classmethod
     def open(cls, root: Path, key: str | None = None, *, recover=False):
         """Open a run; without a key, read it from the run's key file."""
-        root = Path(os.path.abspath(root))
+        root = normalize_path(root)
         _checked(root)
         if not key:
             key = read_key_file(root.name)
@@ -602,7 +725,7 @@ class ScratchRun:
 
     def check(self, path: Path) -> dict:
         self._validate()
-        path = Path(os.path.abspath(path))
+        path = normalize_path(path)
         if path.parent != self.root or path.name not in self.data["artifacts"]:
             raise ValueError("path is not owned by this run")
         artifact = self.data["artifacts"][path.name]
@@ -623,7 +746,7 @@ class ScratchRun:
         if mode not in MODES:
             raise ValueError("unknown cleanup mode")
         self._validate()
-        path = Path(os.path.abspath(path))
+        path = normalize_path(path)
         if path.parent != self.root or path.name not in self.data["artifacts"]:
             raise ValueError("path is not owned by this run")
         artifact = self.data["artifacts"][path.name]
@@ -673,7 +796,12 @@ class ScratchRun:
         ]
 
     def finalize(self, *, mode=None, authorized=None):
-        """Only registered files; unexpected entries are reported, never removed."""
+        """Only registered files; unexpected entries are reported, never removed.
+
+        Also removes the shared container directory once it is this run's own
+        empty root that made it empty -- a plain rmdir, never recursive, and a
+        silent no-op while another run still lives inside it.
+        """
         for item in self.inventory():
             if item["cleanup"] == "removed" and os.path.lexists(item["path"]):
                 self.data["artifacts"][Path(item["path"]).name]["cleanup"] = "failed"
@@ -695,11 +823,12 @@ class ScratchRun:
         if complete and not unexpected and effective_mode == "delete" and permission:
             self._validate()
             self.close()
+            container = self.root.parent
             try:
                 # Windows requires the manifest handle closed before unlink.
                 self._validate()
                 (self.root / "manifest.json").unlink()
-                self.root.rmdir()  # empty only; never remove the reused container
+                self.root.rmdir()  # empty only
                 result["cleanup_complete"] = not os.path.lexists(self.root)
                 result["manifest"] = None
                 # The run is gone; its key file has nothing left to protect.
@@ -707,6 +836,12 @@ class ScratchRun:
             except OSError as exc:
                 result["bookkeeping_error"] = type(exc).__name__
                 # Caller must retain this result if the manifest itself was removed.
+            same_container = container.name == "_kiteworks-content-tmp"
+            if result["cleanup_complete"] and same_container:
+                try:
+                    container.rmdir()  # only when this was the last run inside it
+                except OSError:
+                    pass  # other runs still live in the shared container
         return result
 
     def close(self):
@@ -752,7 +887,8 @@ def _explain_incomplete(result, root):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "action", choices=["init", "reserve", "release", "finalize", "inventory"]
+        "action",
+        choices=["init", "reserve", "release", "finalize", "inventory", "sweep"],
     )
     parser.add_argument("--parent", type=Path)
     parser.add_argument("--location")
@@ -773,6 +909,9 @@ def main(argv=None):
     if args.action == "init" and not args.mode:
         parser.error(MODE_REQUIRED)
     try:
+        if args.action == "sweep":
+            _emit({"removed": sweep_stale_keys()}, "")
+            return 0
         if args.action == "init":
             if not args.parent or not args.location:
                 parser.error("init requires --parent and --location")

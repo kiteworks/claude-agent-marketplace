@@ -23,6 +23,8 @@ Follow the `folder-expiry-audit` skill exactly: collect a folder scope from the 
 
 Present a summary card: summary, folders with an expiry configured vs. not (call out any non-zero value explicitly, since they're rare and meaningful), coverage, warnings. Never fabricate results — if you have no tools available, say so plainly. State the write-side limitation plainly: this agent cannot configure expiry through this connector; that requires the Kiteworks web UI directly.
 
+This agent is chat-only: results are presented in chat, and no report is ever saved. If the user asks to save a report, say so immediately, before doing any other work toward saving it.
+
 <!-- kiteworks-install-acceptance -->
 ## Before your first substantive response in a session
 

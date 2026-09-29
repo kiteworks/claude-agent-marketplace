@@ -27,6 +27,142 @@ Run `scripts/branded_pdf.py` (via `Bash`) rather than writing ad hoc `reportlab`
 - `build_branded_pdf(output_path, agent_name, report_title, sections, metadata, scope_caveat, fit_tier=None, operational_status=None, scope=None, limitations=None, recommended_next_steps=None)` — a full document: a full-bleed dark hero band holding **only** the real logo and an agent-name label (nothing else — no title, no folder name), then in the body: the descriptive `report_title` as a heading, optional **fit-tier / operational-status badge chips** right below it, a "Report details" block built from `metadata` (who ran it, what was scanned, when, coverage — with clickable links where relevant), an optional **Scope note box** (what was actually scanned, file types read vs. skipped, retention cutoff, which signals ran), one or more findings sections (each a heading + either a paragraph or a table), optional **Limitations** and **Recommended Next Steps** note boxes after the findings, and a fixed legal footer (injected from the marketplace install disclaimer on every publish) with page numbers.
 - **`scope_caveat` is required for every PDF.** Pass the exact per-agent scope caveat from `report-export`; callers cannot supply or suppress the legal layer.
 
+## Build the PDF: Write the spec, then `build --json-file`
+
+This is the one supported flow, and it keeps report text out of the shell
+entirely. Report text pushed through a shell fails in a few repeatable ways: a
+heredoc chokes on an apostrophe or an unbalanced quote, `<`/`>` get stripped to
+dodge shell quoting (one delivered report said "html lang attribute" instead of
+the literal `<html lang>`), a non-ASCII em dash or curly quote mangles the file
+encoding, or the Windows command-length limit forces a script into pieces. Any
+one of them can quietly change what the report says.
+
+**The rule: never write .py helper files, and never generate report text through
+heredocs, `printf` or a Python one-liner.** Do not write a script that imports
+this module either. Use the Write tool and this module's CLI:
+
+1. **Pick the staging folder once per run**: `<base>/_kiteworks-report/`.
+   `<base>` is a user-private local folder the Kiteworks connector can read for
+   `upload_file_from_path`: the host folder `content-extract` uses as `--parent`
+   when this run downloads files (on Windows, the `--long-path` output),
+   otherwise the connector-readable folder you use for local files. The name
+   must be exactly `_kiteworks-report`: your Write tool may only write `.json`,
+   `.csv`, `.txt` and `.md` files directly inside a folder of that name, and
+   every other path is refused.
+2. **Write `spec.json` with the Write tool** at
+   `<base>/_kiteworks-report/spec.json`: one UTF-8 JSON object shaped like the
+   example below. Put report text in it exactly as it should read, with no
+   manual escaping; literal `<html lang>`, apostrophes, "double quotes", an em
+   dash, curly quotes and accented letters all render as written.
+3. **Write the CSV with the Write tool** into the same folder
+   (`<agent-name>-<YYYY-MM-DD>.csv`, see `report-export`).
+4. **Build**: `python <this skill>/scripts/branded_pdf.py build --json-file
+   <base>/_kiteworks-report/spec.json --out
+   <base>/_kiteworks-report/<agent-name>-<YYYY-MM-DD>.pdf`. It prints one JSON
+   line, `{"pdf": "<path>", "pages": <n>, "bytes": <n>, "spec_removed": true}`,
+   and removes the spec it read from the staging folder (`--keep-spec` keeps
+   it). A malformed spec exits 2 with one `error:` line naming the key and the
+   expected shape; fix `spec.json` with the Write tool and build again (a
+   failed build keeps the spec).
+5. **Upload** the PDF and the CSV with `upload_file_from_path` and compare each
+   response size with the local size (see `report-export`).
+6. **Clean up** once you no longer need the local files, whether or not the
+   upload succeeded: `python <this skill>/scripts/branded_pdf.py cleanup --dir
+   <base>/_kiteworks-report`. It deletes the staged `.json`, `.csv`, `.txt`,
+   `.md`, `.pdf` and `.b64` files, then the empty folder, and prints what it
+   kept (anything else); report kept paths to the user.
+
+`scope_caveat` is required and the published legal footer is fixed: no CLI flag
+or spec key can override or omit it.
+
+### spec.json: a complete example
+
+Copy this shape; it builds as it stands. Every key is one of this module's
+keyword arguments.
+
+```json
+{
+  "agent_name": "Section 508 Compliance Check",
+  "report_title": "Section 508 Compliance Report",
+  "scan_date": "2026-09-28",
+  "fit_tier": "accessibility",
+  "operational_status": "operational",
+  "metadata": [
+    ["Folder scanned", {"text": "My Folder/Website", "url": "https://kiteworks.example.com/#/folder/123"}],
+    ["Report saved in", {"text": "My Folder/Agents/Section 508 Compliance Check", "url": "https://kiteworks.example.com/#/folder/456"}],
+    ["Scanned by", "Jane Doe (jane.doe@example.com)"],
+    ["Generated", "2026-09-28"]
+  ],
+  "scope": ["12 HTML files read; 3 PDFs skipped (no text layer)."],
+  "sections": [
+    {
+      "heading": "Summary",
+      "paragraph": "4 of 12 pages lack the <html lang> attribute or a <title> element. It's the most common gap — “quick” to fix."
+    },
+    {
+      "heading": "Flagged files",
+      "table": {
+        "data": [
+          ["File", "Issue", "Link"],
+          ["index.html", "missing <html lang>", {"text": "Open in Kiteworks", "url": "https://kiteworks.example.com/#/file/789"}],
+          ["café-menu.html", "no <title> element", null]
+        ],
+        "col_widths_frac": [0.3, 0.4, 0.3]
+      }
+    }
+  ],
+  "limitations": ["No screen-reader test was run.", "Scripts and <canvas> content were not evaluated."],
+  "recommended_next_steps": ["Add lang=\"en\" to every <html> element."],
+  "scope_caveat": "Checked HTML markup only; did not render pages or test assistive technology."
+}
+```
+
+The spec rules, which the build enforces:
+
+- **Keys**: `agent_name`, `report_title`, `sections` and `scope_caveat` are
+  required; `metadata`, `fit_tier`, `operational_status`, `scope`,
+  `limitations`, `recommended_next_steps` and `scan_date` are optional. Any
+  other key is refused. `output_path` is not a key; it comes from `--out`.
+- **A section** is an object with a `heading` and a `paragraph`, a `table`, or
+  both.
+- **A table** is an object, never a bare list:
+  `{"data": [header row, row, ...], "col_widths_frac": [...], "header": true}`.
+  Every row has as many cells as the header row. `col_widths_frac` (optional)
+  is one positive number per column; `header` defaults to `true`.
+- **A cell**, and a `metadata` value, is text, a number, `null` (empty) or a
+  link object `{"text": "...", "url": "https://..."}` (`http`, `https` or
+  `mailto`). Use the link object for links; never write `<a href>` markup
+  yourself. All other text is shown literally.
+- **`metadata`** is a list of `[label, value]` rows; the output of
+  `standard_metadata()` fits as it is. `scope`, `limitations` and
+  `recommended_next_steps` are a string or a list of strings.
+
+### Fallback for a host without the Write tool: `spec-append`
+
+Use this only when the Write tool itself is unavailable in this host, never
+because a write to another path was refused (write to `_kiteworks-report`
+instead). It needs no file writes from you, because every chunk is plain-ASCII
+base64:
+
+- `python scripts/branded_pdf.py spec-append --spec <path.json.b64> --b64 <chunk>`
+  appends one base64 chunk (`A-Za-z0-9+/=` only, roughly 6000 characters or
+  fewer) to `<path.json.b64>`, creating the file on the first call. Call it once
+  per chunk, in order; a non-base64 character is rejected with a clear error.
+- `python scripts/branded_pdf.py build --spec <path.json.b64> --out <file.pdf>`
+  joins the chunks, decodes them as the same UTF-8 JSON spec and builds it,
+  exactly like `build --json-file`.
+
+The base64 below decodes to a spec whose paragraph reads "12 of 340 files
+flagged, including one with a <title> tag in its name." The literal `<title>`
+survives untouched.
+
+```bash
+python scripts/branded_pdf.py spec-append --spec /tmp/report.json.b64 --b64 "eyJhZ2VudF9uYW1lIjogIlNlbnNpdGl2ZSBDb250ZW50IFNjYW5uZXIiLCAicmVwb3J0X3RpdGxlIjogIlNlbnNpdGl2ZSBDb250ZW50IFNjYW4gUmVwb3J0IiwgInNlY3Rpb25zIjogW3siaGVhZGluZyI6ICJTdW1tYXJ5IiwgInBhcmFncmFwaCI6ICIxMiBvZiAz"
+python scripts/branded_pdf.py spec-append --spec /tmp/report.json.b64 --b64 "NDAgZmlsZXMgZmxhZ2dlZCwgaW5jbHVkaW5nIG9uZSB3aXRoIGEgPHRpdGxlPiB0YWcgaW4gaXRzIG5hbWUuIn1dLCAic2NvcGVfY2F2ZWF0IjogIlNjYW5uZWQgZmlsZSBuYW1lcyBhbmQgY29udGVudHMgb25seTsgZGlkIG5vdCBldmFsdWF0ZSBwZXJtaXNzaW9ucy4ifQ=="
+python scripts/branded_pdf.py build --spec /tmp/report.json.b64 --out /tmp/report.pdf
+# {"pdf": "/tmp/report.pdf", "pages": 1, "bytes": 4821}
+```
+
 ## Badges and note boxes — added 2026-07-14 for the `*-compliance-check` family, usable by any agent
 
 Two new, optional, brand-consistent building blocks, added to close a real gap: reports could describe a fit tier or a "what this doesn't check" paragraph in the *skill's own documentation*, which a report reader never sees. Now they render directly in the PDF.
@@ -37,13 +173,13 @@ Two new, optional, brand-consistent building blocks, added to close a real gap: 
 Any agent in this plugin can use these four kwargs, not just `*-compliance-check` — they're the general-purpose "here's the fit tier and here's what this run did/didn't cover" building blocks, `compliance-mapping`'s consumers are simply the first and most systematic users of all five together.
 
 - `standard_metadata(scope_label, scope_name, scanned_by, generated_on, scope_link=None, output_folder_name=None, output_folder_link=None)` — builds the **generic** rows of the Report details block that are identical in shape across every agent in this plugin: the scope (folder/person/mailbox, whatever `scope_label` names it), where the report itself was saved, who ran it, and when. Both the scope and the output-folder rows render as real clickable Kiteworks links when a `*_link` URL is passed. Call this first, then extend the returned list with this agent's own specific rows (e.g. `[("Terms / patterns checked", "...")]` for sensitive-content-scanner, or a retention threshold, time window, person name for others) before passing the combined list to `build_branded_pdf`'s `metadata` argument. This is the formal generic-vs-agent-specific split: **generic** = scope, output location, who, when (same function, same order, every agent); **agent-specific** = whatever extra rows that one agent's SKILL.md appends.
-- `safe_table(data, col_widths_frac=None, header=True)` — returns a ready-to-insert reportlab `Table` flowable. **This is the fix for cell text overlapping**: it wraps every cell's text in a `Paragraph` (via a small helper style) before handing it to `Table`, instead of passing raw strings.
+- `safe_table(data, col_widths_frac=None, header=True)` — returns a ready-to-insert reportlab `Table` flowable. **This is the fix for cell text overlapping**: it wraps every cell's text in a `Paragraph` (via a small helper style) before handing it to `Table`, instead of passing raw strings. A cell is text, a number, `null` or a link object `{"text": ..., "url": ...}`, which renders as a real link (see the spec rules above).
 
 **`report_title` must stay generic/branded** (e.g. "Sensitive Content Scan Report") — never put the specific folder name, date, or person in it. Those are scope-specific facts and belong in `metadata`, rendered in the Report Details block, not in the title or the hero. Rick caught the folder-in-header version of this directly ("folder name scanned should not be in header, but below").
 
 **Corrected 2026-07-14 — the hero and the title were overlapping/redundant.** An earlier version put the agent name in the hero as an eyebrow AND put a near-identical descriptive title ("Sensitive Content Scan Report") right below it in the hero too — Rick caught the visual overlap and the redundancy directly ("'SENSITIVE CONTENT SCANNER' and 'Sensitive Content Scan Report' overlap and are very similar"). Fixed by making the hero pure brand real-estate — logo + agent-name label, nothing else, ever — and moving `report_title` into the body as the very first thing on the page, where there's no shared vertical space to fight over.
 
-**`metadata` must always include who ran it and what it covered, and now includes real links.** At minimum, via `standard_metadata()`: folder/scope (linked), where the report was saved (linked), "Scanned by" (from `get_user_info_whoami`), "Generated" (date) — plus each agent's own scan-specific parameters (term list, PII categories, retention threshold, time window — whichever apply). Rick asked for this twice: first the who/what audit context ("the person who scanned this and what we scanned for?!"), then the actual clickable folder links ("can we generically add links to the scanned kiteworks folder and folder this report was generated in"). Links use `<a href="URL" color="#4D60FB"><u>text</u></a>` reportlab Paragraph markup — `#4D60FB` is the brand's own `--fg-link` token, same value as Electric Indigo.
+**`metadata` must always include who ran it and what it covered, and now includes real links.** At minimum, via `standard_metadata()`: folder/scope (linked), where the report was saved (linked), "Scanned by" (from `get_user_info_whoami`), "Generated" (date) — plus each agent's own scan-specific parameters (term list, PII categories, retention threshold, time window — whichever apply). Rick asked for this twice: first the who/what audit context ("the person who scanned this and what we scanned for?!"), then the actual clickable folder links ("can we generically add links to the scanned kiteworks folder and folder this report was generated in"). Links render in the brand's own `--fg-link` color (`#4D60FB`, same value as Electric Indigo); in a spec, write a link as a `{"text": ..., "url": ...}` object, never as markup.
 
 ## Why the table overlap happened, and the exact rule that prevents it
 

@@ -75,3 +75,7 @@ Summary card: counts (scanned / candidates / skipped-AV-DLP / skipped-unsupporte
 **Tax-specific disclaimer, every time, not just once:** *"These are best-effort extracted/OCR'd values, not verified accounting data. Reconcile totals against your bank or card statement before using this for tax filing or bookkeeping. Currency was read from what's printed on each receipt, not verified against live exchange rates."*
 
 End by actively offering apply for the confirmed High + Medium set: *"Want me to rename these N files and export the categorized CSV? The M Low-confidence files need your input first — want to review those now?"* Never bundle Low-confidence files into a "looks good, proceeding" default.
+
+## Preview cannot save a report
+
+This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.

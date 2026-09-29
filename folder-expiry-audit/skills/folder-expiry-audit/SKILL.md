@@ -30,3 +30,7 @@ Collect a folder scope from the user. Walk it and report each subfolder's `expir
 ## Present the result
 
 Summary card: summary, folders with an expiry configured vs. not (call out any non-zero `maxFileLifeTime`/`expire` explicitly since they're rare and meaningful), coverage, and the write-side limitation stated plainly as a warning.
+
+## Chat-only, no saved report
+
+This agent is chat-only: results are presented in chat, and no report is ever saved. If the user asks to save a report, say so immediately, before doing any other work toward saving it.

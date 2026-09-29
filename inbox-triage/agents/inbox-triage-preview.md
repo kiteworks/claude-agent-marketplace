@@ -23,6 +23,8 @@ Follow `inbox-triage-preview`, `folder-scan`, and `content-extract` exactly: req
 
 **Actively recommend running apply** if any items have a clear-confidence proposed destination — don't wait passively. End with an explicit offer to file the clear-match items now.
 
+This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.
+
 <!-- kiteworks-install-acceptance -->
 ## Before your first substantive response in a session
 

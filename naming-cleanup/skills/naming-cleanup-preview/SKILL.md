@@ -23,3 +23,7 @@ Walk the folder and flag: version-sprawl patterns (e.g. "final", "final_v2", "FI
 ## Present the result
 
 Summary card: summary, flagged groups with proposed standardized name, coverage, warnings. Hand the confirmed-per-item renames forward for apply.
+
+## Preview cannot save a report
+
+This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.

@@ -107,11 +107,22 @@ The executable ships at `scripts/scratch_lifecycle.py` alongside this skill
   no-op. Otherwise missing/replaced/planned-only files stay failed, not DONE.
 - `finalize --root <run> --mode delete --authorized` releases remaining owned
   files, keeps unexpected entries, and removes only its owned empty run directory
-  after bookkeeping. It never removes the reused container/root recursively.
+  after bookkeeping, then the shared `_kiteworks-content-tmp` container itself
+  once that made it empty (a plain rmdir either way, never recursive; a
+  silent no-op while another run still lives in the container).
   Preserve returned JSON if a bookkeeping removal fails. Exit 3 means incomplete
   cleanup; list pending, truncated, retained_by_user and failed artifacts and any
   unexpected files. State exactly which paths the user should inspect/remove
   manually; never suggest deleting a whole reused parent.
+- `sweep` (also run at the start of every `init`) removes key files in the
+  per-user key store older than 24h. This is unrelated to run recovery below:
+  it never touches a manifest, a run directory or any document content, and
+  it makes no judgement about whether a run itself is finished -- a run is
+  still selected and recovered explicitly, by root, never by age. A key file
+  cannot name the arbitrary `--parent` folder its run was created under, so
+  age is the only signal available for whether it is still worth keeping; a
+  run that still needs recovery after its key is swept requires manual
+  inspection, exactly as for any other lost key.
 
 Always finalize in a consumer finally block after releasing needed text/originals.
 If `finalize` lists `retained` files and the user did not ask to keep them, run

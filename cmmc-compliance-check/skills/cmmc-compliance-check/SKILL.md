@@ -22,7 +22,7 @@ The US Department of Defense's cybersecurity certification model for contractors
 
 ## Signals this agent runs
 
-Signals: **A, B**. Signal A's default term list for this framework: "CUI", "controlled unclassified information", "FOUO", "export controlled", "DFARS" (plus the built-in PII/secret presets, plus anything the user adds).
+Signals: **A, B**. Signal A's default term list for this framework: "CUI", "controlled unclassified information", "FOUO", "export controlled", "DFARS" (plus the built-in PII/secret presets, plus anything the user adds). Count these terms, and the user's own terms, only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --framework=cmmc --framework-terms [--terms-file=<user-terms.txt>]`: the script holds this exact list and applies one fixed matching rule, so never count them yourself. When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=cmmc`: that adds the plaintext-credential preset (`password = <value>`-style assignments, placeholder values excluded) to the general built-in presets.
 
 ## Control citations
 

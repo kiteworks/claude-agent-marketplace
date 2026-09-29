@@ -44,3 +44,7 @@ Find candidate files per `folder-scan`/`term-sweep`'s name/content matching. For
 Summary card: mode used, term/pattern and replacement, per-file candidate list with match count and format-support tier (high-confidence / needs-manual-review / unsupported), destination folder, coverage, warnings. Do not create anything yet.
 
 End with an explicit next step, e.g.: *"Want me to create redacted copies of the N high-confidence files in [destination]? The M PDF/legacy files need manual handling."* Hand the confirmed-per-file list forward for apply exactly like the other real preview/apply agents in this family.
+
+## Preview cannot save a report
+
+This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.
