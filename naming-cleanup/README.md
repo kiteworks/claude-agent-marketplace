@@ -1,6 +1,6 @@
 # Naming Cleanup
 
-`v0.6.7` · updated 2026-09-29
+`v0.6.8` · updated 2026-09-30
 
 Cleans up inconsistent or version-sprawled file names in a Kiteworks folder, and renames them once you approve.
 

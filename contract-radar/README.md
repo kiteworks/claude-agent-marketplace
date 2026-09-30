@@ -1,6 +1,6 @@
 # Contract Radar
 
-`v1.2.4` · updated 2026-09-29
+`v1.2.5` · updated 2026-09-30
 
 Finds contracts, agreements, and renewal-related documents in a Kiteworks folder, and can save a report.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: cleanup and reliability improvements.
+Agents now ask which report to save (CSV, PDF, TXT or none) before the scan, so saving works in Claude Desktop and Cowork.
 
 ## Install
 

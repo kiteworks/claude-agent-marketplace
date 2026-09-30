@@ -1,6 +1,6 @@
 # CIS Controls Compliance Check
 
-`v1.3.4` · updated 2026-09-29
+`v1.3.5` · updated 2026-09-30
 
 Scans a Kiteworks folder for sensitive content and external sharing under CIS Controls v8's Data Protection control, and saves a report. Most of CIS Controls is outside what this can check; it says so.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: cleanup and reliability improvements.
+Agents now ask which report to save (CSV, PDF, TXT or none) before the scan, so saving works in Claude Desktop and Cowork.
 
 ## Install
 

@@ -1,6 +1,6 @@
 # WCAG Compliance Check
 
-`v1.2.4` · updated 2026-09-29
+`v1.2.5` · updated 2026-09-30
 
 Runs a shallow accessibility structure check (tagged PDFs, document/slide metadata, alt text, and HTML heading structure) over PDF, Word, PowerPoint, and HTML files in a Kiteworks folder under WCAG, and saves a report. This is not a full WCAG conformance test.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: cleanup and reliability improvements.
+Agents now ask which report to save (CSV, PDF, TXT or none) before the scan, so saving works in Claude Desktop and Cowork.
 
 ## Install
 

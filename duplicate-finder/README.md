@@ -1,6 +1,6 @@
 # Duplicate Finder
 
-`v0.6.7` · updated 2026-09-29
+`v0.6.8` · updated 2026-09-30
 
 Finds duplicate files in a Kiteworks folder and, once you approve, moves the extra copies to a review folder so you can reclaim space.
 

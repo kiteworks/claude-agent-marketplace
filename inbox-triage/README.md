@@ -1,6 +1,6 @@
 # Inbox Triage
 
-`v0.6.7` · updated 2026-09-29
+`v0.6.8` · updated 2026-09-30
 
 Sorts files sitting in a Kiteworks inbox or uploads folder into the right project folders, and moves them once you approve the matches.
 

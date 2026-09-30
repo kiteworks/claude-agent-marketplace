@@ -1,6 +1,6 @@
 # EU AI Act Compliance Check
 
-`v1.3.4` · updated 2026-09-29
+`v1.3.5` · updated 2026-09-30
 
 Checks a Kiteworks folder for AI-related documents that are shared externally or contain personal/biometric data, under the EU AI Act. Most of the EU AI Act is outside what this can check; it says so.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: cleanup and reliability improvements.
+Agents now ask which report to save (CSV, PDF, TXT or none) before the scan, so saving works in Claude Desktop and Cowork.
 
 ## Install
 

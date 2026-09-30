@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.5 — 2026-09-30
+
+Maintenance release: cleanup and reliability improvements. <!-- whats-new: consolidated -->
+
 ## 0.7.4 — 2026-09-29
 
 Maintenance release: cleanup and reliability improvements. <!-- whats-new: consolidated -->

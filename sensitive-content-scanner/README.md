@@ -1,6 +1,6 @@
 # Sensitive Content Scanner
 
-`v1.5.4` · updated 2026-09-29
+`v1.5.5` · updated 2026-09-30
 
 Scans a Kiteworks folder for sensitive terms and common PII (like SSNs, credit card numbers, and IBANs) before you share it, and can save a report.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: cleanup and reliability improvements.
+Agents now ask which report to save (CSV, PDF, TXT or none) before the scan, so saving works in Claude Desktop and Cowork.
 
 ## Install
 

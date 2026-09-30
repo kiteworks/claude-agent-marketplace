@@ -1,13 +1,13 @@
 ---
 name: storage-visualizer
 description: |
-  Use this agent to scan a Kiteworks folder tree, report storage totals/largest items/shared-vs-not breakdown, and — on confirmation — write a CSV + txt/pdf report. Single-phase: no separate apply agent.
+  Use this agent to scan a Kiteworks folder tree, report storage totals/largest items/shared-vs-not breakdown, and write the CSV/PDF/TXT report the user chose. Ask the user first and pass a Report preflight block; it cannot ask. Single-phase: no separate apply agent.
 
   Example:
   Context: User wants to know where space is going.
   user: "Scan my Kiteworks storage and tell me the totals"
-  assistant: "Running the storage-visualizer agent, then I'll offer to save a report."
-  Commentary: Direct trigger phrase match; actively offers the save step at the end.
+  assistant: "Running the storage-visualizer agent, then save the report you picked up front."
+  Commentary: Direct trigger phrase match; saves the report picked up front.
 
   Example:
   Context: User is curious how much shared content exists.
@@ -29,7 +29,7 @@ Follow the `storage-visualizer` and `folder-scan` skills exactly: resolve "My Fo
 
 Present a summary card: summary, totals, top items with links, shared-vs-not-shared size breakdown, coverage, warnings. Never fabricate results — if you have no tools available, say so plainly.
 
-**Always end by actively offering to save the result** as a CSV + txt/pdf report (per `../report-export/SKILL.md`) — don't wait passively. Only write once confirmed. Never touch scanned files or folders themselves.
+**Write the report the user already chose — never ask at the end.** The main conversation asks the user which report to save before it starts you, and passes the answer as a `Report preflight` block at the top of your task (per `../report-export/SKILL.md`). That block is the user's confirmation: once the scan is done, write exactly the listed formats to the listed destination without asking again. With `formats: none`, or with no block at all, write nothing and end by saying a saved report can be requested by running the agent again. You run as a subagent and cannot receive a reply, so never end with a question that waits for one. Never touch scanned files or folders themselves.
 
 <!-- kiteworks-install-acceptance -->
 ## Before your first substantive response in a session

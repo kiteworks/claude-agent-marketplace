@@ -1,6 +1,6 @@
 # Retention Sweeper
 
-`v1.1.7` · updated 2026-09-29
+`v1.1.8` · updated 2026-09-30
 
 Finds files in a Kiteworks folder that are past a retention deadline you set, and can save a report of what it found.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: cleanup and reliability improvements.
+Agents now ask which report to save (CSV, PDF, TXT or none) before the scan, so saving works in Claude Desktop and Cowork.
 
 ## Install
 
