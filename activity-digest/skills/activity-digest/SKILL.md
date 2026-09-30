@@ -3,12 +3,13 @@ name: activity-digest
 description: >
   Use when the user wants a summary of recent activity in a Kiteworks
   folder — trigger phrases include "what's new in X this week," "activity
-  digest for [folder]," or "what changed since Monday." Scans and, on
-  confirmation, writes a CSV + txt/pdf report. Single-phase: no separate
+  digest for [folder]," or "what changed since Monday." Asks up front which report to save (CSV, PDF, TXT, or none), then scans and writes it. Single-phase: no separate
   "apply" step to ask for.
 metadata:
   version: "1.0.2"
 ---
+
+**Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save — CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default `My Folder/Agents/Activity Digest/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks.
 
 Delegate to the `activity-digest` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` first.
 
@@ -26,15 +27,15 @@ A folder scope (required) and a time window (e.g. "this week," "since last Monda
 
 Do the bounded `get_folder_children` walk per `folder-scan`, then filter client-side: `modified` after the window start = changed, `created` after the window start = new. **Do not scope this via `search_files`'s `modified_after`/`created_after` alone instead of walking** — confirmed live, a `parent_folder_id` + date-filter-only query (no text term) returns nothing. If the user gives a name pattern too (e.g. "anything with 'draft' changed this week"), `search_files` with `path_contains` + `modified_after` works fine and is recursive — use that instead of walking in that specific case.
 
-## Present the result, then actively offer to save it
+## Present the result, then save the chosen report
 
 Summary card: summary, window used, new items (created_after match), changed items (modified_after match, excluding new), most-active subfolder if discernible, coverage, warnings.
 
-**Do not stop there and wait.** End by explicitly asking, e.g.: *"Want me to save this as a CSV + PDF report to `My Folder/Agents/Activity Digest/`?"*
+Then write the formats from the report preflight without asking again, and list what was saved (file names, links). With `formats: none`, end with the results only.
 
 This skill also pairs naturally with the `schedule` capability for a recurring digest — mention that once, don't set it up unless asked.
 
-## If confirmed, write the report
+## Write the report the preflight selected
 
 Read `../report-export/SKILL.md`. Default agent name: "Activity Digest".
 

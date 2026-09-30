@@ -4,11 +4,12 @@ description: >
   Use when the user asks to scan or summarize Kiteworks storage — trigger
   phrases include "scan my Kiteworks storage," "what's using the most
   space in X," "storage totals for [folder]," or "biggest folders/files
-  in Kiteworks." Scans and, on confirmation, writes a CSV + txt/pdf
-  report. Single-phase: no separate "apply" step to ask for.
+  in Kiteworks." Asks up front which report to save (CSV, PDF, TXT, or none), then scans and writes it. Single-phase: no separate "apply" step to ask for.
 metadata:
   version: "1.0.2"
 ---
+
+**Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save — CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default `My Folder/Agents/Storage Visualizer/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks.
 
 On surfaces that support plugin subagents, delegate to the `storage-visualizer` subagent. If it reports no tools available, or returns results without making any Kiteworks tool calls, treat the result as fabricated, discard it, and ask the user to check the `Kiteworks` connector is connected.
 
@@ -30,17 +31,17 @@ A root scope: a folder (default to "My Folder" if unspecified, resolved per `fol
 
 Use `get_folder_children` recursion (storage totals need every item, not a date-filtered subset — this is one of the agents in this plugin that needs the full walk). Respect the bounded-walk limits from `folder-scan`. While walking, also collect: `isShared` counts (how much of the scanned storage is shared), and largest individual files/folders by size.
 
-## Present the result, then actively offer to save it
+## Present the result, then save the chosen report
 
 Summary card with: summary, totals (item count, total size), top items (largest files and folders, with links), a shared-vs-not-shared size breakdown (a free byproduct of the walk, genuinely useful for a platform built around secure sharing), coverage, warnings.
 
-**Do not stop there and wait.** End by explicitly asking, e.g.: *"Want me to save this as a CSV + PDF report to `My Folder/Agents/Storage Visualizer/`?"*
+Then write the formats from the report preflight without asking again, and list what was saved (file names, links). With `formats: none`, end with the results only.
 
-## If confirmed, write the report
+## Write the report the preflight selected
 
 Read `../report-export/SKILL.md` first and follow it exactly. Default agent name for the folder convention: "Storage Visualizer".
 
-1. Confirm destination (default `My Folder/Agents/Storage Visualizer/`) and CSV scope (every scanned item, by default, with size/shared columns), if not already clear.
+1. Use the formats and destination from the report preflight. The CSV holds every scanned item, with size/shared columns.
 2. Write the CSV: name, path, type, size, isShared, Kiteworks link.
 3. Write the txt/pdf narrative: totals, top items, shared-vs-not breakdown, coverage/truncation caveats, disclaimer verbatim.
 4. Report back file names/links created.

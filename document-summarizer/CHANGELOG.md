@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.8 — 2026-09-30
+
+Agents now ask which report to save (CSV, PDF, TXT or none) before the scan, so saving works in Claude Desktop and Cowork. <!-- whats-new: consolidated -->
+
 ## 0.6.7 — 2026-09-29
 
 Maintenance release: cleanup and reliability improvements. <!-- whats-new: consolidated -->

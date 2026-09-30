@@ -4,11 +4,12 @@ description: >
   Use when the user asks to check, scan, or review what's past retention
   in a Kiteworks folder — trigger phrases include "show me what's past
   retention in X," "what's older than N months/years in this folder," or
-  "check retention on [folder]." Scans and, on confirmation, writes a
-  CSV + txt/pdf report. Single-phase: no separate "apply" step to ask for.
+  "check retention on [folder]." Asks up front which report to save (CSV, PDF, TXT, or none), then scans and writes it. Single-phase: no separate "apply" step to ask for.
 metadata:
   version: "1.0.2"
 ---
+
+**Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save — CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default `My Folder/Agents/Retention Sweeper/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks.
 
 On surfaces that support plugin subagents (Claude Code, Claude Cowork), delegate to the `retention-sweeper` subagent. If it reports no tools available, or returns results without making any Kiteworks tool calls, treat the result as fabricated, discard it, and ask the user to check the `Kiteworks` connector is connected. On other surfaces, follow this skill directly.
 
@@ -34,17 +35,17 @@ Before scanning, compute the actual cutoff date (today minus the threshold) as a
 
 **Do not use `search_files`'s `modified_before`/`created_before` alone as a substitute for the walk.** Confirmed live: a query with only `parent_folder_id` plus a date filter and no text term returns nothing at all, same as an empty query. The full `get_folder_children` recursion is the only way to see the whole tree for a pure date-based sweep.
 
-## Present the result, then actively offer to save it
+## Present the result, then save the chosen report
 
 A summary card with: summary, cutoff date and threshold used, counts (flagged vs. total scanned), top items (name, path, last-modified, link), coverage (scanned vs. truncated), warnings (legal hold caveat, truncation).
 
-**Do not stop there and wait.** End the result by explicitly asking, e.g.: *"Want me to save this as a CSV + PDF report to `My Folder/Agents/Retention Sweeper/`?"* Don't make the user remember to separately ask for an export — offer it every time, as part of the same response.
+Then write the formats from the report preflight without asking again, and list what was saved (file names, links). With `formats: none`, end with the results only.
 
-## If confirmed, write the report
+## Write the report the preflight selected
 
-Read `../report-export/SKILL.md` and follow its destination convention, disclaimer, and confirm-before-write rules exactly. Default agent name for the folder convention: "Retention Sweeper".
+Read `../report-export/SKILL.md` and follow its destination convention, disclaimer, and report preflight rules exactly. Default agent name for the folder convention: "Retention Sweeper".
 
-1. Confirm the destination folder (default `My Folder/Agents/Retention Sweeper/`, or user-specified) and whether the CSV should contain only past-retention items or the full scanned set with a flag column, if not already clear.
+1. Use the formats and destination from the report preflight. The CSV holds the full scanned set with a flag column unless the user asked for past-retention items only.
 2. Write the CSV with columns: name, path, last-modified date, threshold applied, past-retention (yes/no), Kiteworks link.
 3. Write the txt/pdf narrative: cutoff date and threshold used, counts, top flagged items, coverage/truncation caveats, and the standard disclaimer verbatim.
 4. Report back the file names/links created.

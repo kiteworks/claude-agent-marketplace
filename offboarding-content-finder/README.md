@@ -1,6 +1,6 @@
 # Offboarding Content Finder
 
-`v0.6.7` · updated 2026-09-29
+`v0.6.8` · updated 2026-09-30
 
 Finds everything a departing or transferring employee owns across Kiteworks, and moves confirmed items to a holding folder for review.
 

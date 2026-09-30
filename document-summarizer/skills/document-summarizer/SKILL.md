@@ -13,6 +13,8 @@ metadata:
   version: "0.3.1"
 ---
 
+**Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user whether to save the summary back to Kiteworks — .txt, .docx, or no saved summary (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default: the same folder as the source file). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the summary deadlocks.
+
 Delegate to the `document-summarizer` subagent. If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools available, or returns a summary without making any Kiteworks tool calls, treat the result as fabricated, discard it, and ask the user to check the `Kiteworks` connector is connected. On other surfaces, follow this skill directly.
 
 Read `../content-extract/SKILL.md` first for how binary files (.docx, .pdf, .pptx, .xlsx) actually get their text out — this agent never re-implements that bridge itself.
@@ -56,9 +58,9 @@ Text-based (`.txt`, `.csv`, `.json`, `.xml`, `.md`, `.log`): read directly per `
 
 Proportional length (see above); never quote sensitive identifiers verbatim; always restate path, last-modified, and the Step 2 check result alongside the summary.
 
-## Step 5 — Actively offer to save it, don't wait passively
+## Step 5 — Save it the way the preflight chose
 
-End by asking, e.g.: *"Want me to save this summary back to Kiteworks?"* If yes, ask .txt or .docx, and confirm the destination — **default to the same folder as the source file** (a deliberate difference from this plugin's usual `My Folder/Agents/<Agent Name>/` convention: a document summary is a companion to one specific file, not a row in a bulk scan report, so it belongs next to what it summarizes unless the user says otherwise). Only write once confirmed.
+Write the format(s) from the report preflight without asking again — the destination **defaults to the same folder as the source file** (a deliberate difference from this plugin's usual `My Folder/Agents/<Agent Name>/` convention: a document summary is a companion to one specific file, not a row in a bulk scan report, so it belongs next to what it summarizes unless the user says otherwise). With `formats: none`, end with the summary only.
 
 - **.txt:** `create_file_from_content`, UTF-8, with a short header (`Summary of: <path>`, `Generated: <date>`, `Summarized by: <get_user_info_whoami>`) above the summary text.
 - **.docx:** use the `docx` skill's full creation process, **including its render-and-verify step**, before uploading. Only after visual verification, `upload_file_from_path` straight to the Kiteworks destination — **never base64-encode it into `create_file_from_content`.** Live-tested 2026-07-14: a hand-copied base64 string of the built docx was corrupted twice in two different ways between tool calls (once truncated, once with a chunk duplicated), each time reporting a clean success with a plausible-looking response — only a byte-for-byte re-download-and-diff caught it. `upload_file_from_path` uploads straight from the local file, no string relay, no corruption risk; verify afterward by checking the response's `size` matches the local file's real size (or re-download and diff for a higher-stakes write). See `../report-export/SKILL.md`'s corrected rule — same fix, same root cause, applies everywhere in this plugin that writes a binary file.

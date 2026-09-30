@@ -3,12 +3,13 @@ name: sharing-auditor
 description: >
   Use when the user asks what's shared or exposed in Kiteworks — trigger
   phrases include "what's shared in X folder," "find files and folders
-  exposed through sharing," "sharing audit," or "what's exposed outside my team." Scans
-  and, on confirmation, writes a CSV + txt/pdf report. Single-phase: no
+  exposed through sharing," "sharing audit," or "what's exposed outside my team." Asks up front which report to save (CSV, PDF, TXT, or none), then scans and writes it. Single-phase: no
   separate "apply" step to ask for.
 metadata:
   version: "1.1.0"
 ---
+
+**Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save — CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default `My Folder/Agents/Sharing Auditor/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks.
 
 On surfaces that support plugin subagents, delegate to the `sharing-auditor` subagent. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector.
 
@@ -28,13 +29,13 @@ A folder scope (required). Optionally: whether to include subfolders recursively
 
 First read the scan root's flag and, if it is shared, resolve the share origin (`sharing-exposure` steps 1 and 2). Then walk with `get_folder_children` and apply its step 3: report one finding per share origin with the counts of files and subfolders that inherit; files inherit their folder and are never judged from a missing field. Cross-reference item names against any sensitive-sounding terms the user cares about (optional; if given, flag matches as higher priority) but do not require a term list — the core value here is just surfacing what's shared at all.
 
-## Present the result, then actively offer to save it
+## Present the result, then save the chosen report
 
 Summary card: summary, counts (items exposed vs. items seen), share origins with name/path/link/creator, coverage, warnings (this reports folder-level sharing *state*; it cannot see who has access or whether they are internal or external, and directly shared files are not detected; whether the exposure is appropriate is the user's judgment). Include the sharing-context Scope lines from `sharing-exposure` (Sharing context always; Share origin only when the root is shared; Members always).
 
-**Do not stop there and wait.** End by explicitly asking, e.g.: *"Want me to save this as a CSV + PDF report to `My Folder/Agents/Sharing Auditor/`?"*
+Then write the formats from the report preflight without asking again, and list what was saved (file names, links). With `formats: none`, end with the results only.
 
-## If confirmed, write the report
+## Write the report the preflight selected
 
 Read `../report-export/SKILL.md` and follow it exactly. Default agent name: "Sharing Auditor".
 

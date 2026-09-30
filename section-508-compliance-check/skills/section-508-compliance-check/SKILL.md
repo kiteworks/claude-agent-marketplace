@@ -2,13 +2,14 @@
 name: section-508-compliance-check
 description: >
   Use when the user asks to check Kiteworks content against Section 508 --
-  trigger phrases include `Section 508` `508 compliance` `VPAT` `ACR` `federal accessibility`. Scans and, on confirmation,
-  writes a CSV + txt/pdf report. Single-phase: no separate "apply" step
+  trigger phrases include `Section 508` `508 compliance` `VPAT` `ACR` `federal accessibility`. Asks up front which report to save (CSV, PDF, TXT, or none), then scans and writes it. Single-phase: no separate "apply" step
   to ask for. Fit tier: Accessibility -- see below for what this can and can't
   actually check.
 metadata:
   version: "0.5.0"
 ---
+
+**Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save -- CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) -- and confirm the destination (default `My Folder/Agents/Section 508 Compliance Check/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks.
 
 Delegate to the `section-508-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
