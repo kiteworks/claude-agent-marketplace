@@ -28,3 +28,23 @@ This agent's apply step does two things, unlike Retention Sweeper and Storage Vi
 3. `move_file` each confirmed duplicate into it.
 4. Write the CSV (columns: duplicate-set id, file name, original path, moved-to path, size, keeper yes/no) and the txt/pdf narrative (sets found, reclaimable space, what was moved, link to the review folder, disclaimer verbatim).
 5. Report back clearly: what moved, where, and that nothing was deleted — the user reviews and deletes manually.
+
+## Executive report record
+
+For saved reports, the version 2 contract in the shared report-export and
+kw-pdf-report skills supersedes older table/metadata layout examples here.
+Use profile `duplicates` and document_kind: receipt; read the profile-specific
+evidence requirements in kw-pdf-report/report-profiles.md. Preserve the full
+enumerated population and per-check outcomes, not only flagged items.
+Derive authorized PDF, TXT and complete-inventory CSV from that one record.
+Explain why findings matter and what decision is needed. Any specialized
+detail table remains supporting evidence, never a substitute for the ledger.
+Record actions actually completed separately from proposals, failures and
+skips, with verification and times. Do not invent missing execution evidence.
+
+### Proposals and receipts
+
+Reports written with `document_kind: proposal` or `receipt` keep their current
+per-action format; the assessment rules for `report_mode`, themes and metrics
+do not change them. Only an assessment-style report adopts the new rules, as
+described in the Assessment contract in the kw-pdf-report SKILL.md.

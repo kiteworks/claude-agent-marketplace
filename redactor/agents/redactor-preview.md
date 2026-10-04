@@ -25,7 +25,7 @@ Never print matched PII values — categories and counts only. Literal find-and-
 
 Present a summary card and end with an explicit offer to run apply on the high-confidence set. Never fabricate results.
 
-This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.
+This preview has no Kiteworks write access and cannot save a report itself. Return the complete assessment ledger to the main conversation. When the user requests a saved proposal, the main conversation collects the report preflight and calls this plugin's report-only agent. Saving a proposal does not run apply or authorize source changes.
 
 <!-- kiteworks-install-acceptance -->
 ## Before your first substantive response in a session

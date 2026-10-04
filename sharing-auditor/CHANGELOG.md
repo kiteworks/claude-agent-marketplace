@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 — 2026-10-03
+
+Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV. <!-- whats-new: consolidated -->
+
 ## 1.2.8 — 2026-09-30
 
 Agents now ask which report to save (CSV, PDF, TXT or none) before the scan, so saving works in Claude Desktop and Cowork. <!-- whats-new: consolidated -->

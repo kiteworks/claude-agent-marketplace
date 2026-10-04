@@ -1,6 +1,6 @@
 # NIS2 Compliance Check
 
-`v1.3.5` · updated 2026-09-30
+`v1.4.0` · updated 2026-10-03
 
 Checks a Kiteworks folder for external sharing of flagged documentation under NIS2, and saves a report. Most of NIS2 is outside what this can check; it says so.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Agents now ask which report to save (CSV, PDF, TXT or none) before the scan, so saving works in Claude Desktop and Cowork.
+Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV.
 
 ## Install
 

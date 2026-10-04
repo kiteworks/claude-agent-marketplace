@@ -1,0 +1,114 @@
+{
+  "agent_name": "GDPR Compliance Check",
+  "report_title": "Personal Data Handling Review",
+  "scope_caveat": "Selected files only; no legal determination of compliance.",
+  "scan_date": "2026-09-30",
+  "assessment": {
+    "schema_version": 2,
+    "report_mode": {
+      "inventory": "compact"
+    },
+    "cover": {
+      "title": "Personal Data Handling Review",
+      "scope_label": "Selected repository / Records"
+    },
+    "profile": "privacy",
+    "run": {
+      "id": "REVIEW-1",
+      "version": "1",
+      "operator": "Reviewer",
+      "assessed_at": "2026-09-30T10:00:00+02:00",
+      "generated_at": "2026-09-30T11:00:00+02:00",
+      "scope": "Selected repository",
+      "enumeration_complete": true,
+      "unvisited_scope": [],
+      "review_status": "Automated assessment · not reviewed by a person · findings need owner validation"
+    },
+    "executive": {
+      "purpose": "Identify personal-data handling questions for owner review.",
+      "conclusion": "One file needs validation and one could not be read.",
+      "key_points": [
+        "The unreadable file limits this review."
+      ],
+      "decisions": [
+        "Assign a privacy owner to validate the candidate."
+      ]
+    },
+    "checks": [
+      {
+        "id": "content",
+        "label": "Personal-data patterns",
+        "method": "Pattern matching",
+        "kind": "content",
+        "fact_keys": [
+          "iban_count"
+        ]
+      }
+    ],
+    "inventory": [
+      {
+        "id": "FILE-1",
+        "name": "records.txt",
+        "type": "file",
+        "checks": [
+          {
+            "id": "content",
+            "status": "checked",
+            "method": "text"
+          }
+        ],
+        "url": "https://kiteworks.example.com/#/file/123",
+        "facts": {
+          "iban_count": 1
+        }
+      },
+      {
+        "id": "FILE-2",
+        "name": "unreadable.pdf",
+        "type": "file",
+        "checks": [
+          {
+            "id": "content",
+            "status": "skipped",
+            "reason": "OCR unavailable"
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "id": "F1",
+        "title": "Validate possible personal information",
+        "observation": "One file contains a personal-data pattern.",
+        "impact": "The processing purpose needs owner validation.",
+        "confidence": "Automated observation",
+        "priority": "medium",
+        "priority_reason": "Context is not established.",
+        "object_ids": [
+          "FILE-1"
+        ],
+        "check_ids": [
+          "content"
+        ],
+        "recommendation": "Validate the content and applicable purpose."
+      }
+    ],
+    "actions": [
+      {
+        "id": "A1",
+        "finding_ids": [
+          "F1"
+        ],
+        "action": "Validate the content and purpose.",
+        "status": "proposed"
+      }
+    ],
+    "limitations": [
+      "Lawful basis was not assessed."
+    ],
+    "profile_details": {
+      "Framework and version": "GDPR",
+      "Policy basis": "Not supplied"
+    }
+  }
+}

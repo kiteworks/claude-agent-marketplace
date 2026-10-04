@@ -47,3 +47,44 @@ Read `../report-export/SKILL.md` first and follow it exactly. Default agent name
 4. Report back file names/links created.
 
 Never touch scanned files or folders themselves — this agent's only write action is creating the report files.
+
+## Executive report record
+
+For saved reports, the version 2 contract in the shared report-export and
+kw-pdf-report skills supersedes older table/metadata layout examples here.
+Use profile `storage` and document_kind: assessment; read the profile-specific
+evidence requirements in kw-pdf-report/report-profiles.md. Preserve the full
+enumerated population and per-check outcomes, not only flagged items.
+Derive authorized PDF, TXT and complete-inventory CSV from that one record.
+Explain why findings matter and what decision is needed. Any specialized
+detail table remains supporting evidence, never a substitute for the ledger.
+Record actions actually completed separately from proposals, failures and
+skips, with verification and times. Do not invent missing execution evidence.
+
+### Assessment rules (new-mode records)
+
+Follow the Assessment contract in the kw-pdf-report SKILL.md; the points that
+matter for this plugin are:
+
+- Set `report_mode`: `companion` when both CSV and PDF are authorized (the PDF
+  is a short companion to the complete CSV inventory), `compact` for a
+  PDF-only request.
+- Fill `cover.title` and `cover.scope_label` so the cover names the report and
+  the scope actually examined.
+- Use the canonical priority values; mark purely informational notes `info`.
+- Give every check a `kind`, as the shared contract defines.
+- Before writing any prose, run `branded_pdf.py metrics --json-file <record>`
+  and quote its figures; do not recompute counts, sizes or percentages by hand.
+- Group findings into themes with an affected count instead of listing one
+  finding per file; the per-file rows belong in the CSV.
+
+For this plugin specifically:
+
+- Use layout `brief`.
+- The executive conclusion quotes `metrics.total_size`, for example "Six
+  files use 80.4 kB; no capacity action is needed."
+- Show a shared/not-shared breakdown. Where Kiteworks returned no sharing
+  flag, word it "Kiteworks reported no sharing flag" rather than "not shared".
+- List the largest folders and the top 10 files from `metrics.largest_files`.
+- Never write KiB, MiB or raw byte counts in prose; use the formatted sizes
+  from the metrics output.

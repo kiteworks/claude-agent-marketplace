@@ -44,6 +44,15 @@ Never report "0 items owned" when any folder in scope is incomplete or skipped. 
 
 Summary card: summary, matched items (path, type, which field matched, last-modified), folders swept vs. skipped, the coverage block, warnings. Hand the confirmed item set forward for apply (staging into a holding folder for reassignment) if the user wants to act on it.
 
-## Preview cannot save a report
+## Save a proposal separately
 
-This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.
+This preview has no Kiteworks write access and cannot save a report itself. Return the complete assessment ledger to the main conversation. When the user requests a saved proposal, the main conversation collects the report preflight and calls this plugin's report-only agent. Saving a proposal does not run apply or authorize source changes.
+
+## Evidence handoff for reports
+
+Retain every enumerated object and every configured check in the version 2
+assessment ledger, including failed/skipped checks and unvisited scope.
+Use profile `offboarding`. Explain purpose, conclusion, implications and
+proposed actions. Return that record to the main conversation along with
+the preview. The caller invokes `offboarding-content-finder-report` to save the authorized
+proposal. It must not substitute an apply run for a reporting request.

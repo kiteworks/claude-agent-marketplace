@@ -70,8 +70,10 @@ import datetime as _dt
 import json
 import os
 import re
+import runpy
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 from xml.sax.saxutils import escape as _xml_escape
 from xml.sax.saxutils import unescape as _xml_unescape
 
@@ -87,6 +89,7 @@ from reportlab.platypus import (
     Table,
     TableStyle,
 )
+from reportlab.platypus.doctemplate import LayoutError
 
 ASSETS_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets"
@@ -152,6 +155,8 @@ SPEC_KEYS = (
     "limitations",
     "recommended_next_steps",
     "scan_date",
+    "assessment",
+    "presentation",
 )
 TABLE_SHAPE = (
     '{"data": [["Header A", "Header B"], ["row 1 text", {"text": "link text", '
@@ -221,6 +226,7 @@ _section_title_style = ParagraphStyle(
     textColor=FG_PAPER_1,
     spaceBefore=14,
     spaceAfter=6,
+    keepWithNext=True,
 )
 _body_style = ParagraphStyle(
     "kw_body",
@@ -345,7 +351,9 @@ def _link_markup(text, url):
 
 
 def _is_link_url(url):
-    return str(url).strip().lower().startswith(_LINK_SCHEMES)
+    return str(url).strip().lower().startswith(_LINK_SCHEMES) or bool(
+        re.fullmatch(r"#[A-Za-z0-9][A-Za-z0-9_-]*", str(url))
+    )
 
 
 def _type_name(value):
@@ -621,7 +629,13 @@ def safe_table(data, col_widths_frac=None, header=True):
             ]
         )
 
-    table = Table(wrapped_rows, colWidths=col_widths, repeatRows=1 if header else 0)
+    table = Table(
+        wrapped_rows,
+        colWidths=col_widths,
+        repeatRows=1 if header else 0,
+        splitByRow=1,
+        splitInRow=1,
+    )
 
     style_cmds = [
         ("GRID", (0, 0), (-1, -1), 0.5, BORDER_PAPER),
@@ -658,7 +672,7 @@ def _metadata_block(metadata):
         for label, value in metadata
     ]
     width = _printable_width()
-    table = Table(rows, colWidths=[width * 0.28, width * 0.72])
+    table = Table(rows, colWidths=[width * 0.28, width * 0.72], splitInRow=1)
     table.setStyle(
         TableStyle(
             [
@@ -750,25 +764,22 @@ def _note_box(heading, text):
     styled and immediately recognizable as a matched set, distinct from
     plain findings paragraphs. `text` may be a single string or a list of
     bullet strings (rendered as a simple dash-prefixed list)."""
-    if isinstance(text, (list, tuple)):
-        body_text = "<br/>".join(
-            "&#8226;&nbsp;%s" % _escape_report_text(t) for t in text
-        )
-    else:
-        body_text = _escape_report_text(text)
-    inner = [
-        Paragraph(_escape_report_text(heading.upper()), _note_heading_style),
-        Paragraph(body_text, _note_body_style),
-    ]
+    items = text if isinstance(text, (list, tuple)) else [text]
+    inner = [[Paragraph(_escape_report_text(heading.upper()), _note_heading_style)]]
+    for item in items:
+        body = _escape_report_text(item)
+        if isinstance(text, (list, tuple)):
+            body = "&#8226;&nbsp;" + body
+        inner.append([Paragraph(body, _note_body_style)])
     width = _printable_width()
     # Single-cell table so a colored left border can be drawn via LINEBEFORE
     # -- reportlab has no native "left-border box" flowable, this is the
     # standard workaround.
-    t = Table([[inner]], colWidths=[width])
+    t = Table(inner, colWidths=[width], repeatRows=1, splitInRow=1)
     t.setStyle(
         TableStyle(
             [
-                ("LINEBEFORE", (0, 0), (0, 0), 2.5, ELECTRIC_INDIGO),
+                ("LINEBEFORE", (0, 0), (0, -1), 2.5, ELECTRIC_INDIGO),
                 ("BACKGROUND", (0, 0), (-1, -1), BG_PAPER_SOFT),
                 ("LEFTPADDING", (0, 0), (-1, -1), 12),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 10),
@@ -844,11 +855,65 @@ def _footer(canvas_obj, doc, scan_date=None):
     canvas_obj.restoreState()
 
 
+_DELIVERY_KEYS = (
+    "name",
+    "location",
+    "url",
+    "row_count",
+    "byte_size",
+    "delivery_status",
+)
+
+
+def _validate_delivery(delivery, assessment, model):
+    """Check a `build --delivery` descriptor against the record it describes."""
+    if not isinstance(delivery, dict):
+        raise ValueError("delivery must be a JSON object")
+    if not model["is_new_mode"](assessment) or (
+        model["inventory_mode"](assessment) != "companion"
+    ):
+        raise ValueError(
+            "delivery requires a record with report_mode.inventory = companion"
+        )
+    required = {k for k in _DELIVERY_KEYS if k != "url"}
+    keys = set(delivery)
+    if keys - set(_DELIVERY_KEYS) or required - keys:
+        raise ValueError(
+            "delivery fields must be exactly: " + ", ".join(_DELIVERY_KEYS)
+        )
+    name = delivery["name"]
+    if not isinstance(name, str) or not name.lower().endswith(".csv"):
+        raise ValueError("delivery.name must be a file name ending in .csv")
+    if not isinstance(delivery["location"], str) or not delivery["location"].strip():
+        raise ValueError("delivery.location must be a non-empty string")
+    if "url" in delivery:
+        url = delivery["url"]
+        if not isinstance(url, str) or not url.startswith("https://"):
+            raise ValueError("delivery.url must be an https URL")
+    count = delivery["row_count"]
+    if (
+        isinstance(count, bool)
+        or not isinstance(count, int)
+        or count != len(assessment["inventory"])
+    ):
+        raise ValueError(
+            "delivery.row_count must equal the number of inventory objects"
+        )
+    size = delivery["byte_size"]
+    if isinstance(size, bool) or not isinstance(size, int) or size < 1:
+        raise ValueError("delivery.byte_size must be an integer of at least 1")
+    if delivery["delivery_status"] not in model["DELIVERY_STATUSES"]:
+        raise ValueError(
+            "delivery.delivery_status must be one of: "
+            + ", ".join(model["DELIVERY_STATUSES"])
+        )
+
+
 def build_branded_pdf(
     output_path,
     agent_name,
     report_title,
-    sections,
+    sections=None,
     metadata=None,
     scope_caveat=None,
     fit_tier=None,
@@ -857,6 +922,9 @@ def build_branded_pdf(
     limitations=None,
     recommended_next_steps=None,
     scan_date=None,
+    assessment=None,
+    presentation=None,
+    delivery=None,
 ):
     """`report_title` is now rendered ONCE, as the first thing in the body
     (below the hero) -- never in the hero itself, which stays pure brand
@@ -911,6 +979,54 @@ def build_branded_pdf(
         )
     if not scope_caveat:
         raise ValueError("scope_caveat is required for every branded report")
+    if assessment is not None:
+        if (
+            sections
+            or metadata
+            or scope
+            or limitations
+            or recommended_next_steps
+            or fit_tier
+            or operational_status
+        ):
+            raise ValueError(
+                "assessment owns report content; do not mix it with legacy sections or metadata"
+            )
+        scripts = Path(__file__).resolve().parent
+        model = runpy.run_path(str(scripts / "report_model.py"))
+        if delivery is not None:
+            _validate_delivery(delivery, assessment, model)
+        prepared = model["prepare_assessment"](
+            assessment,
+            delivery=delivery,
+            layout=(presentation or {}).get("layout", "full"),
+        )
+        assessed_date = assessment["run"]["assessed_at"][:10]
+        if scan_date and scan_date != assessed_date:
+            raise ValueError("scan_date must match assessment.run.assessed_at")
+        renderer = runpy.run_path(str(scripts / "report_layout.py"))
+        return renderer["build_assessment_pdf"](
+            output_path,
+            agent_name=agent_name,
+            report_title=report_title,
+            assessment=assessment,
+            prepared=prepared,
+            presentation={} if presentation is None else presentation,
+            scope_caveat=scope_caveat,
+            legal_footer=_resolve_legal_footer(assessed_date),
+            theme=SimpleNamespace(
+                FG_PAPER_1=FG_PAPER_1,
+                FG_PAPER_2=FG_PAPER_2,
+                DEEP_SPACE=DEEP_SPACE,
+                MIST=MIST,
+                ELECTRIC_INDIGO=ELECTRIC_INDIGO,
+                BG_PAPER_SOFT=BG_PAPER_SOFT,
+                HERO_BG_PATH=HERO_BG_PATH,
+                LOGO_WHITE_PATH=LOGO_WHITE_PATH,
+                escape_text=_escape_report_text,
+                cell_markup=_cell_markup,
+            ),
+        )
     _validate_sections(sections)
     _validate_metadata(metadata)
     for name, value in (
@@ -1080,16 +1196,19 @@ def _spec_to_build_kwargs(spec, output_path):
             "unknown spec key(s) %s; allowed keys: %s"
             % (", ".join(unknown), ", ".join(SPEC_KEYS))
         )
-    missing = [
-        key for key in ("agent_name", "report_title", "sections") if key not in spec
-    ]
+    required = (
+        ("agent_name", "report_title")
+        if "assessment" in spec
+        else ("agent_name", "report_title", "sections")
+    )
+    missing = [key for key in required if key not in spec]
     if missing:
         raise ValueError("the spec is missing required key(s) %s" % ", ".join(missing))
     return dict(
         output_path=str(output_path),
         agent_name=spec["agent_name"],
         report_title=spec["report_title"],
-        sections=spec["sections"],
+        sections=spec.get("sections"),
         metadata=spec.get("metadata"),
         scope_caveat=spec.get("scope_caveat"),
         fit_tier=spec.get("fit_tier"),
@@ -1098,6 +1217,8 @@ def _spec_to_build_kwargs(spec, output_path):
         limitations=spec.get("limitations"),
         recommended_next_steps=spec.get("recommended_next_steps"),
         scan_date=spec.get("scan_date"),
+        assessment=spec.get("assessment"),
+        presentation=spec.get("presentation"),
     )
 
 
@@ -1184,6 +1305,14 @@ def _build_cli_parser():
     )
     build_parser.add_argument("--out", required=True, help="Output PDF path.")
     build_parser.add_argument(
+        "--delivery",
+        help=(
+            "Path to a UTF-8 JSON file describing the saved companion CSV "
+            "(name, location, url, row_count, byte_size, delivery_status). "
+            "Requires report_mode.inventory = companion."
+        ),
+    )
+    build_parser.add_argument(
         "--keep-spec",
         action="store_true",
         help=(
@@ -1191,6 +1320,24 @@ def _build_cli_parser():
             "read from a %s folder is removed once the PDF is built." % STAGING_DIR_NAME
         ),
     )
+
+    export_parser = subparsers.add_parser(
+        "export",
+        help="Export the validated assessment as full inventory CSV or narrative TXT.",
+    )
+    export_parser.add_argument("--json-file", required=True)
+    export_parser.add_argument("--format", choices=("csv", "txt"), required=True)
+    export_parser.add_argument("--out", required=True)
+
+    metrics_parser = subparsers.add_parser(
+        "metrics",
+        help=(
+            "Print the exact formatted values (sizes, coverage, status, "
+            "authoring warnings) for a new-mode assessment so prose can quote "
+            "them verbatim. Reads the spec only; never writes files."
+        ),
+    )
+    metrics_parser.add_argument("--json-file", required=True)
 
     cleanup_parser = subparsers.add_parser(
         "cleanup",
@@ -1215,35 +1362,112 @@ def _run_cli(argv):
             _spec_append(args.spec, args.b64)
             return 0
 
+        if args.command == "export":
+            spec = json.loads(Path(args.json_file).read_text(encoding="utf-8"))
+            _spec_to_build_kwargs(spec, args.out)
+            if not spec.get("scope_caveat"):
+                raise ValueError("scope_caveat is required for every report")
+            model = runpy.run_path(
+                str(Path(__file__).resolve().parent / "report_model.py")
+            )
+            assessment = spec.get("assessment")
+            model["validate_assessment"](assessment)
+            scan_date = assessment["run"]["assessed_at"][:10]
+            if spec.get("scan_date") and spec["scan_date"] != scan_date:
+                raise ValueError("scan_date must match assessment.run.assessed_at")
+            output = Path(args.out)
+            if (
+                output.suffix != "." + args.format
+                or output.resolve() == Path(args.json_file).resolve()
+            ):
+                raise ValueError(
+                    "export output must use the selected format and differ from its source"
+                )
+            text = model["export_assessment"](
+                assessment,
+                args.format,
+                _resolve_legal_footer(scan_date),
+                spec["scope_caveat"],
+            )
+            output.write_text(text, encoding="utf-8", newline="")
+            print(
+                json.dumps(
+                    {
+                        "output": str(output),
+                        "format": args.format,
+                        "objects": len(assessment["inventory"]),
+                        "bytes": output.stat().st_size,
+                    }
+                )
+            )
+            return 0
+
+        if args.command == "metrics":
+            spec = json.loads(Path(args.json_file).read_text(encoding="utf-8"))
+            model = runpy.run_path(
+                str(Path(__file__).resolve().parent / "report_model.py")
+            )
+            assessment = spec.get("assessment")
+            model["validate_assessment"](assessment)
+            prepared = model["prepare_assessment"](assessment)
+            if model["is_new_mode"](assessment):
+                result = {
+                    "status": prepared["status"],
+                    "status_explanation": prepared["status_explanation"],
+                    "coverage": prepared["coverage"],
+                    "metrics": prepared["metrics"],
+                    "warnings": model["authoring_warnings"](assessment),
+                }
+            else:
+                result = {"status": prepared["status"], "metrics": None}
+            print(json.dumps(result, ensure_ascii=False))
+            return 0
+
         if args.command == "build":
             spec_path = Path(args.json_file or args.spec)
+            if Path(args.out).resolve() == spec_path.resolve():
+                raise ValueError("report output must differ from its source spec")
             if args.json_file:
                 spec = json.loads(spec_path.read_text(encoding="utf-8"))
             else:
                 spec = _decode_spec_file(args.spec)
-            out_path = build_branded_pdf(**_spec_to_build_kwargs(spec, args.out))
+            delivery = None
+            if args.delivery:
+                delivery = json.loads(Path(args.delivery).read_text(encoding="utf-8"))
+            out_path = build_branded_pdf(
+                **_spec_to_build_kwargs(spec, args.out), delivery=delivery
+            )
             # The staged spec has served its purpose; a spec kept anywhere
             # else (a template, a test fixture) is never touched.
             spec_removed = False
             if not args.keep_spec and spec_path.parent.name == STAGING_DIR_NAME:
                 spec_path.unlink()
                 spec_removed = True
-            print(
-                json.dumps(
-                    {
-                        "pdf": str(out_path),
-                        "pages": _count_pdf_pages(out_path),
-                        "bytes": os.path.getsize(out_path),
-                        "spec_removed": spec_removed,
-                    }
+            summary = {
+                "pdf": str(out_path),
+                "pages": _count_pdf_pages(out_path),
+                "bytes": os.path.getsize(out_path),
+                "spec_removed": spec_removed,
+            }
+            assessment = spec.get("assessment")
+            if isinstance(assessment, dict) and "report_mode" in assessment:
+                model = runpy.run_path(
+                    str(Path(__file__).resolve().parent / "report_model.py")
                 )
-            )
+                summary["warnings"] = model["authoring_warnings"](assessment)
+            if delivery is not None:
+                summary["companion"] = {
+                    "name": delivery["name"],
+                    "row_count": delivery["row_count"],
+                    "delivery_status": delivery["delivery_status"],
+                }
+            print(json.dumps(summary))
             return 0
 
         if args.command == "cleanup":
             print(json.dumps(_cleanup_staging(args.dir)))
             return 0
-    except (ValueError, OSError, RuntimeError, KeyError, TypeError) as exc:
+    except (ValueError, OSError, RuntimeError, KeyError, TypeError, LayoutError) as exc:
         print("error: %s" % exc, file=sys.stderr)
         return 2
 

@@ -19,3 +19,23 @@ Confirmed live: `move_file` works cleanly (tested moving a file between two Kite
 1. For each confirmed item, call `move_file` to its confirmed destination.
 2. Write a CSV (item, from-path, to-path, confidence at proposal time, link) and a txt/pdf narrative (what moved, what was left unfiled and why, disclaimer verbatim) into `Agents/Inbox Triage/` (or user destination), per `report-export`.
 3. Report back plainly what moved where, and what's still sitting unfiled.
+
+## Executive report record
+
+For saved reports, the version 2 contract in the shared report-export and
+kw-pdf-report skills supersedes older table/metadata layout examples here.
+Use profile `inbox` and document_kind: receipt; read the profile-specific
+evidence requirements in kw-pdf-report/report-profiles.md. Preserve the full
+enumerated population and per-check outcomes, not only flagged items.
+Derive authorized PDF, TXT and complete-inventory CSV from that one record.
+Explain why findings matter and what decision is needed. Any specialized
+detail table remains supporting evidence, never a substitute for the ledger.
+Record actions actually completed separately from proposals, failures and
+skips, with verification and times. Do not invent missing execution evidence.
+
+### Proposals and receipts
+
+Reports written with `document_kind: proposal` or `receipt` keep their current
+per-action format; the assessment rules for `report_mode`, themes and metrics
+do not change them. Only an assessment-style report adopts the new rules, as
+described in the Assessment contract in the kw-pdf-report SKILL.md.

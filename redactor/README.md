@@ -1,6 +1,6 @@
 # Redactor
 
-`v0.7.5` · updated 2026-09-30
+`v0.8.0` · updated 2026-10-03
 
 Finds and replaces specific text -- like a name or other sensitive information -- across documents in a Kiteworks folder, and creates redacted copies once you approve. Originals are never changed.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: cleanup and reliability improvements.
+Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV.
 
 ## Install
 

@@ -76,6 +76,15 @@ Summary card: counts (scanned / candidates / skipped-AV-DLP / skipped-unsupporte
 
 End by actively offering apply for the confirmed High + Medium set: *"Want me to rename these N files and export the categorized CSV? The M Low-confidence files need your input first — want to review those now?"* Never bundle Low-confidence files into a "looks good, proceeding" default.
 
-## Preview cannot save a report
+## Save a proposal separately
 
-This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.
+This preview has no Kiteworks write access and cannot save a report itself. Return the complete assessment ledger to the main conversation. When the user requests a saved proposal, the main conversation collects the report preflight and calls this plugin's report-only agent. Saving a proposal does not run apply or authorize source changes.
+
+## Evidence handoff for reports
+
+Retain every enumerated object and every configured check in the version 2
+assessment ledger, including failed/skipped checks and unvisited scope.
+Use profile `invoices`. Explain purpose, conclusion, implications and
+proposed actions. Return that record to the main conversation along with
+the preview. The caller invokes `invoice-organizer-report` to save the authorized
+proposal. It must not substitute an apply run for a reporting request.
