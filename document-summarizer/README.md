@@ -1,6 +1,6 @@
 # Document Summarizer
 
-`v0.6.8` · updated 2026-09-30
+`v0.7.0` · updated 2026-10-03
 
 Find and summarize documents stored in Kiteworks (docx, pdf, pptx, xlsx, and text formats) directly in chat, with compliance-aware handling of sensitivity labels and PII.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Agents now ask which report to save (CSV, PDF, TXT or none) before the scan, so saving works in Claude Desktop and Cowork.
+Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV.
 
 ## Install
 

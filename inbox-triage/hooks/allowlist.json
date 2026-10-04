@@ -21,5 +21,15 @@
       "get_user_info_whoami",
       "search_folders"
     ]
+  },
+  "inbox-triage-report": {
+    "kiteworks": [
+      "get_top_folders",
+      "get_folder_children",
+      "get_user_info_whoami",
+      "create_folder",
+      "create_file_from_content",
+      "upload_file_from_path"
+    ]
   }
 }

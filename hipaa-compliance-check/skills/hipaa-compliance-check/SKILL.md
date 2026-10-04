@@ -23,7 +23,7 @@ The US health-data privacy and security law (Privacy Rule, Security Rule, Breach
 
 ## Signals this agent runs
 
-Signals: **A, B, C**. Signal A's default term list for this framework: "PHI", "ePHI", "protected health information", "patient", "diagnosis", "medical record number" (plus the built-in PII/secret presets, plus anything the user adds). Count these terms, and the user's own terms, only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --framework=hipaa --framework-terms [--terms-file=<user-terms.txt>]`: the script holds this exact list and applies one fixed matching rule, so never count them yourself. When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=hipaa`: that adds the NPI preset (80840-prefixed Luhn check, NPI keyword required), the medical record number preset and the health-plan member ID preset (both only directly after their label) to the general built-in presets, which already include SSN. Signal C's retention threshold: 6 years from creation or last effective date, per the HIPAA Security Rule documentation-retention requirement (45 CFR 164.316(b)(2)).
+Signals: **A, B**. Signal C does not run: minimum documentation retention cannot be assessed by flagging old files. Signal A's default term list for this framework: "PHI", "ePHI", "protected health information", "patient", "diagnosis", "medical record number" (plus the built-in PII/secret presets, plus anything the user adds). Count these terms, and the user's own terms, only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --framework=hipaa --framework-terms [--terms-file=<user-terms.txt>]`: the script holds this exact list and applies one fixed matching rule, so never count them yourself. When the content deep-scan runs, call `../term-sweep/scripts/pii_patterns.py` with `--framework=hipaa`: that adds the NPI preset (80840-prefixed Luhn check, NPI keyword required), the medical record number preset and the health-plan member ID preset (both only directly after their label) to the general built-in presets, which already include SSN. The six-year period in 45 CFR 164.316(b)(2)(i) is a minimum for required Security Rule documentation, measured from the later of creation or last effectiveness. It is not a maximum age for PHI files; file modification time does not establish last effectiveness.
 
 ## Control citations
 
@@ -31,17 +31,17 @@ Drawn directly from the HIPAA Security Rule text at 45 CFR Part 164 (via eCFR), 
 
 - **Signal A** (PHI-shaped content exposure): 45 CFR §164.312(a)(1), the Access Control technical safeguard -- ePHI access must be restricted to authorized users. This signal flags where PHI-shaped content sits before that control can even be evaluated.
 - **Signal B** (sharing exposure): 45 CFR §164.312(e)(1), Transmission Security -- guards against unauthorized access to ePHI transmitted over a network. A file in a shared folder tree with PHI-shaped content is the observable proxy for this control's concern.
-- **Signal C** (retention): 45 CFR §164.316(b)(2)(i) -- required documentation must be retained 6 years from the date of creation or the date it last was in effect, whichever is later.
+- **Not assessed — minimum documentation retention**: 45 CFR §164.316(b)(2)(i) -- required documentation must be retained 6 years from the date of creation or the date it last was in effect, whichever is later.
 
 ## What this doesn't check
 
-Technical/administrative/physical safeguard implementation, Business Associate Agreements, breach risk-assessment, and workforce training are entirely outside what content, sharing, and age can reveal -- this only flags where PHI-shaped content appears to live, is in a shared folder tree, or has aged past the documentation-retention window. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
+Technical/administrative/physical safeguard implementation, Business Associate Agreements, breach risk-assessment, and workforce training are entirely outside what content, sharing, and age can reveal -- this only flags where PHI-shaped content appears to live, is in a shared folder tree, and requires owner validation; it cannot verify minimum documentation retention. It also cannot see who a shared folder is shared with, or whether they are internal or external; directly shared files, and any sharing set above the top-level folder visible to the scanning user, are not detected.
 
 ## Recommended next steps
 
 - Complete a formal HIPAA Security Risk Analysis (45 CFR §164.308(a)(1)) -- this scan is not a substitute for one.
 - Verify Business Associate Agreements are in place for any party a flagged file was shared with.
-- Confirm workforce training covers the specific PHI-handling gaps this scan surfaced.
+- Validate potential PHI-handling concerns before deciding whether workforce training needs adjustment.
 
 ## Source
 

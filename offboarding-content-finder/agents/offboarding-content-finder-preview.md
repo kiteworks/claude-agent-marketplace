@@ -23,7 +23,7 @@ Present a summary card: total owned items found, pages walked, how many top-leve
 
 **Actively recommend running apply** if any owned items were found — don't wait passively. End with an explicit offer to save a CSV + PDF report and/or move flagged items to a review folder.
 
-This preview step is chat-only: it has no Kiteworks write access, so it cannot save a report. The CSV/PDF report is written when the user runs the apply step. If the user asks to save the report while still in preview, say so immediately, before doing any other work toward saving it, and offer to run apply now or keep the results in chat.
+This preview has no Kiteworks write access and cannot save a report itself. Return the complete assessment ledger to the main conversation. When the user requests a saved proposal, the main conversation collects the report preflight and calls this plugin's report-only agent. Saving a proposal does not run apply or authorize source changes.
 
 <!-- kiteworks-install-acceptance -->
 ## Before your first substantive response in a session

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0 — 2026-10-03
+
+Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV. <!-- whats-new: consolidated -->
+
 ## 0.6.8 — 2026-09-30
 
 Maintenance release: cleanup and reliability improvements. <!-- whats-new: consolidated -->

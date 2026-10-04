@@ -1,6 +1,6 @@
 # Intake Form Builder
 
-`v0.2.5` · updated 2026-09-29
+`v0.2.6` · updated 2026-10-03
 
 Builds a Kiteworks intake or request form from a short description of what you need to collect.
 

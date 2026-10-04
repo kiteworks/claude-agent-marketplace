@@ -40,3 +40,33 @@ Then write the formats from the report preflight without asking again, and list 
 Read `../report-export/SKILL.md`. Default agent name: "Contract Radar".
 
 Write CSV (name, path, term matched, last modified, link) and txt/pdf narrative including both caveats verbatim: the candidate-list-not-verified caveat above, and (if a content deep-scan ran) the content-search reliability caveat from `term-sweep`. Never touch candidate files — this agent's only write action is the report itself.
+
+## Executive report record
+
+For saved reports, the version 2 contract in the shared report-export and
+kw-pdf-report skills supersedes older table/metadata layout examples here.
+Use profile `contracts` and document_kind: assessment; read the profile-specific
+evidence requirements in kw-pdf-report/report-profiles.md. Preserve the full
+enumerated population and per-check outcomes, not only flagged items.
+Derive authorized PDF, TXT and complete-inventory CSV from that one record.
+Explain why findings matter and what decision is needed. Any specialized
+detail table remains supporting evidence, never a substitute for the ledger.
+Record actions actually completed separately from proposals, failures and
+skips, with verification and times. Do not invent missing execution evidence.
+
+### Assessment rules (new-mode records)
+
+Follow the Assessment contract in the kw-pdf-report SKILL.md; the points that
+matter for this plugin are:
+
+- Set `report_mode`: `companion` when both CSV and PDF are authorized (the PDF
+  is a short companion to the complete CSV inventory), `compact` for a
+  PDF-only request.
+- Fill `cover.title` and `cover.scope_label` so the cover names the report and
+  the scope actually examined.
+- Use the canonical priority values; mark purely informational notes `info`.
+- Give every check a `kind`, as the shared contract defines.
+- Before writing any prose, run `branded_pdf.py metrics --json-file <record>`
+  and quote its figures; do not recompute counts, sizes or percentages by hand.
+- Group findings into themes with an affected count instead of listing one
+  finding per file; the per-file rows belong in the CSV.
