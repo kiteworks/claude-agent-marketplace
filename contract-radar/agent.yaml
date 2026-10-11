@@ -1,0 +1,33 @@
+sdk: 0
+slug: contract-radar
+title: Contract Finder
+version: 1.3.1
+kind: single
+skills:
+- connector-probe
+- content-extract
+- folder-scan
+- kw-pdf-report
+- report-export
+- scratch-lifecycle
+- surface-gate
+- term-sweep
+agents:
+  contract-radar:
+    role: main
+    tools:
+      get_folder_children: user
+      get_top_folders: user
+      search_files: user
+      search_folders: user
+      get_file_metadata: user
+      read_file_contents: user
+      download_file_to_path: user
+      create_file_from_content: user
+      upload_file_from_path: user
+      create_folder: user
+      get_user_info_whoami: user
+    builtins:
+    - Read
+    - Bash
+    - Write

@@ -1,0 +1,31 @@
+sdk: 0
+slug: document-summarizer
+title: Document Summarizer
+version: 0.7.1
+kind: single
+skills:
+- connector-probe
+- content-extract
+- kw-pdf-report
+- report-export
+- scratch-lifecycle
+- surface-gate
+agents:
+  document-summarizer:
+    role: main
+    tools:
+      search_files: user
+      search: user
+      get_file_metadata: user
+      read_file_contents: user
+      download_file_to_path: user
+      create_file_from_content: user
+      upload_file_from_path: user
+      create_folder: user
+      get_user_info_whoami: user
+      get_top_folders: user
+      get_folder_children: user
+    builtins:
+    - Read
+    - Bash
+    - Write

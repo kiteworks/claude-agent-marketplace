@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.8 — 2026-10-08
+
+Maintenance release: reliability and safety improvements. <!-- whats-new: consolidated -->
+
 ## 0.3.7 — 2026-10-03
 
 Maintenance release: cleanup and reliability improvements. <!-- whats-new: consolidated -->

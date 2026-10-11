@@ -4,10 +4,10 @@
     "url": "https://kiteworks.com"
   },
   "description": "Summarizes what's new or changed in a Kiteworks folder over a time window, and can save a report.",
-  "displayName": "Activity Digest",
+  "displayName": "Activity Summarizer",
   "homepage": "https://kiteworks.com",
   "license": "Apache-2.0",
   "name": "activity-digest",
   "repository": "https://github.com/kiteworks/claude-agent-marketplace",
-  "version": "1.2.0"
+  "version": "1.2.1"
 }

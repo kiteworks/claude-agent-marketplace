@@ -36,6 +36,10 @@ PROFILES = {
     "offboarding": "Content handover",
     "inbox": "Inbox folder filing",
     "redaction": "Redaction review",
+    "audit-activity": "Audit activity review",
+    "access-review": "User access review",
+    "account-changes": "Account changes",
+    "document-collection": "Document collection",
 }
 CHECK_STATES = (
     "checked",

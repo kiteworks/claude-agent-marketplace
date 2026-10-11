@@ -1,6 +1,6 @@
 # Intake Form Builder
 
-`v0.2.6` · updated 2026-10-03
+`v0.2.7` · updated 2026-10-08
 
 Builds a Kiteworks intake or request form from a short description of what you need to collect.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: cleanup and reliability improvements.
+Maintenance release: reliability and safety improvements.
 
 ## Install
 

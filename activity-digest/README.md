@@ -1,6 +1,6 @@
-# Activity Digest
+# Activity Summarizer
 
-`v1.2.0` · updated 2026-10-03
+`v1.2.1` · updated 2026-10-08
 
 Summarizes what's new or changed in a Kiteworks folder over a time window, and can save a report.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV.
+Maintenance release: reliability and safety improvements.
 
 ## Install
 

@@ -1,0 +1,66 @@
+sdk: 0
+slug: audit-activity-explorer
+title: Activity Explorer
+version: 0.1.1
+kind: reviewer
+people_data: identifying
+transports:
+- stdio
+- remote
+# TODO(user_config): working_hours and bulk_download_threshold (both optional strings) and internal_domains (optional list, read by the report agent's destination check) await userConfig generation (SDK schema section 9); `sdk generate` refuses a manifest that sets user_config.
+skills:
+- connector-probe
+- admin-window
+- data-fence
+- report-export
+- kw-pdf-report
+- scratch-lifecycle
+- surface-gate
+agents:
+  audit-activity-explorer:
+    role: main
+    attributes:
+    - untrusted-read
+    return_schema: schemas/explorer-result.v1.json
+    tools:
+      get_admin_activity: admin
+      search_users: admin
+      find_user_by_email: admin
+      get_user_metadata: admin
+      get_file_metadata: user
+      search_files: user
+      search_folders: user
+      get_user_info_whoami: user
+    builtins:
+    - Read
+    - Bash
+  audit-activity-explorer-report:
+    role: report
+    tools:
+      get_user_info_whoami: user
+      get_top_folders: user
+      get_folder_children: user
+      list_members: user
+      create_folder: user
+      create_file_from_content: user
+      upload_file_from_path: user
+    builtins:
+    - Read
+    - Bash
+    - Write
+eu2:
+  runs:
+  - admin
+  - plain-user
+  dataset: kestrelvane
+  expectations:
+    saves:
+    - csv
+    - pdf
+replay:
+- plain-user-403
+- invalid-grant
+- injection-in-names
+- person-view-without-purpose
+- ninety-day-three-windows
+- object-history

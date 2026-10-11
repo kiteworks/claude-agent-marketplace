@@ -1,0 +1,58 @@
+sdk: 0
+slug: redactor
+title: Redactor
+version: 0.8.1
+kind: preview-apply-report
+skills:
+- connector-probe
+- content-extract
+- folder-scan
+- kw-pdf-report
+- report-export
+- scratch-lifecycle
+- surface-gate
+- term-sweep
+agents:
+  redactor-apply:
+    role: apply
+    tools:
+      download_file_to_path: user
+      upload_file_from_path: user
+      create_file_from_content: user
+      create_folder: user
+      get_top_folders: user
+      get_folder_children: user
+      get_user_info_whoami: user
+      get_file_metadata: user
+      read_file_contents: user
+    builtins:
+    - Read
+    - Bash
+    - Write
+  redactor-preview:
+    role: preview
+    tools:
+      get_folder_children: user
+      get_top_folders: user
+      search_files: user
+      search_folders: user
+      get_file_metadata: user
+      read_file_contents: user
+      download_file_to_path: user
+      get_user_info_whoami: user
+    builtins:
+    - Read
+    - Bash
+  redactor-report:
+    role: report
+    tools:
+      get_top_folders: user
+      get_folder_children: user
+      get_user_info_whoami: user
+      create_folder: user
+      create_file_from_content: user
+      upload_file_from_path: user
+    builtins:
+    - Read
+    - Bash
+    - Write

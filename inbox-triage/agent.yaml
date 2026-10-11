@@ -1,0 +1,57 @@
+sdk: 0
+slug: inbox-triage
+title: Inbox Sorter
+version: 0.7.1
+kind: preview-apply-report
+skills:
+- connector-probe
+- content-extract
+- folder-scan
+- kw-pdf-report
+- report-export
+- scratch-lifecycle
+- surface-gate
+agents:
+  inbox-triage-apply:
+    role: apply
+    tools:
+      move_file: destructive
+      create_file_from_content: user
+      upload_file_from_path: user
+      create_folder: user
+      get_top_folders: user
+      get_folder_children: user
+      get_user_info_whoami: user
+    builtins:
+    - Read
+    - Bash
+    - Write
+    destructive_grants:
+    - move_file
+  inbox-triage-preview:
+    role: preview
+    tools:
+      get_folder_children: user
+      get_top_folders: user
+      search_files: user
+      get_file_metadata: user
+      read_file_contents: user
+      download_file_to_path: user
+      get_user_info_whoami: user
+      search_folders: user
+    builtins:
+    - Read
+    - Bash
+  inbox-triage-report:
+    role: report
+    tools:
+      get_top_folders: user
+      get_folder_children: user
+      get_user_info_whoami: user
+      create_folder: user
+      create_file_from_content: user
+      upload_file_from_path: user
+    builtins:
+    - Read
+    - Bash
+    - Write

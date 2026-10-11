@@ -48,6 +48,28 @@ def register_fonts(font_dir):
     )
 
 
+# The data-fence skill brackets untrusted tenant names in U+27E6 / U+27E7, which
+# the bundled Noto Sans does not carry. Draw them as a doubled ASCII bracket so
+# the marker stays visible and symmetric; the record and CSV keep the originals.
+_FENCE_GLYPHS = str.maketrans({"⟦": "[[", "⟧": "]]"})
+
+
+def _map_fence_glyphs(value):
+    """Return value with fence characters mapped to renderable brackets."""
+    if isinstance(value, dict):
+        return {
+            key: item if key == "url" else _map_fence_glyphs(item)
+            for key, item in value.items()
+        }
+    if isinstance(value, list):
+        return [_map_fence_glyphs(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(_map_fence_glyphs(item) for item in value)
+    if isinstance(value, str):
+        return value.translate(_FENCE_GLYPHS)
+    return value
+
+
 def validate_glyphs(value):
     """Fail explicitly for scripts this font/layout does not yet support."""
     if isinstance(value, dict):
@@ -188,6 +210,16 @@ def build_assessment_pdf(
         presentation["classification"], str
     ):
         raise ValueError("presentation.classification must be text")
+    (
+        assessment,
+        prepared,
+        report_title,
+        agent_name,
+        scope_caveat,
+        presentation,
+    ) = _map_fence_glyphs(
+        [assessment, prepared, report_title, agent_name, scope_caveat, presentation]
+    )
     new_mode = "report_mode" in assessment
     if new_mode:
         validate_glyphs(

@@ -1,0 +1,244 @@
+{
+  "version": "0.1.0",
+  "categories": [
+    {
+      "id": "sign_in_session",
+      "label": "Sign-in and session"
+    },
+    {
+      "id": "admin_settings",
+      "label": "Administration and settings"
+    },
+    {
+      "id": "user_lifecycle",
+      "label": "User lifecycle"
+    },
+    {
+      "id": "sharing_permissions",
+      "label": "Sharing and permissions"
+    },
+    {
+      "id": "content_transfer",
+      "label": "Content transfer (upload, download, view)"
+    },
+    {
+      "id": "secure_mail",
+      "label": "Secure mail"
+    },
+    {
+      "id": "file_requests_forms",
+      "label": "File requests and forms"
+    },
+    {
+      "id": "deletion_retention",
+      "label": "Deletion and retention"
+    },
+    {
+      "id": "other",
+      "label": "Other"
+    }
+  ],
+  "exact": {
+    "activate_branding_template": "admin_settings",
+    "add_admin_role": "admin_settings",
+    "add_admin_user": "user_lifecycle",
+    "add_expand_storage_role": "admin_settings",
+    "add_file": "content_transfer",
+    "add_folder": "content_transfer",
+    "add_permission": "sharing_permissions",
+    "add_risk_policy": "admin_settings",
+    "add_tag": "other",
+    "add_user": "user_lifecycle",
+    "admin_logged_in": "sign_in_session",
+    "admin_set_password": "sign_in_session",
+    "agent_job_ended": "other",
+    "agent_job_started": "other",
+    "captcha": "sign_in_session",
+    "cleanup_expired_emails_completed": "other",
+    "cleanup_expired_emails_started": "other",
+    "client_manage": "admin_settings",
+    "create_form": "file_requests_forms",
+    "db_backup": "other",
+    "delete_permission": "sharing_permissions",
+    "download": "content_transfer",
+    "edit_admin_role_components": "admin_settings",
+    "edit_banned_ips": "admin_settings",
+    "edit_client": "admin_settings",
+    "epg_start_fips_mode": "admin_settings",
+    "expiration_notification": "other",
+    "extend_session": "sign_in_session",
+    "hids_event": "other",
+    "ldap_sync": "other",
+    "modify_permission": "sharing_permissions",
+    "nebula_udp_readiness_scan": "other",
+    "oauth_revoke_token": "sign_in_session",
+    "oauth_set_token": "sign_in_session",
+    "postpone_risky_settings_warning": "admin_settings",
+    "push_nist_rule_to_epg": "admin_settings",
+    "read_whats_new": "other",
+    "reboot_host": "admin_settings",
+    "refresh_ldap_groups": "other",
+    "rename_form": "file_requests_forms",
+    "repaired_file_metadata": "other",
+    "send_notification": "other",
+    "session_started": "sign_in_session",
+    "shutdown_host": "admin_settings",
+    "system_setting_switched": "admin_settings",
+    "system_update": "admin_settings",
+    "update_password": "sign_in_session",
+    "update_risk_policy": "admin_settings",
+    "user_logged_in": "sign_in_session",
+    "user_logged_out": "sign_in_session",
+    "user_login_failed": "sign_in_session",
+    "user_login_lockout": "sign_in_session",
+    "user_login_unlock": "sign_in_session",
+    "view_file": "content_transfer",
+    "waf_update": "admin_settings"
+  },
+  "keywords": [
+    [
+      "delete",
+      "deletion_retention"
+    ],
+    [
+      "trash",
+      "deletion_retention"
+    ],
+    [
+      "purge",
+      "deletion_retention"
+    ],
+    [
+      "expire",
+      "deletion_retention"
+    ],
+    [
+      "retention",
+      "deletion_retention"
+    ],
+    [
+      "login",
+      "sign_in_session"
+    ],
+    [
+      "logout",
+      "sign_in_session"
+    ],
+    [
+      "signin",
+      "sign_in_session"
+    ],
+    [
+      "sign_in",
+      "sign_in_session"
+    ],
+    [
+      "session",
+      "sign_in_session"
+    ],
+    [
+      "2fa",
+      "sign_in_session"
+    ],
+    [
+      "totp",
+      "sign_in_session"
+    ],
+    [
+      "setting",
+      "admin_settings"
+    ],
+    [
+      "config",
+      "admin_settings"
+    ],
+    [
+      "policy",
+      "admin_settings"
+    ],
+    [
+      "admin",
+      "admin_settings"
+    ],
+    [
+      "user_create",
+      "user_lifecycle"
+    ],
+    [
+      "suspend",
+      "user_lifecycle"
+    ],
+    [
+      "deactivat",
+      "user_lifecycle"
+    ],
+    [
+      "profile",
+      "user_lifecycle"
+    ],
+    [
+      "activate",
+      "user_lifecycle"
+    ],
+    [
+      "share",
+      "sharing_permissions"
+    ],
+    [
+      "permission",
+      "sharing_permissions"
+    ],
+    [
+      "member",
+      "sharing_permissions"
+    ],
+    [
+      "collaborat",
+      "sharing_permissions"
+    ],
+    [
+      "upload",
+      "content_transfer"
+    ],
+    [
+      "download",
+      "content_transfer"
+    ],
+    [
+      "view",
+      "content_transfer"
+    ],
+    [
+      "preview",
+      "content_transfer"
+    ],
+    [
+      "copy",
+      "content_transfer"
+    ],
+    [
+      "move",
+      "content_transfer"
+    ],
+    [
+      "mail",
+      "secure_mail"
+    ],
+    [
+      "email",
+      "secure_mail"
+    ],
+    [
+      "message",
+      "secure_mail"
+    ],
+    [
+      "request",
+      "file_requests_forms"
+    ],
+    [
+      "form",
+      "file_requests_forms"
+    ]
+  ]
+}

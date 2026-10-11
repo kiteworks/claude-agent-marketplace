@@ -1,0 +1,77 @@
+sdk: 0
+slug: user-account-reviewer
+title: User Account Reviewer
+version: 0.1.1
+kind: reviewer
+people_data: identifying
+transports:
+- stdio
+- remote
+# TODO(SDK-user_config): dormant_days (string, optional, integer as text,
+# default 90) and internal_domains (list, optional). `sdk generate` refuses a
+# manifest with user_config until it can write userConfig into plugin.json.
+skills:
+- connector-probe
+- data-fence
+- kw-pdf-report
+- report-export
+- scratch-lifecycle
+- surface-gate
+agents:
+  user-account-reviewer:
+    role: main
+    tools:
+      get_user_info_whoami: user
+      search_users: admin
+      get_user_metadata: admin
+      find_user_by_email: admin
+      list_user_profiles: admin
+      get_profile: admin
+      list_profile_users: admin
+      get_profile_eligibility: admin
+    builtins:
+    - Read
+    - Bash
+    attributes:
+    - untrusted-read
+    return_schema: schemas/user-account-reviewer.result.v1.json
+  user-account-reviewer-intake:
+    role: intake
+    tools:
+      get_user_info_whoami: user
+      read_file_contents: user
+      search_files: user
+      get_folder_children: user
+    attributes:
+    - untrusted-read
+    return_schema: schemas/intake-rows.v1.json
+  user-account-reviewer-report:
+    role: report
+    tools:
+      get_user_info_whoami: user
+      get_top_folders: user
+      get_folder_children: user
+      list_members: user
+      create_folder: user
+      create_file_from_content: user
+      upload_file_from_path: user
+    builtins:
+    - Read
+    - Bash
+    - Write
+eu2:
+  runs:
+  - admin
+  - plain-user
+  dataset: eu2-user-lifecycle
+  expectations:
+    saves:
+    - csv
+    - pdf
+replay:
+- plain-user-403
+- invalid-grant
+- hr-csv-injection
+- proposed-changes-schema
+- dormant-findings
+- filter-400

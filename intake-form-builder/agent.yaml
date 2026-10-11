@@ -1,0 +1,14 @@
+sdk: 0
+slug: intake-form-builder
+title: Intake Form Builder
+version: 0.2.7
+kind: single
+skills:
+- connector-probe
+agents:
+  intake-form-builder:
+    role: main
+    tools:
+      get_create_form_schema: user
+      create_form: user
+      get_user_info_whoami: user

@@ -1,8 +1,8 @@
 # CIS Controls Compliance Check
 
-`v1.4.0` · updated 2026-10-03
+`v1.4.1` · updated 2026-10-08
 
-Scans a Kiteworks folder for sensitive content and external sharing under CIS Controls v8's Data Protection control, and saves a report. Most of CIS Controls is outside what this can check; it says so.
+Scans a Kiteworks folder for sensitive content and sharing exposure under CIS Controls v8's Data Protection control, and saves a report. Most of CIS Controls is outside what this can check; it says so.
 
 **[View on the Kiteworks Agent Marketplace →](https://agents.kiteworks.com/catalog/cis-controls-compliance-check)** — live examples, screenshots, and full detail.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV.
+Maintenance release: reliability and safety improvements.
 
 ## Install
 

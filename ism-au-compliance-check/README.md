@@ -1,8 +1,8 @@
 # ISM (Australia) Compliance Check
 
-`v1.4.0` · updated 2026-10-03
+`v1.4.1` · updated 2026-10-08
 
-Checks a Kiteworks folder for classification-marked content and external sharing under Australia's ISM, and saves a report. Most of ISM is outside what this can check; it says so.
+Checks a Kiteworks folder for classification-marked content and sharing exposure under Australia's ISM, and saves a report. Most of ISM is outside what this can check; it says so.
 
 **[View on the Kiteworks Agent Marketplace →](https://agents.kiteworks.com/catalog/ism-au-compliance-check)** — live examples, screenshots, and full detail.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV.
+Maintenance release: reliability and safety improvements.
 
 ## Install
 

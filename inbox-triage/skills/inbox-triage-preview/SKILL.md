@@ -9,9 +9,9 @@ metadata:
   version: "0.2.1"
 ---
 
-Delegate to the `inbox-triage-preview` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` and `../content-extract/SKILL.md` first.
+Delegate to the `inbox-triage-preview` subagent. If you already are that subagent, do not delegate again: follow this skill directly. When the subagent returns a `NOT_CONTENT_CHECKED_HANDOFF` block, the delegating session (never the subagent itself) follows `../content-extract/COORDINATOR.md` before reporting. Read `../folder-scan/SKILL.md` and `../content-extract/SKILL.md` first.
 
-# Inbox Triage — preview
+# Inbox Sorter — preview
 
 ## Collect from the user
 

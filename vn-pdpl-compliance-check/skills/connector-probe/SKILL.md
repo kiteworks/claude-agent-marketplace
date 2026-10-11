@@ -7,7 +7,7 @@ description: >
   is missing, and says how to learn whether this user may call an
   admin-gated tool. Read before any Kiteworks call.
 metadata:
-  version: "1.3.0"
+  version: "1.4.0"
 ---
 
 # connector-probe — resolve the connector, check its tools, degrade honestly
@@ -50,6 +50,22 @@ only the path tools. A tool exists when it is in that list; nothing else
 counts. Never infer a tool from the server name, the host, the product name or
 a previous run. Probe at every agent run; there is no cache.
 
+## Login expired
+
+An expired Kiteworks login answers every call with plain text, no structured
+code: `failed to refresh token: API error 400: {"error": "invalid_grant", ...}`.
+When any tool result or error contains `invalid_grant` or
+`failed to refresh token`, the run is over: make no further tool call, save
+nothing, do not retry (retries, parallel ones above all, do not help), and say
+exactly this text:
+
+```text
+Your Kiteworks login has expired, so I stopped before changing or saving anything. Log in to Kiteworks again, then run me again.
+```
+
+If the run ends with a structured result block, report it in `tool_failures`
+with the reason `invalid_grant`.
+
 ## Admin-gated tools
 
 Some tools are advertised to every user but only work for a tenant admin:
@@ -77,13 +93,45 @@ example `Admin-gated tools this agent uses: get_admin_activity.` Then:
   succeeded.
 - Never infer admin status from `get_user_info_whoami`, from the tool being
   listed, from the user's job title, or from a previous run.
-- Do not add a confirmation of your own before an admin-gated call. Tools
-  that need one carry it server-side (`confirmation_token`): the server
-  either prompts the user itself or tells you to relay its question, and you
-  follow what it returns.
+- Do not add a confirmation question of your own before an admin-gated call
+  (a delegated run cannot ask). Tools that need one carry it server-side
+  (`confirmation_token`): the server either prompts the user itself or tells
+  you to relay its question, and you follow what it returns. Relaying or
+  resending that token is never the user's consent: it is not a human
+  approval. Agents that write as an admin gate those writes through their
+  guard hook, never through the server token.
 
 An admin-gated tool that is missing from the tool list altogether is handled
 like any other missing tool (below), not as a permission answer.
+
+## Admin-only agents
+
+An agent whose body carries the line `This agent needs a Kiteworks admin.`
+(besides its `Admin-gated tools this agent uses: ...` line) has no useful
+user-level path. On the first 403 carrying `ERR_ACCESS_ADMIN` or
+`ERR_ACCESS_ADMIN_COMPONENT` it ends the admin path: it says this text with
+its own capability and alternatives filled in, and stops without calling
+another admin tool:
+
+```text
+This needs a Kiteworks admin: {capability}. What you can do instead: {alternatives}.
+```
+
+Agents without that line keep the continue-with-the-user-path rule above.
+
+## Transport and destructive tools
+
+Classify the connection once per run, from the tool list alone:
+
+- `remote` when neither `download_file_to_path` nor `upload_file_from_path`
+  is listed, else `local`.
+- `destructive tools enabled` when `create_user`, `reset_user_totp` or
+  `move_file` is listed (the local server only lists them when started with
+  destructive tools on), else not enabled.
+
+An action that needs an unlisted tool is reported as unavailable on this
+connection in one sentence (see "Any other missing tool") and is never
+attempted through another tool.
 
 ## Silent while nothing is lost
 
@@ -131,7 +179,7 @@ review-folder step is skipped"), then continue with what is possible.
 ## Connector tools this skill uses
 
 - Calls: `get_user_info_whoami`.
-- Named only: `get_top_folders`, `read_file_contents`, `download_file_to_path`, `upload_file_from_path`, `create_file_from_content`, `get_admin_activity`.
+- Named only: `get_top_folders`, `read_file_contents`, `download_file_to_path`, `upload_file_from_path`, `create_file_from_content`, `get_admin_activity`, `create_user`, `reset_user_totp`, `move_file`.
 
 Every agent is granted `get_user_info_whoami`: this skill uses it to name the
 tenant. The named tools belong to the agent's own steps; this skill only

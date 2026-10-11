@@ -11,7 +11,7 @@ metadata:
   version: "0.2.0"
 ---
 
-Delegate to the `invoice-organizer-preview` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` and `../content-extract/SKILL.md` first. Read `scripts/ocr_extract.py`'s own docstring before using it -- it's this skill's own OCR fallback, not part of `content-extract`.
+Delegate to the `invoice-organizer-preview` subagent. If you already are that subagent, do not delegate again: follow this skill directly. When the subagent returns a `NOT_CONTENT_CHECKED_HANDOFF` block, the delegating session (never the subagent itself) follows `../content-extract/COORDINATOR.md` before reporting. Read `../folder-scan/SKILL.md` and `../content-extract/SKILL.md` first. Read `scripts/ocr_extract.py`'s own docstring before using it -- it's this skill's own OCR fallback, not part of `content-extract`.
 
 # Invoice & Receipt Organizer — preview
 
@@ -49,7 +49,7 @@ Per `folder-scan`: candidates are any file that could plausibly be an invoice or
 For each file with usable extracted text, pull (reasoning over the extracted text yourself — there's no deterministic field-extraction library for this, unlike the masking step below):
 
 - **Vendor/merchant name**
-- **Date** — normalize to `YYYY-MM-DD`. If the date format is ambiguous (e.g. `01/02/2026` could be Jan 2 or Feb 1) and nothing in the text disambiguates it (no month name, no other dated reference), don't guess — flag the file for manual confirmation of the date rather than silently picking one convention.
+- **Date** — normalize to `YYYY-MM-DD`. If the date format is ambiguous (e.g. `01/02/2026` could be Jan 2 or Feb 1) and nothing in the text disambiguates it (no month name, no other dated reference), don't guess — flag the file for manual confirmation of the date rather than silently picking one convention. If the document prints no invoice/receipt date at all (e.g. a cloud bill that shows only a billing period, or a hotel receipt that shows only the stay dates), leave the date blank, note the period beside it, and ask the user which date to file it under: a missing date is a question for the user, not a reason to doubt an amount that was read cleanly.
 - **Invoice/receipt number**, if present
 - **Subtotal, tax/VAT, tip/gratuity** (if itemized separately), and **total amount** — if the total can't be confidently located, leave it blank and flag the file; never fabricate a number.
 - **Currency** — the symbol/code actually printed. If none is visible, mark `"currency": "unspecified"` rather than assuming USD or the user's own locale. If a folder mixes currencies, flag it explicitly in the summary — never sum amounts across currencies into one total.
@@ -58,19 +58,26 @@ For each file with usable extracted text, pull (reasoning over the extracted tex
 
 ## Step 4 — confidence tier per file, stated honestly
 
-- **High** — real text layer (`"method": "text_layer"` from the OCR script, or a docx/xlsx/txt/csv source) and every key field (vendor, date, total) was found cleanly.
-- **Medium** — OCR-derived (`"method": "ocr_image"` or `"ocr_pdf_rasterized"`), but vendor/date/total were still found with reasonable confidence. Label these "OCR-derived — verify against the original before relying on it," every time, not just once in a caveat paragraph.
-- **Low / needs manual review** — any of: the OCR script reported a near-empty-result warning, the total or date couldn't be confidently located, the receipt appears handwritten, the extracted text is a foreign language you're not confident parsing amounts/dates in, or the file is a legacy `doc`/`ppt`/`xls` format. Never include a Low-confidence file's numbers in a proposed rename or category total — surface it with what little was found (if anything) and require explicit manual entry/confirmation, never a bulk "looks right" inclusion.
+- **High** — real text layer (`"method": "text_layer"` from the OCR script, or a docx/xlsx/txt/csv source), vendor and total found cleanly, and the date found cleanly or not printed on the document at all (Step 3).
+- **Medium** — OCR-derived (`"method": "ocr_image"` or `"ocr_pdf_rasterized"`), but vendor and total (and the date, if one is printed) were still found with reasonable confidence. Label these "OCR-derived — verify against the original before relying on it," every time, not just once in a caveat paragraph.
+- **Low / needs manual review** — any of: the OCR script reported a near-empty-result warning, the total couldn't be confidently located, the date is ambiguous (two plausible readings, per Step 3) and nothing in the text settles it, the receipt appears handwritten, the extracted text is a foreign language you're not confident parsing amounts/dates in, or the file is a legacy `doc`/`ppt`/`xls` format. Never include a Low-confidence file's numbers in a proposed rename or category total — surface it with what little was found (if anything) and require explicit manual entry/confirmation, never a bulk "looks right" inclusion. A date that is simply not printed is not a Low trigger: tier the file on its vendor and total, and list the date as an open question.
 
 ## Step 5 — a cheap, real duplicate check (not a replacement for `duplicate-finder`)
 
-Within this run's own results, flag any two files with the same vendor + same date + same total as "possible duplicate receipt" (e.g. a receipt photographed twice, or a paper receipt plus its emailed PDF copy) — a real, useful signal that falls out of the fields already extracted, at no extra cost. This is deliberately not the same thing as `duplicate-finder`'s content-fingerprint matching (two different photos of the same paper receipt won't fingerprint-match, since they're different image bytes) — recommend running `duplicate-finder` on the same folder too if the user wants an actual byte-level duplicate check; don't claim this catches everything it would.
+Within this run's own results, flag any two files with the same vendor + same date + same total as "possible duplicate receipt" (e.g. a receipt photographed twice, or a paper receipt plus its emailed PDF copy) — a real, useful signal that falls out of the fields already extracted, at no extra cost. Flag two files the same way when the folder listing or file metadata shows the same content fingerprint (a byte-identical copy such as `receipt.pdf` and `receipt (1).pdf`). This is deliberately not the same thing as `duplicate-finder`'s content-fingerprint matching (two different photos of the same paper receipt won't fingerprint-match, since they're different image bytes) — recommend running `duplicate-finder` on the same folder too if the user wants an actual byte-level duplicate check; don't claim this catches everything it would.
 
 ## Step 6 — propose renames and present the result
 
-Per the agreed convention (default `YYYY-MM-DD_Vendor_Amount.ext`), propose a new filename for every High/Medium-confidence file. Sanitize vendor names for filesystem safety (strip `/\:*?"<>|`, collapse whitespace to underscores).
+Per the agreed convention (default `YYYY-MM-DD_Vendor_Amount.ext`), propose a new filename for every High/Medium-confidence file (a file with no printed date gets its rename once the user has answered the date question). Sanitize vendor names for filesystem safety (strip `/\:*?"<>|`, collapse whitespace to underscores).
 
-Summary card: counts (scanned / candidates / skipped-AV-DLP / skipped-unsupported-format / High / Medium / Low), a sample of extracted rows (file, vendor, date, total, currency, category, confidence), possible-duplicate flags, currency-mix warning if applicable, extraction-cap disclosure, coverage note, and the standard disclaimer plus the tax-specific one below.
+Summary card: counts (scanned / candidates / skipped-AV-DLP / skipped-unsupported-format / High / Medium / Low), a sample of extracted rows (file, vendor, date, total, currency, category, confidence), per-currency totals, possible-duplicate flags, currency-mix warning if applicable, extraction-cap disclosure, coverage note, and the standard disclaimer plus the tax-specific one below.
+
+**Currency totals — fixed rules, so the same folder always gives the same figures:**
+
+- One total per printed currency. Never add currencies together and never convert them.
+- Every High or Medium file's total goes into its currency's total. A missing date does not change that: an amount read cleanly from the document's own text counts, and the missing date is reported separately as a question for the user. Never report a currency total of 0.00 while a High or Medium amount in that currency exists.
+- Low-confidence amounts (Step 4) and `unspecified`-currency amounts stay out of the totals. List them separately under the totals, with what was read, as "not in the totals — needs your confirmation".
+- Each group of possible duplicates (Step 5) counts once: the first file by filename is in the total, the others are listed as duplicates and left out of it. You may also give the figure with the duplicates included, clearly labelled, but the headline total counts each receipt once.
 
 **Tax-specific disclaimer, every time, not just once:** *"These are best-effort extracted/OCR'd values, not verified accounting data. Reconcile totals against your bank or card statement before using this for tax filing or bookkeeping. Currency was read from what's printed on each receipt, not verified against live exchange rates."*
 

@@ -1,0 +1,33 @@
+{
+  "user-account-reviewer": {
+    "kiteworks": [
+      "get_user_info_whoami",
+      "search_users",
+      "get_user_metadata",
+      "find_user_by_email",
+      "list_user_profiles",
+      "get_profile",
+      "list_profile_users",
+      "get_profile_eligibility"
+    ]
+  },
+  "user-account-reviewer-intake": {
+    "kiteworks": [
+      "get_user_info_whoami",
+      "read_file_contents",
+      "search_files",
+      "get_folder_children"
+    ]
+  },
+  "user-account-reviewer-report": {
+    "kiteworks": [
+      "get_user_info_whoami",
+      "get_top_folders",
+      "get_folder_children",
+      "list_members",
+      "create_folder",
+      "create_file_from_content",
+      "upload_file_from_path"
+    ]
+  }
+}

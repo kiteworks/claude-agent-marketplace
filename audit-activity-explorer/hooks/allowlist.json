@@ -1,0 +1,25 @@
+{
+  "audit-activity-explorer": {
+    "kiteworks": [
+      "get_admin_activity",
+      "search_users",
+      "find_user_by_email",
+      "get_user_metadata",
+      "get_file_metadata",
+      "search_files",
+      "search_folders",
+      "get_user_info_whoami"
+    ]
+  },
+  "audit-activity-explorer-report": {
+    "kiteworks": [
+      "get_user_info_whoami",
+      "get_top_folders",
+      "get_folder_children",
+      "list_members",
+      "create_folder",
+      "create_file_from_content",
+      "upload_file_from_path"
+    ]
+  }
+}

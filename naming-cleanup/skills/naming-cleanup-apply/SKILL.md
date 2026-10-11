@@ -9,14 +9,14 @@ metadata:
 
 Delegate to the `naming-cleanup-apply` subagent, passing only user-confirmed old-name→new-name pairs. If you already are that subagent, do not delegate again: follow this skill directly. Read `../report-export/SKILL.md`.
 
-# Naming Cleanup — apply
+# File Name Cleaner — apply
 
 Confirmed live: `rename_file` works cleanly (tested renaming a file in place; metadata updated, path reflects new name). Require per-item confirmation before renaming — never bulk-rename an entire flagged list on one blanket "yes."
 
 ## Steps
 
 1. For each confirmed item, call `rename_file` (or `rename_folder`) with the confirmed new name.
-2. Write a CSV (old name, new name, path, link) and txt/pdf narrative (what was renamed, what was skipped, disclaimer verbatim) into `Agents/Naming Cleanup/` (or user destination).
+2. Write a CSV (old name, new name, path, link) and txt/pdf narrative (what was renamed, what was skipped, disclaimer verbatim) into `Agents/File Name Cleaner/` (or user destination).
 3. Report back plainly what changed.
 
 ## Executive report record

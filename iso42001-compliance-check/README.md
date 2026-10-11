@@ -1,6 +1,6 @@
 # ISO 42001 Compliance Check
 
-`v1.4.0` · updated 2026-10-03
+`v1.4.1` · updated 2026-10-08
 
 Checks a Kiteworks folder for AI-related documents that are shared externally or contain personal data, under ISO 42001. Most of ISO 42001 is outside what this can check; it says so.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV.
+Maintenance release: reliability and safety improvements.
 
 ## Install
 

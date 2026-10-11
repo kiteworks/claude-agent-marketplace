@@ -11,7 +11,7 @@ metadata:
 
 **Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save — CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default `My Folder/Agents/Sensitive Content Scanner/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks. In the same question, ask whether to also run the content deep scan (a download and parse per candidate file, capped per run) and pass it as `- deep_scan: yes` or `- deep_scan: no` in the block.
 
-Delegate to the `sensitive-content-scanner` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../term-sweep/SKILL.md` first — it has the confirmed caveat about `content_contains` reliability; do not skip it.
+Delegate to the `sensitive-content-scanner` subagent. If you already are that subagent, do not delegate again: follow this skill directly. When the subagent returns a `NOT_CONTENT_CHECKED_HANDOFF` block, the delegating session (never the subagent itself) follows `../content-extract/COORDINATOR.md` before reporting. Read `../term-sweep/SKILL.md` first — it has the confirmed caveat about `content_contains` reliability; do not skip it.
 
 # Sensitive Content Scanner
 

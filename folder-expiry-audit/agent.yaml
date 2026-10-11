@@ -1,0 +1,18 @@
+sdk: 0
+slug: folder-expiry-audit
+title: Folder Expiry Auditor
+version: 0.3.8
+kind: single
+skills:
+- connector-probe
+- folder-scan
+- scratch-lifecycle
+- surface-gate
+agents:
+  folder-expiry-audit:
+    role: main
+    tools:
+      get_folder_children: user
+      get_top_folders: user
+      search_folders: user
+      get_user_info_whoami: user
