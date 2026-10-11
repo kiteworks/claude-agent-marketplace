@@ -1,6 +1,6 @@
 # WCAG Compliance Check
 
-`v1.3.0` · updated 2026-10-03
+`v1.3.1` · updated 2026-10-08
 
 Runs a shallow accessibility structure check (tagged PDFs, document/slide metadata, alt text, and HTML heading structure) over PDF, Word, PowerPoint, and HTML files in a Kiteworks folder under WCAG, and saves a report. This is not a full WCAG conformance test.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV.
+Maintenance release: reliability and safety improvements.
 
 ## Install
 

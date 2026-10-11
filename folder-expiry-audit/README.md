@@ -1,6 +1,6 @@
-# Folder Expiry Audit
+# Folder Expiry Auditor
 
-`v0.3.7` · updated 2026-10-03
+`v0.3.8` · updated 2026-10-08
 
 Reports which Kiteworks folders have an expiry/retention policy configured and which don't.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Maintenance release: cleanup and reliability improvements.
+Maintenance release: reliability and safety improvements.
 
 ## Install
 

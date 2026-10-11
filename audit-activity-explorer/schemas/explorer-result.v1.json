@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "explorer-result.v1.json",
+  "title": "Activity Explorer result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "view",
+    "mode",
+    "period",
+    "windows_run",
+    "row_cap",
+    "row_cap_hit",
+    "rows",
+    "oldest_at",
+    "purpose",
+    "files",
+    "distinct_people",
+    "unknown_events",
+    "injection_suspected_count",
+    "chat_rows",
+    "limitations",
+    "error"
+  ],
+  "properties": {
+    "schema": {
+      "const": "explorer-result.v1"
+    },
+    "view": {
+      "enum": [
+        "admin",
+        "user"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "ask",
+        "report",
+        "person",
+        "object"
+      ]
+    },
+    "period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "windows_run": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "row_cap": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "row_cap_hit": {
+      "type": "boolean"
+    },
+    "rows": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "oldest_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "purpose": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 200
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rows",
+        "aggregate",
+        "flags",
+        "compare",
+        "users"
+      ],
+      "properties": {
+        "rows": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "aggregate": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "flags": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "compare": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "users": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "distinct_people": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unknown_events": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "count"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 82
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "injection_suspected_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "chat_rows": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "type": "object",
+        "propertyNames": {
+          "enum": [
+            "category",
+            "label",
+            "events",
+            "failed",
+            "event",
+            "count",
+            "client"
+          ]
+        },
+        "additionalProperties": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "maxLength": 82
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "maxLength": 300
+      }
+    },
+    "error": {
+      "enum": [
+        null,
+        "login_expired",
+        "not_admin",
+        "purpose_missing",
+        "object_not_found",
+        "tool_error"
+      ]
+    }
+  },
+  "if": {
+    "properties": {
+      "error": {
+        "const": "tool_error"
+      }
+    },
+    "required": [
+      "error"
+    ]
+  },
+  "then": {
+    "properties": {
+      "limitations": {
+        "items": {
+          "enum": [
+            "tool_unavailable",
+            "rate_limited",
+            "window_unreadable",
+            "unexpected_answer",
+            "login_settings_unconfirmed"
+          ]
+        }
+      }
+    }
+  }
+}

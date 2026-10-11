@@ -8,7 +8,8 @@ open openpyxl workbooks, whose relationships use absolute part names. PDF uses
 pdftotext. Images (JPEG, PNG, TIFF) and image-only PDFs are OCR'd with the
 tesseract CLI (PDF pages rasterized one at a time by pdftoppm into owned
 ``ocr`` reservations). A missing OCR tool is reported per file in
-``not_content_checked``, never skipped silently (#295).
+``not_content_checked``, never skipped silently (#295). ``--probe`` reports
+what parses where the script runs (#321).
 """
 
 from __future__ import annotations
@@ -16,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import platform
 import posixpath
 import re
 import shutil
@@ -38,6 +40,7 @@ PARSER_BY_FORMAT = {
     "xlsx": NATIVE,
     **{fmt: OCR for fmt in IMAGE_FORMATS},
 }
+RASTERIZER = "pdftoppm"
 # A PDF whose text layer holds fewer non-space characters than this per page
 # is image-only (a scan) and is OCR'd instead (same threshold as
 # invoice-organizer's ocr_extract.py).
@@ -448,6 +451,21 @@ NATIVE_EXTRACTORS = {
 }
 
 
+def probe() -> dict:
+    """What parses where this script runs (#321)."""
+    return {
+        "python": platform.python_version(),
+        "formats": {
+            fmt: {"parser": PARSER_BY_FORMAT[fmt], "available": available(fmt)}
+            for fmt in sorted(PARSER_BY_FORMAT)
+        },
+        "rasterizer": {
+            "parser": RASTERIZER,
+            "available": shutil.which(RASTERIZER) is not None,
+        },
+    }
+
+
 def _tesseract(tesseract, image, env, cwd) -> str:
     """OCR one image; the text comes back on stdout, never as a file."""
     completed = subprocess.run(
@@ -472,7 +490,7 @@ def _ocr_pdf(scratch, source, pages, env, result) -> str | None:
     reason = None
     if tesseract is None:
         reason = OCR_UNAVAILABLE
-    elif not shutil.which("pdftoppm"):
+    elif not shutil.which(RASTERIZER):
         reason = RASTERIZER_UNAVAILABLE
     elif pages > MAX_OCR_PAGES:
         reason = OCR_PAGE_CAP
@@ -485,7 +503,7 @@ def _ocr_pdf(scratch, source, pages, env, result) -> str | None:
         try:
             subprocess.run(
                 [
-                    "pdftoppm",
+                    RASTERIZER,
                     "-f",
                     str(number),
                     "-l",
@@ -623,6 +641,11 @@ def main(argv=None):
         type=Path,
         help="print the host folder with Windows 8.3 short names expanded, then exit",
     )
+    parser.add_argument(
+        "--probe",
+        action="store_true",
+        help="print which formats parse here, then exit",
+    )
     parser.add_argument("--root", type=Path)
     parser.add_argument("--downloaded-path", type=Path)
     parser.add_argument("--format", choices=sorted(PARSER_BY_FORMAT))
@@ -631,6 +654,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.long_path is not None:
         print(json.dumps({"path": long_path(args.long_path)}))
+        return 0
+    if args.probe:
+        print(json.dumps(probe()))
         return 0
     if not (args.root and args.downloaded_path and args.format and args.out):
         parser.error("--root, --downloaded-path, --format and --out are required")

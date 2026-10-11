@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.2 — 2026-10-10
+
+Maintenance release: invoice totals now include amounts from invoices without a printed date and count duplicate receipts once. <!-- whats-new: consolidated -->
+
+## 0.7.1 — 2026-10-08
+
+Maintenance release: reliability and safety improvements. <!-- whats-new: consolidated -->
+
 ## 0.7.0 — 2026-10-03
 
 Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV. <!-- whats-new: consolidated -->

@@ -10,7 +10,7 @@ metadata:
 
 Delegate to the `naming-cleanup-preview` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` first.
 
-# Naming Cleanup — preview
+# File Name Cleaner — preview
 
 ## Collect from the user
 

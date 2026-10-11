@@ -1,0 +1,36 @@
+sdk: 0
+slug: cmmc-compliance-check
+title: CMMC Compliance Check
+version: 1.4.1
+kind: single
+skills:
+- compliance-mapping
+- connector-probe
+- content-extract
+- folder-scan
+- kw-pdf-report
+- report-export
+- scratch-lifecycle
+- sharing-exposure
+- surface-gate
+- term-sweep
+agents:
+  cmmc-compliance-check:
+    role: main
+    tools:
+      get_folder_children: user
+      get_top_folders: user
+      get_user_info_whoami: user
+      search: user
+      search_files: user
+      search_folders: user
+      get_file_metadata: user
+      read_file_contents: user
+      download_file_to_path: user
+      create_file_from_content: user
+      upload_file_from_path: user
+      create_folder: user
+    builtins:
+    - Read
+    - Bash
+    - Write

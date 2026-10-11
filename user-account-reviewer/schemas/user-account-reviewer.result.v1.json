@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "user-account-reviewer.result.v1.json",
+  "title": "User Account Reviewer result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "view",
+    "reference_date",
+    "dormant_days",
+    "files",
+    "counts",
+    "tier_order_source",
+    "injection_suspected_count",
+    "limitations",
+    "error"
+  ],
+  "properties": {
+    "schema": {
+      "const": "reviewer-result.v1"
+    },
+    "view": {
+      "enum": [
+        "admin",
+        "user"
+      ]
+    },
+    "reference_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "dormant_days": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "roster",
+        "result",
+        "reconcile",
+        "proposed"
+      ],
+      "properties": {
+        "roster": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 300,
+          "pattern": "^(?!/)(?!.*\\.\\.)[A-Za-z0-9._/-]+$"
+        },
+        "result": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 300,
+          "pattern": "^(?!/)(?!.*\\.\\.)[A-Za-z0-9._/-]+$"
+        },
+        "reconcile": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 300,
+          "pattern": "^(?!/)(?!.*\\.\\.)[A-Za-z0-9._/-]+$"
+        },
+        "proposed": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 300,
+          "pattern": "^(?!/)(?!.*\\.\\.)[A-Za-z0-9._/-]+$"
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "dormant",
+          "never_signed_in",
+          "locked",
+          "unverified",
+          "password_reset_pending",
+          "suspended_with_sessions",
+          "external",
+          "admin_role",
+          "licence_waste",
+          "total_users",
+          "internal",
+          "external_unknown",
+          "matched",
+          "orphaned",
+          "missing",
+          "mismatched",
+          "unknown_status",
+          "ambiguous",
+          "hr_invalid",
+          "tenant_email_invalid",
+          "hr_duplicates",
+          "external_not_in_hr",
+          "hr_rows",
+          "proposed_rows",
+          "enriched_accounts",
+          "flagged_accounts",
+          "intake_skipped"
+        ]
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "tier_order_source": {
+      "enum": [
+        "probe",
+        "user_confirmed",
+        "unknown"
+      ]
+    },
+    "injection_suspected_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "limitations": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "maxLength": 300,
+        "pattern": "^[A-Za-z0-9 .,;:()'\\\"=_/%+-]*$"
+      }
+    },
+    "error": {
+      "enum": [
+        null,
+        "login_expired",
+        "not_admin",
+        "tool_error"
+      ]
+    }
+  },
+  "if": {
+    "properties": {
+      "error": {
+        "const": "tool_error"
+      }
+    },
+    "required": [
+      "error"
+    ]
+  },
+  "then": {
+    "properties": {
+      "limitations": {
+        "items": {
+          "enum": [
+            "tool_unavailable",
+            "rate_limited",
+            "unexpected_answer",
+            "roster_unreadable"
+          ]
+        }
+      }
+    }
+  }
+}

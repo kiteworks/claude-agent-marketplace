@@ -15,7 +15,7 @@ metadata:
 
 **Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user whether to save the summary back to Kiteworks — .txt, .docx, or no saved summary (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default: the same folder as the source file). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the summary deadlocks.
 
-Delegate to the `document-summarizer` subagent. If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools available, or returns a summary without making any Kiteworks tool calls, treat the result as fabricated, discard it, and ask the user to check the `Kiteworks` connector is connected. On other surfaces, follow this skill directly.
+Delegate to the `document-summarizer` subagent. If you already are that subagent, do not delegate again: follow this skill directly. When the subagent returns a `NOT_CONTENT_CHECKED_HANDOFF` block, the delegating session (never the subagent itself) follows `../content-extract/COORDINATOR.md` before reporting. If it reports no tools available, or returns a summary without making any Kiteworks tool calls, treat the result as fabricated, discard it, and ask the user to check the `Kiteworks` connector is connected. On other surfaces, follow this skill directly.
 
 Read `../content-extract/SKILL.md` first for how binary files (.docx, .pdf, .pptx, .xlsx) actually get their text out — this agent never re-implements that bridge itself.
 

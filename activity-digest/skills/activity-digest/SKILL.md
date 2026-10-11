@@ -9,11 +9,11 @@ metadata:
   version: "1.0.2"
 ---
 
-**Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save — CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default `My Folder/Agents/Activity Digest/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks.
+**Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save — CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default `My Folder/Agents/Activity Summarizer/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks.
 
 Delegate to the `activity-digest` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` first.
 
-# Activity Digest
+# Activity Summarizer
 
 ## Why this is one phase, not two
 
@@ -37,7 +37,7 @@ This skill also pairs naturally with the `schedule` capability for a recurring d
 
 ## Write the report the preflight selected
 
-Read `../report-export/SKILL.md`. Default agent name: "Activity Digest".
+Read `../report-export/SKILL.md`. Default agent name: "Activity Summarizer".
 
 Write CSV (item, new/changed, date, link) and txt/pdf narrative (window used, counts, highlights, disclaimer verbatim). Never touch the scanned items themselves.
 

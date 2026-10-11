@@ -11,7 +11,7 @@ metadata:
 
 **Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save -- CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) -- and confirm the destination (default `My Folder/Agents/CCPA/CPRA Compliance Check/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks.
 
-Delegate to the `ccpa-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
+Delegate to the `ccpa-compliance-check` subagent on surfaces that support it (Claude Code, Cowork). If you already are that subagent, do not delegate again: follow this skill directly. When the subagent returns a `NOT_CONTENT_CHECKED_HANDOFF` block, the delegating session (never the subagent itself) follows `../content-extract/COORDINATOR.md` before reporting. If it reports no tools or fabricates results without tool calls, discard and check the `Kiteworks` connector. On other surfaces, follow this skill directly.
 
 # CCPA/CPRA Compliance Check -- fit tier: Strong
 

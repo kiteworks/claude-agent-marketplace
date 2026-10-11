@@ -11,7 +11,7 @@ metadata:
 
 Delegate to the `folder-expiry-audit` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` first.
 
-# Folder Expiry Audit
+# Folder Expiry Auditor
 
 ## Important: this is audit-only, by confirmed necessity, not choice
 

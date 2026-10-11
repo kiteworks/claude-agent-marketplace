@@ -1,8 +1,8 @@
 # ISO 27001 Compliance Check
 
-`v1.4.0` · updated 2026-10-03
+`v1.4.1` · updated 2026-10-08
 
-Checks a Kiteworks folder for the narrow slice of ISO 27001 a file-sharing platform can actually see -- sensitive content and external sharing -- and saves a report. Most of ISO 27001 is outside what this can check; it says so.
+Checks a Kiteworks folder for the narrow slice of ISO 27001 a file-sharing platform can actually see -- sensitive content and sharing exposure -- and saves a report. Most of ISO 27001 is outside what this can check; it says so.
 
 **[View on the Kiteworks Agent Marketplace →](https://agents.kiteworks.com/catalog/iso27001-compliance-check)** — live examples, screenshots, and full detail.
 
@@ -16,7 +16,7 @@ Kiteworks agents are intended for business and professional use. They use AI to 
 
 ## What's new
 
-Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV.
+Maintenance release: reliability and safety improvements.
 
 ## Install
 

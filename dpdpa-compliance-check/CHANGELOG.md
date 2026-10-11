@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1 — 2026-10-08
+
+Maintenance release: reliability and safety improvements. <!-- whats-new: consolidated -->
+
 ## 1.4.0 — 2026-10-03
 
 Clearer executive reports: a concise PDF for decision makers, with the complete evidence in a linked CSV. <!-- whats-new: consolidated -->

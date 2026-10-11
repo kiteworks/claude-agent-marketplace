@@ -9,11 +9,11 @@ metadata:
   version: "1.0.3"
 ---
 
-**Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save — CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default `My Folder/Agents/Contract Radar/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks. In the same question, ask whether to also run the content deep scan (a download and parse per candidate file, capped per run) and pass it as `- deep_scan: yes` or `- deep_scan: no` in the block.
+**Before anything else, run the report preflight** (`../report-export/SKILL.md`): ask the user which report to save — CSV, PDF, TXT, or no saved report (one multi-select question, with `AskUserQuestion` where the host has it) — and confirm the destination (default `My Folder/Agents/Contract Finder/`). Pass the answer to the subagent as the `Report preflight` block. The subagent cannot ask the user anything itself, so a save question asked after the scan deadlocks. In the same question, ask whether to also run the content deep scan (a download and parse per candidate file, capped per run) and pass it as `- deep_scan: yes` or `- deep_scan: no` in the block.
 
-Delegate to the `contract-radar` subagent. If you already are that subagent, do not delegate again: follow this skill directly. Read `../folder-scan/SKILL.md` first, and `../term-sweep/SKILL.md` if a content deep-scan is confirmed.
+Delegate to the `contract-radar` subagent. If you already are that subagent, do not delegate again: follow this skill directly. When the subagent returns a `NOT_CONTENT_CHECKED_HANDOFF` block, the delegating session (never the subagent itself) follows `../content-extract/COORDINATOR.md` before reporting. Read `../folder-scan/SKILL.md` first, and `../term-sweep/SKILL.md` if a content deep-scan is confirmed.
 
-# Contract Radar
+# Contract Finder
 
 ## Why this is one phase, not two
 
@@ -25,7 +25,7 @@ A folder scope (required). Term list is optional — default to `agreement, MSA,
 
 ## Sweep
 
-Name/path match against the term list per `term-sweep`, always on. Folder names in each item's path count, so a file under a `Contracts/` folder matches "contract" even when its own name does not; `search_files(path_contains=...)` alone would miss it, because it matches file names only. Surface `modified`/`created` dates on every candidate — contract radar is inherently about staleness/renewal timing, so dates matter even before any content check.
+Name/path match against the term list per `term-sweep`, always on. Folder names in each item's path count, so a file under a `Contracts/` folder matches "contract" even when its own name does not; `search_files(path_contains=...)` alone would miss it, because it matches file names only. Surface `modified`/`created` dates on every candidate — Contract Finder is inherently about staleness/renewal timing, so dates matter even before any content check.
 
 Content matching is a separate, opt-in "deep scan" (real per-file work — a download and parse per candidate, per `../content-extract/SKILL.md`): the user decides in the report preflight, before the run (`deep_scan: yes` or `no`). Run it only on yes, and tell them how many candidates were in scope vs. actually checked. Respect `content-extract`'s per-run cap and disclose how many files were actually checked vs. in scope. Count the terms in each extracted text only with `../term-sweep/scripts/pii_patterns.py <extracted-text-file> --terms-file=<user-terms.txt>`, per `term-sweep`'s "Counting terms in extracted text"; never count them yourself.
 
@@ -37,7 +37,7 @@ Then write the formats from the report preflight without asking again, and list 
 
 ## Write the report the preflight selected
 
-Read `../report-export/SKILL.md`. Default agent name: "Contract Radar".
+Read `../report-export/SKILL.md`. Default agent name: "Contract Finder".
 
 Write CSV (name, path, term matched, last modified, link) and txt/pdf narrative including both caveats verbatim: the candidate-list-not-verified caveat above, and (if a content deep-scan ran) the content-search reliability caveat from `term-sweep`. Never touch candidate files — this agent's only write action is the report itself.
 

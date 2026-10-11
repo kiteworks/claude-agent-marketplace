@@ -4,7 +4,7 @@ description: >
   Shared internal reference for bounded retrieval of real Kiteworks content.
   Read before binary extraction, OCR, redaction, or accessibility analysis.
 metadata:
-  version: "0.7.0"
+  version: "0.8.0"
 ---
 
 # content-extract — one owned scratch lifecycle
@@ -34,8 +34,11 @@ files. A shell in a Chat sandbox or
 Cowork VM does not prove access to a connector's host path. Chat may have code/file
 creation; missing hooks/subagents does not mean parsing is unavailable.
 
-Check `pdftotext` for PDF. Do not infer input support from a version or
-executable's presence. DOCX, PPTX and XLSX need no parser check:
+Run `scripts/extract_and_cleanup.py --probe` where the downloads will land,
+before the first binary download: it prints which parsers are installed
+there, and keep that JSON as run evidence. Installed is not proof: do not
+infer input support from a version or an executable's presence; each file's
+result decides. DOCX, PPTX and XLSX need no parser check:
 `scripts/extract_and_cleanup.py` reads them itself with the Python standard
 library. Always extract DOCX, PPTX and XLSX through that script. Do not send
 them to pandoc, openpyxl, python-pptx, `uv run --with`, `pip install` or a
@@ -50,6 +53,46 @@ tab-separated rows, hidden sheets included.
 A format skill is an alternative only if its inputs, temporary outputs,
 and execution location are known. Legacy DOC/PPT/XLS and encrypted formats need a
 verified parser or an explicit unsupported-format result.
+
+## When you cannot parse here: hand off, never guess
+
+Where you run may not reach a parser that exists: a plugin hook can deny this
+agent the device shell, or your shell (a Cowork cloud sandbox, say) cannot see
+where the connector writes downloads. That is not "no parser exists". Name
+what blocked you; never report a parser as missing that you could not check.
+
+When a binary cannot be content-checked from where you run, do not download
+it. Return one row per file in a JSON list headed
+`NOT_CONTENT_CHECKED_HANDOFF`:
+
+    {"file_id": "...", "name": "...", "format": "pdf", "reason": "...", "tool_needed": "..."}
+
+`reason` is exactly one of:
+
+- `exec-tool-denied`: the shell for the download location is blocked for
+  this agent; `tool_needed` names it (for example
+  `mcp__remote-devices__device_bash`).
+- `download-not-visible`: downloads land where your shell cannot read them.
+- `parser-missing`: the location runs but the probe shows the parser absent;
+  `tool_needed` names it (`pdftotext`, `pdftoppm`, `tesseract`).
+- `unsupported-format`: nothing here reads it (DOC, PPT, XLS, and images
+  other than JPEG, PNG and TIFF, such as GIF, BMP, WebP and HEIC).
+
+An encrypted file is found by parsing, not beforehand: report it as that
+file's parse result, not as a handoff row.
+
+A plugin agent ends its turn with that list next to its full result data:
+every row, count and category the report would need, zero-hit categories
+included, so the session that delegated to it can merge and save. While rows
+remain, the agent does not write the report its `Report preflight` block
+asked for: it says the save is deferred, and the delegating session writes
+the merged report. That session follows `COORDINATOR.md` in this folder. An apply agent (it acts on
+a user-confirmed list) does not hand off: it lists such files as "needs
+manual review" with the reason, and leaves them untouched.
+Unless the user explicitly narrowed the scan, a run that asked for content
+checking is not complete while rows remain: open the result, and any saved
+report, with the unchecked count and each file's reason and missing tool,
+never only in a footnote.
 
 ## Images and scanned PDFs: OCR is a standard step
 
@@ -89,10 +132,12 @@ OCR runs the same way on every run; it is not a per-run judgement call.
   maximum (10 minutes) or in the background, so a scan is never cut off
   without its JSON result.
 - Other image types (GIF, BMP, WebP, HEIC) are not OCR'd: list them as
-  "not content-checked: unsupported image format".
+  "not content-checked: unsupported image format" (an `unsupported-format`
+  handoff row).
 
 If access acquisition fails, the Desktop connection is offline/revoked, the local
-VM is unavailable, or no parser/mapping exists: do not download. Metadata-only
+VM is unavailable, or no parser/mapping is reachable: do not download; hand the
+files off as above. Metadata-only
 matching may be useful for a scanner, but a summarizer must say it cannot
 summarize this binary. Never label filename matching as content analysis.
 

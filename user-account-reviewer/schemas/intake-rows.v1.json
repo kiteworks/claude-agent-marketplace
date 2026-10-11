@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "intake-rows.v1.json",
+  "title": "User Account Reviewer intake rows",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "file_id",
+    "rows",
+    "skipped",
+    "error"
+  ],
+  "properties": {
+    "schema": {
+      "const": "intake-rows.v1"
+    },
+    "file_id": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9_.-]*$"
+    },
+    "rows": {
+      "type": "array",
+      "maxItems": 5000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "email",
+          "status",
+          "employee_id"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254,
+            "pattern": "^[A-Za-z0-9._%+'-]{1,64}@[A-Za-z0-9.-]{1,253}$"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "current",
+              "employed",
+              "former",
+              "inactive",
+              "leaver",
+              "left",
+              "no",
+              "terminated",
+              "unknown",
+              "yes"
+            ]
+          },
+          "employee_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 40,
+            "pattern": "^[A-Za-z0-9._-]{1,40}$"
+          }
+        }
+      }
+    },
+    "skipped": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "error": {
+      "enum": [
+        null,
+        "file_not_found",
+        "unreadable",
+        "no_email_column"
+      ]
+    }
+  }
+}

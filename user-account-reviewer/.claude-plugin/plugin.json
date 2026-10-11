@@ -1,0 +1,13 @@
+{
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Reviews Kiteworks user accounts, reconciles them with an HR list, and can save an access-review report.",
+  "displayName": "User Account Reviewer",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "user-account-reviewer",
+  "repository": "https://github.com/kiteworks/claude-agent-marketplace",
+  "version": "0.1.1"
+}

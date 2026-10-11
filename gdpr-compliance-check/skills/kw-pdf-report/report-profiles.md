@@ -33,13 +33,17 @@ extraction is truncated; valid observations from that portion remain linkable.
 | retention | Retention Sweeper | Policy/version/threshold and reference event; age cohorts; purpose and hold status unknown when unavailable. Candidate review is not authority to delete. |
 | storage | Storage Visualizer | Measured size units and scope; aggregation/versions limitations; capacity concentrations. Distinguish logical size, estimated opportunity and actually freed space; no unsupported cost savings. |
 | duplicates | Duplicate Finder | Matching basis, group/keeper rationale, unknown fingerprints, proposed destination. Proposal and receipt differ; moved files have not freed storage. Inventory includes all enumerated objects, not just duplicate candidates. |
-| contracts | Contract Radar | Search terms/purpose, candidate confidence, extraction coverage, owner-review queue. Discovery is not verified obligations/renewals; modified dates are not renewal dates. |
+| contracts | Contract Finder | Search terms/purpose, candidate confidence, extraction coverage, owner-review queue. Discovery is not verified obligations/renewals; modified dates are not renewal dates. |
 | invoices | Invoice Organizer | Extraction/OCR provenance; missing fields; duplicates; totals separately by currency; organization rule. Separate proposal from completed renames/moves; no financial/tax validation claim. |
-| activity | Activity Digest | Exact interval/timezone; created vs modified file populations; scope and comparable prior snapshot if available. File metadata is not an access/download/deletion event audit log. Prefer brief layout. |
-| naming | Naming Cleanup | Naming convention, real scope, before/after proposal, collisions and unresolved choices. Receipt includes actual outcomes and failures. |
+| activity | Activity Summarizer | Exact interval/timezone; created vs modified file populations; scope and comparable prior snapshot if available. File metadata is not an access/download/deletion event audit log. Prefer brief layout. |
+| naming | File Name Cleaner | Naming convention, real scope, before/after proposal, collisions and unresolved choices. Receipt includes actual outcomes and failures. |
 | offboarding | Offboarding Content Finder | Identity-matching basis, searched scope, candidate owners and handover destination. Creator match is not current ownership; moving content is not access revocation or ownership transfer. |
-| inbox | Inbox Triage | Source inbox/uploads folder, real destination taxonomy, filename-only vs content-aware classification and uncertainty. These are files/folders, not email/messages/attachments. |
+| inbox | Inbox Sorter | Source inbox/uploads folder, real destination taxonomy, filename-only vs content-aware classification and uncertainty. These are files/folders, not email/messages/attachments. |
 | redaction | Redactor | Source-to-derivative identity, categories/method, supported formats, verification status and excluded content. Successful copy creation is not proof of irreversible removal. Never repeat removed values in the report. |
+| audit-activity | Activity Explorer | Exact period, 30-day windows run and time zone; row cap and whether it was hit; oldest row returned (log reach); rows with empty object data; taxonomy version and unknown event names; AI-client section always present; a person view states the typed purpose. Observations from the audit log, not forensic evidence. No IP or location. No per-person ranking or risk score. |
+| access-review | User Account Reviewer | Roster source and filters, reference date and dormancy threshold, profile tier-order source, HR list file and match basis (email, case-insensitive). Findings are review candidates, not decisions. Proposed changes are a proposal the User Account Manager re-validates. Includes an attestation page for the reviewer sign-off. |
+| account-changes | User Account Manager | `document_kind: proposal` for a plan, `receipt` for an outcome. Ticket reference, plan short hash, approvals, before/after per account from `get_user_metadata`, failures, undo plan. Deactivation is not deletion; on demotion data is retained to the named custodian. No passwords. |
+| document-collection | Document Requester | Collection, counterparties, requested documents, due date, requests sent with `require_auth`. Received status from file metadata only; content not opened or verified. Unexpected extra files listed; overdue is relative to the due date. |
 
 ## Family structure
 
@@ -48,6 +52,7 @@ extraction is truncated; valid observations from that portion remain linkable.
 | Compliance (privacy, hipaa, security, ...) | full, 5-7 pages for a small scope | `<category>_count` fact keys where counts are checked |
 | sensitive-content | full, 4-6 pages | `<category>_count` fact keys |
 | storage | brief, 2-3 pages | Must contain: total size card text, file count and measured coverage, a shared / not-shared measured breakdown, largest folders, top files and file types, and one recommendation. No capacity alarm when the footprint is immaterial. Needs no fact keys (uses `size_bytes`). |
+| Admin and collection families (audit-activity, access-review, account-changes, document-collection) | audit-activity and access-review: full; account-changes and document-collection: brief | audit-activity 4-6 pages; access-review includes an attestation page |
 | Other operational families | brief by default | |
 
 Suggested canonical `fact_keys`: privacy, pci and sensitive-content use
@@ -64,7 +69,7 @@ in the action basis; retain before/after object references in profile details or
 the source field of inventory objects. The execution evidence must establish the
 reported outcome; never turn a recommendation into a completed action.
 
-Document Summarizer remains TXT/DOCX; Folder Expiry Audit and Intake Form Builder
+Document Summarizer remains TXT/DOCX; Folder Expiry Auditor and Intake Form Builder
 do not gain a PDF workflow merely because other reports use this contract.
 
 ## Writing and review

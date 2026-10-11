@@ -1,0 +1,13 @@
+{
+  "author": {
+    "name": "Kiteworks",
+    "url": "https://kiteworks.com"
+  },
+  "description": "Answers a Kiteworks admin's questions about the audit log in plain language, and can save a report.",
+  "displayName": "Activity Explorer",
+  "homepage": "https://kiteworks.com",
+  "license": "Apache-2.0",
+  "name": "audit-activity-explorer",
+  "repository": "https://github.com/kiteworks/claude-agent-marketplace",
+  "version": "0.1.1"
+}

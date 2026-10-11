@@ -1,0 +1,27 @@
+sdk: 0
+slug: storage-visualizer
+title: Storage Visualizer
+version: 1.2.1
+kind: single
+skills:
+- connector-probe
+- folder-scan
+- kw-pdf-report
+- report-export
+- scratch-lifecycle
+- surface-gate
+agents:
+  storage-visualizer:
+    role: main
+    tools:
+      get_folder_children: user
+      get_top_folders: user
+      get_user_info_whoami: user
+      search_folders: user
+      create_file_from_content: user
+      upload_file_from_path: user
+      create_folder: user
+    builtins:
+    - Read
+    - Bash
+    - Write
